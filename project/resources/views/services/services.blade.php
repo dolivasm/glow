@@ -1,3 +1,6 @@
+ @section('css')
+<link href="{{ asset('assets/css/external/bootstrap.vertical-tabs.css') }}" rel="stylesheet">
+    @endsection
 @extends('layouts.principal')
     @section('content')
     <!-- Section Title -->

@@ -86,7 +86,7 @@ $(document).ready(function () {
     /*	Date Picker
     /*-----------------------------------------------------------------------------------*/
     
-      var datepicker=  $("#datepicker").datepicker();
+      var datepicker=  $(".datepicker").datepicker();
     
     /*-----------------------------------------------------------------------------------*/
     /*	Pricing Table

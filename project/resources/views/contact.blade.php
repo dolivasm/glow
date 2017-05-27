@@ -37,7 +37,7 @@
                             <div class="contact-map">
 
                                 <div class="embed-responsive embed-responsive-16by9 ">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12042.38341328123!2d28.962356227081358!3d41.01221819455958!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab9eb9d587135%3A0x8aa0bb6b1dd6ffb7!2zRW1pbsO2bsO8LCBSw7xzdGVtIFBhxZ9hLCAzNDExNiBGYXRpaC_EsHN0YW5idWw!5e0!3m2!1str!2str!4v1464594595424" width="800" height="445" style="border:0; pointer-events:none" allowfullscreen class="embed-responsive-item "></iframe>
+                                    <iframe src="https://www.google.com/maps/embed/v1/place?q=10.073688%2C%20-84.308694&key=AIzaSyD2aPh8z-F27MB3d3bzoHnWc7biFA5-Jdw" width="800" height="445" style="border:0; " allowfullscreen class="embed-responsive-item "></iframe>
                                 </div>
                             </div>
                         </div>

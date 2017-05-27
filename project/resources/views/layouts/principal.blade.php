@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Glow</title>
@@ -7,23 +7,28 @@
     <meta name="viewport" content="width=device-width; initial-scale = 1.0;
 maximum-scale=1.0; user-scalable=no" />
     <!--Core Styles-->
-    <link href="assets/css/core/bootstrap.min.css" rel="stylesheet" />
+     <link href="{{ asset('assets/css/core/bootstrap.min.css') }}" rel="stylesheet">
     <!--External Styles-->
-    <link href="assets/css/external/font-awesome.min.css" rel="stylesheet" />
-    <link href="assets/css/external/jquery-ui.css" rel="stylesheet" />
-    <link href="assets/css/external/jquery-ui.theme.css" rel="stylesheet" />
-    <link href="assets/css/external/ytplayer.css" rel="stylesheet" />
-    <link href="assets/css/external/jquery.bxslider.css" rel="stylesheet" />
-    <link href="assets/css/external/yamm.css" rel="stylesheet" />
-    <link href="assets/css/external/slick.css" rel="stylesheet" />
-    <link href="assets/css/external/wfmi-style.css" rel="stylesheet" />
-    <link href="assets/css/external/lightbox.css" rel="stylesheet" />
-     <link href="assets/css/external/flexslider.css" rel="stylesheet" />
-    <!--Project Styles-->
-    <link href="assets/css/project/style.css" rel="stylesheet" />
-    <!--Google Web Fonts-->
+    <link href="{{ asset('assets/css/external/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/jquery-ui.theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/ytplayer.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/jquery.bxslider.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/yamm.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/slick.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/wfmi-style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/lightbox.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/flexslider.css') }}" rel="stylesheet">
+    
+    <!--@section('css')-->
+    
+    @yield('css')
 
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700%7CRaleway:400,700" rel="stylesheet">
+    @show
+    <!--Project Styles-->
+    <link href="{{ asset('assets/css/project/style.css') }}" rel="stylesheet">
+    <!--Google Web Fonts-->
+ <link href="{{ asset('https://fonts.googleapis.com/css?family=Lato:300,400,700%7CRaleway:400,700') }}" rel="stylesheet">
 
 </head>
 <body>
@@ -60,7 +65,7 @@ maximum-scale=1.0; user-scalable=no" />
                             <td>
                                 <div class="icon-box-text">
 
-                                    glow@gmail.com
+                                    clinica.glow.cr@gmail.com
 
                                 </div>
                             </td>
@@ -71,11 +76,11 @@ maximum-scale=1.0; user-scalable=no" />
                 <div class="icon-box pull-right">
                     <table>
                         <tr>
-                            <td><i class="fa fa-bus"></i></td>
+                            <td><i class="fa fa-smile-o"></i></td>
                             <td>
                                 <div class="icon-box-text">
 
-                                    Van facility available for pick and drop
+                                    Te esperamos!
                                 </div>
                             </td>
                         </tr>
@@ -88,7 +93,7 @@ maximum-scale=1.0; user-scalable=no" />
     <div class="header-intro-2">
         <div class="container pt-0 pb-0">
             <div class="row ml-0 mr-0">
-                <div class="col-lg-4 visible-lg"><img src="assets/img/logo/logo.png" class="img-responsive" alt="logo" /></div>
+                <div class="col-lg-4 visible-lg"><img src="{{ asset('assets/img/logo/logo.png') }}" class="img-responsive" alt="logo" /></div>
                 <div class="col-md-12 col-lg-8 pl-0 pr-0">
                     <!-- Main Menu -->
                     <div id="main-menu">
@@ -115,8 +120,38 @@ maximum-scale=1.0; user-scalable=no" />
                                         <li><a href="services">Servicios</a></li>
                                         <li><a href="products">Productos</a></li>
                                         <li><a href="appointment">Cita</a></li>
-                                        <li><a href="login">Ingresar</a></li>
                                         <li><a href="contact">Contacto</a></li>
+                                        @if (Auth::guest())
+                                             <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true"></i>
+                                            <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                              <li><a href="{{ asset('login') }}"> Ingresar</a></li>
+                                              <li><a href="{{ asset('register') }}"> Registrarme</a></li>
+        
+                                            </ul>
+                                          </li>
+                                        @else
+                                         <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">@if (!Auth::guest()) {{ Auth::user()->name }} @endif <i class="fa fa-user" aria-hidden="true"></i>
+                                            <span class="caret"></span></a>
+                                            <ul class="dropdown-menu">
+                                                 <li>
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                           Salir
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                    </li>
+        
+                                            </ul>
+                                          </li>
+                                           
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -200,19 +235,22 @@ maximum-scale=1.0; user-scalable=no" />
     </section>
     <!-- End Go Back Top-->
     <!--Core Scripts-->
-    <script src="assets/js/core/jquery.min.js"></script>
-    <script src="assets/js/core/bootstrap.min.js"></script>
+    <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <!--External Scripts-->
-    <script src="assets/js/external/jquery.backstretch.min.js"></script>
-    <script src="assets/js/external/jquery.countTo.js"></script>
-    <script src="assets/js/external/jquery.easing.1.3.js"></script>
-    <script src="assets/js/external/jquery.mb.YTPlayer.js"></script>
-    <script src="assets/js/external/waypoints.min.js"></script>
-    <script src="assets/js/external/jquery.bxslider.min.js"></script>
-    <script src="assets/js/external/slick.min.js"></script>
-    <script src="assets/js/external/jquery-ui.js"></script>
-    <script src="assets/js/external/lightbox-2.6.min.js"></script>
-    <script src="assets/js/external/jquery.flexslider-min.js"></script>
+     <script src="{{ asset('assets/js/external/jquery.backstretch.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.countTo.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.mb.YTPlayer.js') }}"></script>
+     <script src="{{ asset('assets/js/external/waypoints.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.bxslider.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/js/external/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/js/external/lightbox-2.6.min.js') }}"></script>
+    <script src="{{ asset('assets/js/external/jquery.flexslider-min.js') }}"></script>
+    
+    @yield('js')
+    
     <script>
         $('.basic-carousel').flexslider({
             animation: "slide",
@@ -222,7 +260,7 @@ maximum-scale=1.0; user-scalable=no" />
         });
     </script>
     <!--Project Scripts-->
-    <script src="assets/js/project/script.js"></script>
+    <script src="{{ asset('assets/js/project/script.js') }}"></script>
 
 </body>
 </html> 

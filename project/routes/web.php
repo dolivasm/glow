@@ -15,3 +15,11 @@ Route::get('/','HomeController@index');
 Route::resource('services','ServiceController');
 Route::get('contact','HomeController@contact');
 Route::get('abaut','HomeController@abaut');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('users', function () {
+    $users = App\User::all();
+    return view('usersManagement', compact('users'));
+});
