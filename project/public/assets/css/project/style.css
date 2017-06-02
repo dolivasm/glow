@@ -1,4 +1,4 @@
-﻿/*------------------------------------------------------------------------------------
+/*------------------------------------------------------------------------------------
 
 Template Name: PhysiotherapyPro  
 Template URI: http://fatiherim.com/physiotherapypro
@@ -708,13 +708,6 @@ input[type="color"]:focus,
 /*-----------------------------------------------------------------------------------*/
 
 
-#main-menu {
-    position: relative;
-    z-index: 9999;
-    width: 100%;
-    height: 75px;
-    text-transform: uppercase;
-}
 #main-menu .container{
     width:100%;
 }
@@ -2062,6 +2055,21 @@ input[type="color"]:focus,
     font-weight: 300;
     color: #555;
 }
+.news-post-title {
+    font-size: 20px ;
+    line-height: 27px;
+    font-weight: 300;
+    color: #5b006f;
+    
+}
+.bold-text {
+    font-weight: bold;
+}
+.blog-post-price {
+    font-size: 20px ;
+    font-weight: 300;
+    color: #555;
+}
 
     .blog-post-title > a {
         color: #555 ;
@@ -2243,7 +2251,8 @@ input[type="color"]:focus,
 }
     .contact-details-wrap h3,
     .contact-details-wrap p {
-        color: #fff;
+        color: #b44ab4;
+        text-align:center;
     }
 
 .contact-details-wrap ul {
@@ -4350,4 +4359,126 @@ font-size: 18px;
 
 .login-section .nav-tabs, .login-section .nav-pills {
     text-align:center;
+}
+
+.news-img{
+    height: 320px;
+}
+
+/*Buttons Section*/
+.btn-danger-delete {
+    border-radius: 0;
+    border-color: red;
+    background-color: transparent;
+    color: red;
+    -webkit-transition: all 250ms ease-in 0s;
+    -moz-transition: all 250ms ease-in 0s;
+    -o-transition: all 250ms ease-in 0s;
+    transition: all 250ms ease-in 0s;
+    width: 100%;
+}
+.btn-normal-edit {
+    border-radius: 0;
+    border-color: #b44ab4;
+    background-color: transparent;
+    color: #b44ab4;
+    -webkit-transition: all 250ms ease-in 0s;
+    -moz-transition: all 250ms ease-in 0s;
+    -o-transition: all 250ms ease-in 0s;
+    transition: all 250ms ease-in 0s;
+    width: 100%;
+}
+.btn-normal-add {
+    border-radius: 0;
+    border-color: green;
+    background-color: transparent;
+    color: green;
+    -webkit-transition: all 250ms ease-in 0s;
+    -moz-transition: all 250ms ease-in 0s;
+    -o-transition: all 250ms ease-in 0s;
+    transition: all 250ms ease-in 0s;
+    width: 100%;
+}
+
+  .btn-normal-edit:hover,
+    .btn-normal-edit:hover {
+        border-color: #fff;
+        background-color: #b44ab4;
+        color: #fff;
+    }
+    .btn-normal-add:hover,
+    .btn-normal-add:hover {
+        border-color: #fff;
+        background-color: green;
+        color: #fff;
+    }
+     .btn-danger-delete:hover,
+    .btn-danger-delete:hover {
+        border-color: #fff;
+        background-color: red;
+        color: #fff;
+    }
+    /*End buttons Section*/
+    
+    /*Modal Headers*/
+    
+    .modal-header-success {
+    color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background: #5b006f;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.modal-title {
+    
+    color:white;
+}
+
+
+#addNewsForm .form-group, #addUserForm .form-group{
+    margin-bottom: 2px;
+}
+
+@media (min-width: 600px) {
+#main-menu {
+    z-index: 9999;
+    width: 100%;
+    height: 75px;
+    text-transform: uppercase;
+}
+    
+}
+
+@media (max-width: 600px) {
+    #main-menu {
+    position: relative;
+    z-index: 9999;
+    width: 100%;
+    height: 75px;
+    text-transform: uppercase;
+}
+
+
+}
+@media (max-width: 768px) {
+    #main-menu {
+    position: relative;
+    z-index: 9999;
+    width: 100%;
+    height: 75px;
+    text-transform: uppercase;
+}
+    
+} 
+#usersTable_wrapper .btn-danger-delete,#usersTable_wrapper .btn-normal-edit{
+    width:48%;
+}
+.form-control:focus{
+    border-color: #c156e3;
 }

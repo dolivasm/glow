@@ -18,11 +18,11 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="font-icon">
-                                <h1 class="text-center color-text"><i class="fa fa-map-o"></i> &nbsp; Contact</h1>
+                                <h1 class="text-center color-text"><i class="fa fa-map-o"></i> &nbsp; Localizanos con facilidad.</h1>
                             </div>
                             <div class="vs-25"></div>
                             <div class="seperator-text">
-                                <p>Sed porttitor, justo in feugiat mollis, nunc velit luctus purus, in commodo nisi magna ut sa. </p>
+                                <p>Grecia. 25mts sur de la estación de bomberos. </p>
                             </div>
                         </div>
                     </div>
@@ -47,43 +47,7 @@
                 <div class="contact-details-wrap">
                     <div class="container">
                         <div class="row">
-                            <div class="col-md-6 col-sm-12 col-xs-12">
-                                <div class="contact-details">
-                                    <h3 class="color-text">Acerca de FisioEstética Glow</h3>
-                                    <p>Cuidado profesional de su salud y belleza corporal. Le ofrece los mejores tratamientos estéticos y terapéuticos en un ambiente cálido y personalizado.</p>
-                                    <div class="company-meta">
-                                        <div class="width-half">
-                                            <h3>
-                                                <span>
-                                                    <i class="fa fa-map-marker"></i>
-                                                </span> Nuestras Oficinas
-                                            </h3>
-                                            <p>
-                                                Alajuela, Grecia
-
-                                                <br> 25 sur de los bomberos.
-                                            </p>
-                                           
-                                        </div>
-                                        <div class="width-half">
-                                            <h3>
-                                                <span>
-                                                    <i class="fa fa-comment-o"></i>
-                                                </span> Información de Contacto
-                                            </h3>
-                                            <p>
-                                                <abbr>Correo:</abbr><a href="mailto:info@company.com" class="link"> info@company.com</a>
-                                            </p>
-                                            <p>
-                                                <abbr>Teléfono:</abbr>  (+506) 8814-01 36 // 24 94 0108
-                                            </p>
-                                          
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                                 <div class="contact-form">
                                     <h3 class="color-text">Dejanos tus consultas</h3>
                                     <p>Cuidado profesional de su salud y belleza corporal.</p>
@@ -146,19 +110,7 @@
        
     </section>
     <!-- End Contact -->
-    <!-- Callout -->
-    <section id="callout" class="bg-alternative visible-lg">
-
-        <div class="well">
-            <div class="container pt-35 pb-35">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="callout-wrap">
-                            <h4>"Si la medicina es la ciencia que da años a la vida, la Fisioterapia es la ciencia que da vida a los años" <a href="appointment" class="btn btn-normal btn-lg pull-right"><i class="icon-i-registration"></i> Reservar Cita</a></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
    @endsection
+   @section('js')
+     <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
+    @endsection

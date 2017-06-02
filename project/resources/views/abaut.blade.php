@@ -23,52 +23,7 @@
         </div>
     </section>
     <!-- End About Us -->
-    <!-- Our Numbers -->
-    <section id="our-numbers">
-        <div id="our-numbers-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <h1 class="text-center">We have 15 years of experience</h1>
-                        <div class="vs-30"></div>
-                        <p class="text-center">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum consectetur scelerisque nisl consectetur adipiscing elit </p>
-                    </div>
-                </div>
-                <div class="vs-30"></div>
-                <div class="row">
-                    <!-- Our Numbers Item -->
-
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 our-numbers-item">
-                        <p><span class="timer number" id="physiotherapy-delivered" data-to="203" data-speed="3000">203</span></p>
-                        <p class="our-numbers-text"> Physiotherapy Delivered</p>
-
-                    </div> <!-- End Our Numbers Item -->
-                    <!-- Our Numbers Item -->
-
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 our-numbers-item">
-                        <p><span class="timer number" id="happy-customers" data-to="1560" data-speed="3000">1560</span></p>
-                        <p class="our-numbers-text"> Happy Customers</p>
-
-                    </div> <!-- End Our Numbers Item -->
-                    <!-- Our Numbers Item -->
-
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 our-numbers-item">
-                        <p><span class="timer number" id="massage-therapy" data-to="198" data-speed="3000">198</span></p>
-                        <p class="our-numbers-text"> Massage Therapy</p>
-
-                    </div>   <!-- End Our Numbers Item -->
-                    <!-- Our Numbers Item -->
-
-                    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 our-numbers-item">
-                        <p><span class="timer number" id="cups-coffee" data-to="1533" data-speed="3000">1533</span></p>
-                        <p class="our-numbers-text"> Cups of Coffee</p>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Our Numbers -->
+   
     <!-- Team Members -->
     <div class="team-members">
         <div class="container">
@@ -218,50 +173,15 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
-                        <h2>Physiotherapy Pro HTML Template</h2>
-                        <h2>Buy Now !</h2>
+                        <h2>¿Necesitas una cita?</h2>
+                        <h2>Reserva hoy mismo!</h2>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <!-- End Dark Bg -->
-    <!-- Clients -->
-    <section id="clients">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h1 class="text-center color-text">Our Clients</h1>
-                </div>
-            </div>
-            <div class="vs-60"></div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="flexslider basic-carousel">
-                        <ul class="slides">
-                            <li>
-                                <img src="assets/img/clients/1.png" />
-                            </li>
-                            <li>
-                                <img src="assets/img/clients/2.png" />
-                            </li>
-                            <li>
-                                <img src="assets/img/clients/3.png" />
-                            </li>
-                            <li>
-                                <img src="assets/img/clients/1.png" />
-                            </li>
-                            <li>
-                                <img src="assets/img/clients/2.png" />
-                            </li>
-                            <li>
-                                <img src="assets/img/clients/3.png" />
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Clients -->
   @endsection
+  <!--Section for project scripts-->
+    @section('js')
+@endsection

@@ -12,14 +12,19 @@
 */
 
 Route::get('/','HomeController@index');
-Route::resource('services','ServiceController');
 Route::get('contact','HomeController@contact');
 Route::get('abaut','HomeController@abaut');
+Route::get('newsDetail','NewsController@news_detail');
+Route::get('productsDetail','ProductController@products_detail');
 Auth::routes();
+
+Route::resource('services','ServiceController');
+Route::resource('news','NewsController');
+Route::resource('products','ProductController');
+Route::resource('users', 'UserController');
 
 Route::get('/home', 'HomeController@index');
 
-Route::get('users', function () {
-    $users = App\User::all();
-    return view('usersManagement', compact('users'));
-});
+/*Route::get('api/users', function() {
+    return Datatables::eloquent(App\User::query())->make(true);
+});*/

@@ -1,6 +1,9 @@
- @section('css')
-<link href="{{ asset('assets/css/external/bootstrap.vertical-tabs.css') }}" rel="stylesheet">
-    @endsection
+ @section('external-css')
+     <link href="{{ asset('assets/css/external/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/wfmi-style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/bootstrap.vertical-tabs.css') }}" rel="stylesheet">
+@endsection
+
 @extends('layouts.principal')
     @section('content')
     <!-- Section Title -->
@@ -16,26 +19,144 @@
             <div class="row tab-style-2">
                 <div class="col-md-3 col-xs-12 col-sm-12">
                     <!-- Nav tabs -->
+                    <input type="button" onclick="cargamensaje()" value="Activar Función">
+                   
                     <ul class="nav nav-tabs tabs-left">
                         <li class="active"><a href="#physiotherapy" data-toggle="tab"><span class="icon-i-physical-therapy"></span>&nbsp;Physiotherapy</a></li>
+
+                        <li><a href="#muestradatos" data-toggle="tab"><span class="icon-i-intensive-care"></span>&nbsp;Mostrar Datos</a></li>
+                        <li><a href="#insertadatos" data-toggle="tab"><span class="icon-i-intensive-care"></span>&nbsp;Insertar datos</a></li>
+                        <li><a href="#actualizardatos" data-toggle="tab"><span class="icon-i-intensive-care"></span>&nbsp;Actualizar datos</a></li>
+
+                        <li><a href="#agregaServicio" data-toggle="tab"><span class="icon-facebook"></span>&nbsp;Agregar Servicio</a></li>
+
+
                         <li><a href="#acupuncture" data-toggle="tab"><span class="icon-i-alternative-complementary"></span>&nbsp;Acupuncture</a></li>
-                        <li><a href="#orthopedic-bracing" data-toggle="tab"><span class="icon-i-outpatient"></span>&nbsp;Orthopedic Bracing</a></li>
-                        <li><a href="#sports-injury" data-toggle="tab"><span class="icon-i-ambulance"></span>&nbsp;Sports Injury</a></li>
-                        <li><a href="#rehabilitation" data-toggle="tab"><span class="icon-i-health-education"></span>&nbsp;Rehabilitation</a></li>
-                        <li><a href="#physical-theraphy" data-toggle="tab"><span class="icon-i-intensive-care"></span>&nbsp;Physical Theraphy</a></li>
+                        
                     </ul>
                 </div>
 
                 <div class="col-md-9 col-xs-12 col-sm-12">
                     <!-- Tab panes -->
                     <div class="tab-content">
+
+                        <div class="tab-pane" id="muestradatos">
+                            <h3 class="text-center color-text">Carga de datos</h3>
+                            <div class="vs-25"></div>
+                            <p><img src="assets/img/blog/5.jpg" class="img-responsive" />Base para cargar datos</p>
+                               
+                                <!-- Desplegar información obtenida de servicios-->
+                                <div class="table-responsive">
+                                    @if($data)
+                                    <table class="table">
+                                        <thead>                                        
+                                        <tr>
+                                            <td>nombre</td>
+                                            <td>descripción</td>
+                                            <td>precio</td>
+                                        </tr>    
+                                        </thead>
+                                            @foreach($data as $row)
+                                            <tr>
+                                                <td>{{$row->name}}</td>
+                                                <td>{{$row->description}}</td>
+                                                <td>{{$row->price}}</td>
+                                                <td>
+                                                    <a href="{{ route('services.edit',$row->id)}}" class="btn btn-info">Editar</a>
+                                                    
+                                                    <form action="{{ route('services.destroy', $row->id) }}" method="post">
+                                                        <input name="_method" type="hidden" value="DELETE"/>
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                                                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        
+                                    </table>
+                                    @endif
+                                    
+                                </div>
+                                <!-- Fin de Desplegar información optenida de servicios-->                        
+                        </div>
+
+                        <div class="tab-pane" id="insertadatos">
+                            
+                            <h4><a href="#muestradatos" data-toggle="tab">Mostrar Datos</a></h4>
+                            
+                             <form method="post" action="\services">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}"> <!--Token de seguridad-->
+                                
+                                <div class="form-group">
+                                    <label for="">Nombre</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Nombre"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Descripción</label>
+                                    <input type="text" name="description" class="form-control" placeholder="Descripción"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Precio</label>
+                                    <input type="text" name="price" class="form-control" placeholder="Precio"/>
+                                </div>
+
+                                    
+                                <button type="submit" class="btn btn-default">Guardar</button>
+                            </form>                   
+                        </div>
+
+
+                        <div class="tab-pane" id="actualizardatos">
+                            
+                            <h4><a href="#muestradatos" data-toggle="tab">Mostrar Datos</a></h4>
+                        
+                              <form action="{{ route('services.edit', $row->id) }}" method="post">     
+       
+                                <input type="hidden" name="_method" value="PUT">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
+                                
+                                <div class="form-group">
+                                    <label for="">Nombre</label>
+                                    <input type="text" name="name" class="form-control" placeholder="Nombre" value="{{$row->name}}"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Descripción</label>
+                                    <input type="text" name="description" class="form-control" placeholder="Descripción" value="{{$row->description}}"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="">Precio</label>
+                                    <input type="text" name="price" class="form-control" placeholder="Precio" value="{{$row->price}}"/>
+                                </div>
+
+                                    
+                                <button type="submit" class="btn btn-success">Actualizar</button>
+                            </form>
+                        
+                        </div>
+
                         <div class="tab-pane active" id="physiotherapy">
                             <div>
                                 <h3 class="text-center color-text">Physiotherapy</h3>
                                 <div class="vs-25"></div>
-                                <p><img src="assets/img/blog/1.jpg" class="img-responsive" />Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
+                                <p><img src="assets/img/blog/1.jpg" class="img-responsive" />Se almacenan datos</p>
                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
                                 <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
+                                
+                            </div>
+                        </div>
+                        
+                        <div class="tab-pane active" id="agregaServicio">
+                            <div>
+                                <h3 class="text-center color-text">Physiotherapy</h3>
+                                <div class="vs-25"></div>
+                                <p><img src="assets/img/blog/1.jpg" class="img-responsive" />Se almacenan datos</p>
+                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
+                                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
+                                
                             </div>
                         </div>
                         <div class="tab-pane" id="acupuncture">
@@ -45,34 +166,15 @@
                             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
                             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
                         </div>
-                        <div class="tab-pane" id="orthopedic-bracing">
-                            <h3 class="text-center color-text">Orthopedic Bracing</h3>
+
+                        <div class="tab-pane" id="depilacion">
+                            <h3 class="text-center color-text">Depilación</h3>
                             <div class="vs-25"></div>
-                            <p><img src="assets/img/blog/5.jpg" class="img-responsive" />Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
+                            <p><img src="assets/img/blog/1.jpg" class="img-responsive" />Texto informativo</p>
                             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
                             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
                         </div>
-                        <div class="tab-pane" id="sports-injury">
-                            <h3 class="text-center color-text">Sports Injury</h3>
-                            <div class="vs-25"></div>
-                            <p><img src="assets/img/blog/2.jpg" class="img-responsive" />Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                        </div>
-                        <div class="tab-pane" id="rehabilitation">
-                            <h3 class="text-center color-text">Rehabilitation</h3>
-                            <div class="vs-25"></div>
-                            <p><img src="assets/img/blog/3.jpg" class="img-responsive" />Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                        </div>
-                        <div class="tab-pane" id="physical-theraphy">
-                            <h3 class="text-center color-text">Physical Theraphy</h3>
-                            <div class="vs-25"></div>
-                            <p><img src="assets/img/blog/1.jpg" class="img-responsive" />Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh ultricies vehicula ut id elit. Maecenas faucibus mollis interdum. Praesent commodo cursus magna. Donec sed odio dui.</p>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -144,3 +246,22 @@
     </section>
     <!-- End Appointment -->
    @endsection
+   
+   @section('external-js')
+     <script src="{{ asset('assets/js/external/jquery.backstretch.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.countTo.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.mb.YTPlayer.js') }}"></script>
+     <script src="{{ asset('assets/js/external/waypoints.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/jquery.bxslider.min.js') }}"></script>
+     <script src="{{ asset('assets/js/external/slick.min.js') }}"></script>
+    <script src="{{ asset('assets/js/external/jquery-ui.js') }}"></script>
+    <script src="{{ asset('assets/js/external/lightbox-2.6.min.js') }}"></script>
+    <script src="{{ asset('assets/js/external/jquery.flexslider-min.js') }}"></script>
+
+@endsection
+   
+   @section('js')
+        <script src="{{ asset('assets/js/project/script.js') }}"></script>
+        <script src="{{ asset('assets/js/project/load-Services.js') }}"></script>
+    @endsection

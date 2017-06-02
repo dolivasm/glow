@@ -31,6 +31,7 @@ $(document).ready(function () {
     ], { duration: 4500, fade: 650 });
 
     /* Home Title Slider */
+    
    var titleSlider= $('.title-slider').bxSlider({
         mode: 'fade',
         pager: false,

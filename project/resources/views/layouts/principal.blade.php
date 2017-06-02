@@ -4,27 +4,18 @@
     <title>Glow</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width; initial-scale = 1.0;
-maximum-scale=1.0; user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale = 1.0,
+maximum-scale=1.0, user-scalable=no" />
     <!--Core Styles-->
      <link href="{{ asset('assets/css/core/bootstrap.min.css') }}" rel="stylesheet">
+     <link href="{{ asset('assets/css/external/font-awesome.min.css') }}" rel="stylesheet">
     <!--External Styles-->
-    <link href="{{ asset('assets/css/external/font-awesome.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/jquery-ui.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/jquery-ui.theme.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/ytplayer.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/jquery.bxslider.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/yamm.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/slick.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/wfmi-style.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/lightbox.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/external/flexslider.css') }}" rel="stylesheet">
-    
-    <!--@section('css')-->
-    
-    @yield('css')
+
+     @section('external-css')
 
     @show
+
+     <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
     <!--Project Styles-->
     <link href="{{ asset('assets/css/project/style.css') }}" rel="stylesheet">
     <!--Google Web Fonts-->
@@ -238,29 +229,18 @@ maximum-scale=1.0; user-scalable=no" />
     <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
     <!--External Scripts-->
-     <script src="{{ asset('assets/js/external/jquery.backstretch.min.js') }}"></script>
-     <script src="{{ asset('assets/js/external/jquery.countTo.js') }}"></script>
-     <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
-     <script src="{{ asset('assets/js/external/jquery.mb.YTPlayer.js') }}"></script>
-     <script src="{{ asset('assets/js/external/waypoints.min.js') }}"></script>
-     <script src="{{ asset('assets/js/external/jquery.bxslider.min.js') }}"></script>
-     <script src="{{ asset('assets/js/external/slick.min.js') }}"></script>
-    <script src="{{ asset('assets/js/external/jquery-ui.js') }}"></script>
-    <script src="{{ asset('assets/js/external/lightbox-2.6.min.js') }}"></script>
-    <script src="{{ asset('assets/js/external/jquery.flexslider-min.js') }}"></script>
+    @section('external-js')
     
-    @yield('js')
+    @show
     
-    <script>
-        $('.basic-carousel').flexslider({
-            animation: "slide",
-            animationLoop: false,
-            itemWidth: 210,
-            itemMargin: 5
-        });
-    </script>
+    <script src="{{ asset('assets/js/project/general-script.js') }}"></script>
+     <script src="{{ asset('js/external/toastr.min.js') }}"></script>
     <!--Project Scripts-->
-    <script src="{{ asset('assets/js/project/script.js') }}"></script>
+    @section('js')
+        
+    @show
 
+
+   
 </body>
 </html> 
