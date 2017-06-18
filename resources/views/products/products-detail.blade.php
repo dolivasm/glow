@@ -7,7 +7,7 @@
             @if($products->count()==0)
                 <div class="row">
                 @if (!Auth::guest())
-                    @if((Auth::user()->rol_id=1))
+                    @if((Auth::user()->role_id)==1)
                         @include('products.add-products-option')
                     @endif
                 @endif
@@ -24,7 +24,7 @@
                 @endif
                  <!-- We check if the user is an admin -->
                 @if (!Auth::guest())
-                @if((Auth::user()->rol_id=1) && $addOptionAggregate==false)
+                @if(((Auth::user()->role_id)==1) && $addOptionAggregate==false)
                     @include('products.add-products-option')
                      <?php
                         $count=$count+1;
@@ -44,7 +44,7 @@
                     </div>
                      
                     @if (!Auth::guest())
-                        @if((Auth::user()->rol_id=1))
+                       @if((Auth::user()->role_id)==1)
                         <!--If the user is an admin, the button to edit and delete are available-->
                             <div class="vs-20"></div>
                             <p><a href="#" class="btn btn-normal-edit" OnClick='editProduct({{$product->id}});'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>

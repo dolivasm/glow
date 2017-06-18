@@ -2,16 +2,15 @@
 @extends('layouts.principal')
 
 @section('content')
-
-<div id="exTab2" class="container login-section">
-  <ul class="nav nav-tabs">
-    <li class="active">
-      <a href="#1" data-toggle="tab"><i class="fa fa-lock"></i> Iniciar Sesión</a>
-    </li>
-  </ul>
-
-  <div class="tab-content ">
-    <div class="tab-pane active" id="1">
+    <!-- Section Title -->
+    <section id="section-title" class="bg-alternative">
+        <div id="top-img-bg">
+            <h1 class="text-center">Iniciar Sesión</h1>
+        </div>
+    </section>
+<div id="login-section" class="container login-section ">
+      
+ 
  <div class="col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
         <div class="contact-form login-form">
         
@@ -58,7 +57,7 @@
                 <div class="col-md-12">
                   <div class="control-group">
                     <div class="controls">
-                      <button type="submit" class="btn btn-normal btn-block text-uppercase" id="login-send"><i class="fa fa-sign-in fa-2x"> Ingresar</i> </button>
+                      <button type="submit" class="btn btn-normal btn-block text-uppercase" id="login-send"><i class="fa fa-sign-in fa-2x"></i> </button>
                     </div>
                   </div>
                 </div>
@@ -78,8 +77,9 @@
                 <div class="col-md-12">
                   <div class="control-group">
                     <div class="controls text-center">
-                      <a class="btn btn-link " href="{{ route('register') }}">
-                                    ¿No tienes cuenta aún?
+                      
+                      <a class="btn btn-normal-add " href="{{ route('register') }}">
+                                    Registrarse
                                 </a>
                     </div>
                   </div>
@@ -90,7 +90,5 @@
           <!-- End Contact Form -->
         </div>
       </div>
-    </div>
-  </div>
 </div>
 @endsection

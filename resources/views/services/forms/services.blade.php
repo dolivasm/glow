@@ -3,14 +3,14 @@
 		{!!Form::label('name', 'Servicio', array('class' => 'color-text'));!!}
 	</div>
 <div class="form-group">
-	    {!!Form::text('name',null,['id'=>'name','required','minlength '=>'4','class'=>'form-control','placeholder'=>'Eje: Depilado de cejas'])!!}
+	    {!!Form::text('name',null,['id'=>'name','required','minlength '=>'4','class'=>'form-control','maxlength'=>'255','placeholder'=>'Eje: Depilado de cejas'])!!}
 	</div>
 		
 <div class="form-group">
 		{!!Form::label('price', 'Precio', array('class' => 'color-text'));!!}
 	</div>
 <div class="form-group">
-	    {!!Form::number('price',null,['id'=>'price','required','min' => '1','max' => '999999','class'=>'form-control','placeholder'=>'Eje: 1000'])!!}
+	    {!!Form::number('price',null,['id'=>'price','required','min' => '1','max' => '99999999','class'=>'form-control','placeholder'=>'Eje: 1000'])!!}
 	</div>
 <div class="form-group">
 			{!!Form::label('description', 'Descripción', array('class' => 'color-text'));!!}
@@ -29,5 +29,3 @@
 		    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
 		  </div>
 		</div>
-
-	

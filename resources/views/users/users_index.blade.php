@@ -24,7 +24,7 @@
  Agregar Usuario Nuevo</a>
 		    </div>
 	    </div>
-        <div class="table-responsive">
+        <div id="usersTableDiv" class="table-responsive">
             <table class="table text-center table-hover table-striped" id="usersTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -36,6 +36,7 @@
                         <td>Correo Electrónico</td>
                         <td>Teléfono</td>
                         <td>Estado</td>
+                        <td>Tipo</td>
                         <td>Opciones</td>
                     </tr>
                 </thead>
@@ -53,6 +54,11 @@
                         <td>Eliminado</td>
                         @else
                         <td>Activo</td>
+                        @endif
+                        @if($user->role_id == 1)
+                        <td>Admin</td>
+                        @else
+                        <td>Cliente</td>
                         @endif
                         <td>
                         <a id="btn_updateUser" OnClick="editUser({{$user->id}});" class="btn btn-normal-edit">Editar</a>
@@ -88,6 +94,8 @@
     <!-- Incluye el Date Range Picker -->
     {!!Html::script('assets/js/external/daterangepicker.js')!!}
     {!!Html::script('js/mydatapicker.js')!!}
+    <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/admin/validate-error-message.js') }}"></script>
 @endsection
 
 @section('js')

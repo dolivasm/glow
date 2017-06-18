@@ -11,7 +11,7 @@
           <div id="divToAddUser">
               
           </div>
-        <button type="button" class="btn btn-danger-delete btn-block" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger-delete btn-block text-uppercase" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>

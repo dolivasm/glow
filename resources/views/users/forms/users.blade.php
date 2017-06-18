@@ -26,10 +26,15 @@
 <div class="form-group">
 	{!!Form::label('birthday', 'Fecha de Nacimiento*', array('class' => 'color-text'));!!}
 </div>
+@if(!empty($user))
 <div class="form-group">
-	{!!Form::text('birthday', null, ['id'=>'birthday', 'class' => 'form-control', 'readonly', 'placeholder'=>'Haga Click Aquí'])!!}
+	{!!Form::text('birthday', null, ['id'=>'birthday', 'name' => 'birthday', 'class' => 'form-control', 'readonly', 'required'])!!}
 </div>
-
+@else
+<div class="form-group">
+	{!!Form::text('birthday', null, ['id'=>'birthday2', 'name' => 'birthday2', 'class' => 'form-control', 'readonly', 'placeholder'=>'Haga Click Aquí', 'required'])!!}
+</div>
+@endif
 <!-- Nombre Usuario -->
 <div class="form-group">
 	{!!Form::label('username', 'Nombre de Usuario*', array('class' => 'color-text'));!!}
@@ -43,7 +48,7 @@
 	{!!Form::label('email', 'Correo Electrónico*', array('class' => 'color-text'));!!}
 </div>
 <div class="form-group">
-	{!!Form::text('email', null, ['id'=>'email','size'=>'30x4', 'class' => 'form-control', 'required'])!!}
+	{!!Form::email('email', null, ['id'=>'email','size'=>'30x4', 'class' => 'form-control', 'required'])!!}
 </div>
 
 <!-- Teléfono -->

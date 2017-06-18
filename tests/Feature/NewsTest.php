@@ -43,7 +43,6 @@ class NewsTest extends TestCase
         $response->assertStatus(200);
     }
 
-
       public function testPOSTNewsTest()
     {
         Storage::fake('avatars');

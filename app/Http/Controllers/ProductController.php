@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+      public function __construct()
+    {
+        $this->middleware('sentryContext');
+    }
     private $imgDefault="img/products/img-default.png";
     private $destinationPath = 'img/products/';
     /**

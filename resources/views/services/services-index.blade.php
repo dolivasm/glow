@@ -85,7 +85,7 @@
     <script src="{{ asset('js/admin/validate-error-message.js') }}"></script>
 
         @if(!Auth::guest())
-            @if((Auth::user()->rol_id=1))
+            @if((Auth::user()->role_id)==1)
               <script src="{{ asset('js/admin/admin-services.js') }}"></script>
               <script src="{{ asset('assets/js/external/jasny-bootstrap.js') }}"></script>
               

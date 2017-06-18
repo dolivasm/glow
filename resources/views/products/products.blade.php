@@ -83,7 +83,7 @@
 
 
         @if(!Auth::guest())
-            @if((Auth::user()->rol_id=1))
+           @if((Auth::user()->role_id)==1)
               <script src="{{ asset('js/admin/admin-product.js') }}"></script>
               <script src="{{ asset('assets/js/external/jasny-bootstrap.js') }}"></script>
               

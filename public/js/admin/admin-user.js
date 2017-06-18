@@ -3,7 +3,7 @@
 });
   
 function configTable() {
- $('#usersTable').DataTable({
+    $('#usersTable').DataTable({
     "language": {
       "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
     },
@@ -15,7 +15,17 @@ function configTable() {
 function addUser(route){
   $.get(route, function(response) {
         $('#divToAddUser').html(response);
+        
+        $("#addUserForm").validate({
+            submitHandler: function(form) {
+                //This methos is callback  when the form is valid
+                postUser();
+            }
+        });
      });
+     
+      
+     
     $('#addUserModal').modal({
     backdrop: 'static',
     }, 'show');
@@ -30,7 +40,7 @@ function postUser(){
     archivos.append('name', $("#addUserForm #name").val());
     archivos.append('firstName', $("#addUserForm #firstName").val());
     archivos.append('lastName', $("#addUserForm #lastName").val());
-    archivos.append('birthday', $("#addUserForm #birthday").val());
+    archivos.append('birthday', $("#addUserForm #birthday2").val());
     archivos.append('username', $("#addUserForm #username").val());
     archivos.append('email', $("#addUserForm #email").val());
     archivos.append('phone', $("#addUserForm #phone").val());
@@ -51,7 +61,8 @@ function postUser(){
                 $("#addUserModal").modal('hide');
                 toastr.clear()
                 notifySuccess("Usuario creado exitosamente!");
-                $("#usersTable").load(" #usersTable");
+                //$('#usersTable').load('#usersTable');
+                location.reload();
             },
             error: function(response) {
               if (response.status == 422) {
@@ -65,6 +76,13 @@ function postUser(){
  function editUser(id) {
      $.get('users/'+ id +'/edit', function(response) {
         $('#divToEditUser').html(response);
+        
+        $("#formUpdateUser").validate({
+            submitHandler: function(form) {
+                //This methos is callback  when the form is valid
+                editUserPut();
+            }
+        });
      });
      
     $('#editUserModal').modal({
@@ -99,7 +117,7 @@ function postUser(){
         $("#editUserModal").modal('hide');
         toastr.clear()
         notifySuccess("Usuario Editado Correctamente");
-        $("#usersTable").load(" #usersTable");
+        location.reload();
     },
     error: function(response) {
       if (response.status == 422) {
@@ -135,7 +153,7 @@ function postUser(){
     success: function() {
         $("#deleteUserModal").modal('hide');
       notifySuccess('El usuario fue borrado exitosamente!');
-       $("#usersTable").load(" #usersTable");
+       location.reload();
     },
     error: function(response) {
 
@@ -168,7 +186,7 @@ function postUser(){
     success: function() {
         $("#activateUserModal").modal('hide');
       notifySuccess('El usuario fue activado exitosamente!');
-       $("#usersTable").load(" #usersTable");
+      location.reload();
     },
     error: function(response) {
 
@@ -176,6 +194,7 @@ function postUser(){
     }
   });
  }
+
  
  // Since confModal is essentially a nested modal it's enforceFocus method
 // must be no-op'd or the following error results 

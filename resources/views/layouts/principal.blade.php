@@ -100,7 +100,9 @@
                               <ul class="nav navbar-nav pull-right">
                                  <li><a href="/">Inicio</a></li>
                                  <li><a href="appointment">Cita</a></li>
-                                  @if (!Auth::guest()) @if((Auth::user()->role_id)==1)
+                                  @if (!Auth::guest()) 
+                                  
+                                  @if((Auth::user()->role_id)==1)
                                    <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Administración
                                     <span class="caret"></span></a>
@@ -114,7 +116,14 @@
                                  
                                  @endif
                                  
+                                 @if((Auth::user()->role_id)==2)
+                                 <li><a href="{{ asset('news') }}">Anuncios</a></li>
+                                    <li><a href="{{ asset('services') }}">Servicios</a></li>
+                                    <li><a href="{{ asset('products') }}">Productos</a></li>
+                                 @endif
+                                 
                                  @else
+                                 
                                     <li><a href="{{ asset('news') }}">Anuncios</a></li>
                                     <li><a href="{{ asset('services') }}">Servicios</a></li>
                                     <li><a href="{{ asset('products') }}">Productos</a></li>
@@ -133,14 +142,7 @@
                                     </ul>
                                  </li>
                                  @if (Auth::guest())
-                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user" aria-hidden="true"></i>
-                                    <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                       <li><a href="{{ asset('login') }}"> Ingresar</a></li>
-                                       <li><a href="{{ asset('register') }}"> Registrarme</a></li>
-                                    </ul>
-                                 </li>
+                                 <li><a href="{{ asset('login') }}">Ingresar</a></li>
                                  @else
                                  <li class="dropdown">
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">@if (!Auth::guest()) {{ Auth::user()->name }} @endif <i class="fa fa-user" aria-hidden="true"></i>
@@ -236,10 +238,12 @@
       <script src="{{ asset('assets/js/core/jquery.min.js') }}"></script>
       <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
       <!--External Scripts-->
+      <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
       @section('external-js')
       @show
       <script src="{{ asset('assets/js/project/general-script.js') }}"></script>
       <script src="{{ asset('js/external/toastr.min.js') }}"></script>
+      
       <!--Project Scripts-->
       @section('js')
       @show

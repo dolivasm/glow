@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\File;
 
 class ServiceController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('adminUsers')->except('index','services_detail','search');
+        $this->middleware('sentryContext');
+    }
+    
     private $path='services';//Indica la carpeta de donde lee las vistas de services (Está dentro de resources views)
     /**
      * Display a listing of the resource.
@@ -90,9 +97,9 @@ class ServiceController extends Controller
             }
             
             $Services = new Services(array(
-                'name'=> ($_REQUEST['name']),     
-                'description'=>($_REQUEST['description']),
-                'price'=>($_REQUEST['price']),
+                'name'=> ($request['name']),     
+                'description'=>($request['description']),
+                'price'=>($request['price']),
                 'imageUrl'=> $servicesImageUrl,
               ));
     
@@ -101,7 +108,7 @@ class ServiceController extends Controller
            if (isset($_FILES['imageUrl'])) {
                 move_uploaded_file($_FILES['imageUrl']['tmp_name'], $servicesImageUrl);
             }
-           return response()->json(["message" => "SERVICIO AGREGADO CORRECTAMENTE. "]);
+           return response()->json(["message" => "SERVICIO AGREGADO CORRECTAMENTE."]);
         } catch (Exception  $e) {
             return $e;
         }        
@@ -148,8 +155,8 @@ class ServiceController extends Controller
         
         try {
             
-             if($request->ajax()){
-                $id=($_REQUEST['id']);
+     
+                $id=($request['id']);
                 $services =Services::find($id);
                 $oldImage=$services->imageUrl;
                 $imageHelper=new ImageHelper();
@@ -162,9 +169,9 @@ class ServiceController extends Controller
                 }
                
                 
-                $services->name=($_REQUEST['name']);   
-                $services->description=($_REQUEST['description']);
-                $services->price=($_REQUEST['price']);
+                $services->name=($request['name']);   
+                $services->description=($request['description']);
+                $services->price=($request['price']);
                 
                 $services->imageUrl=$servicesImageUrl;
                 $services->save();
@@ -178,15 +185,9 @@ class ServiceController extends Controller
                     
                 }
                 return response()->json(["message" => "SERVICIO ACTUALIZADO CORRECTAMENTE"]); 
-        }else{
-            
-            return response()->json([
-                "error" => "No existe la página solicitada"
-                ]);
-            
-        }
+
         }catch (Exception $e) {
-            return $e;
+             return response()->json(["error"=>"Lo sentimos, no se a podido actualizar el servicio"]);
         }
        
     }
@@ -200,7 +201,7 @@ class ServiceController extends Controller
     public function destroy($id)
     {
         try {
-        $services=Services::find($id);
+        $services=Services::findOrFail($id);
         $services->delete();
         //Delete the image from the server is is difereent than the default.
         if ($services->imageUrl!=$this->imgDefault) {
@@ -209,8 +210,8 @@ class ServiceController extends Controller
         return response()->json(["message"=>"BORRADO CORRECTAMENTE"]);
             
         } catch ( \Illuminate\Database\QueryException $e) {
-        return response()->json(["error" => "Lo sentimos, ha ocurrido un error al intentar eliminar el anuncio. El erro podría 
-        tratarse porque el anuncio esta siendo utilizado en otra sección."]);
+        return response()->json(["error" => "Lo sentimos, ha ocurrido un error al intentar eliminar el servicio. El error podría 
+        tratarse porque el servicio esta siendo utilizado en otra sección."]);
         }
     }
 }

@@ -14,6 +14,7 @@ class NewsController extends Controller
     public function __construct()
     {
         $this->middleware('adminUsers')->except('index','news_detail','search');
+        $this->middleware('sentryContext');
     }
     private $imgDefault="img/news/img-default.png";
     private $destinationPath = 'img/news/';

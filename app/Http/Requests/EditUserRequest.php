@@ -27,10 +27,10 @@ class EditUserRequest extends FormRequest
             'name'=>'required|max:255',
             'firstName'=>'required|max:255',
             'lastName'=>'nullable|max:255',
-            'birthday'=>'required|date',
+            'birthday'=>'required|date|before:'.date('Y-m-d'),
             'username'=>'required|max:255',
             'email'=>'required|max:255|email',
-            'phone'=>'nullable|numeric',
+            'phone'=>'nullable|numeric|digits_between:0,10',
             'role_id'=>'required',
         ];
     }

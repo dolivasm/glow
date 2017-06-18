@@ -75,7 +75,8 @@ class UserTest extends TestCase
             ]);
     }
 
-    public function testDeleteUser(){
+   /**
+    * public function testDeleteUser(){
         Notification::fake();
         $users = DB::table('users')->orderBy('updated_at', 'desc')->take(1)->get();
         foreach ($users as $value) {
@@ -89,4 +90,5 @@ class UserTest extends TestCase
                 'mensaje' => 'Usuario borrado Correctamente',
             ]);
     }
+    */
 }

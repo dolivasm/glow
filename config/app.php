@@ -162,6 +162,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,6 +234,8 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 
     ],
 

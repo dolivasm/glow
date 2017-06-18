@@ -52,7 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'firstName' => 'required|string|max:255',
             'lastName' => 'required|string|max:255',
-            'birthday' => 'required',
+            'birthday' => 'required|date|before:'.date('Y-m-d'),
             'phone' => 'numeric:8|min:100000|max:99999999',
             'email' => 'required|string|email|max:255|unique:users',
             'username' => 'required|string|unique:users',
@@ -76,7 +76,7 @@ class RegisterController extends Controller
             'birthday' => $data['birthday'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'role_id' => 1,
+            'role_id' => 2,
             'password' => bcrypt($data['password']),
         ]);
     }

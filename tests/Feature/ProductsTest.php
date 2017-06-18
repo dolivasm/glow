@@ -38,7 +38,6 @@ class ProductsTest extends TestCase
         $response->assertStatus(200);
     }
 
-
        public function testPOSTProductsTest(){
            Storage::fake('avatars');
            $price = 1000;

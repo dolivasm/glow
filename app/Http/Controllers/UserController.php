@@ -27,6 +27,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('adminUsers');
+        $this->middleware('sentryContext');
     }
     
     /**
@@ -39,7 +40,7 @@ class UserController extends Controller
        /*$onlineUser = Auth::user();
         $users = DB::table('users')->where('id', '!=', $onlineUser->id)->get();*/
         $users = User::withTrashed()->get()->except(Auth::id());
-        return view('users.users_index', compact('users'));
+        return view('users.users_index', compact('users'))->render();
     }
 
     /**

@@ -139,7 +139,8 @@ return [
         'message'               => 'mensaje',
         'birthday'              => 'fecha de nacimiento',
         'firstName'             => 'primer apellido',
-        'role_id'              => 'tipo de usuario'
+        'role_id'              => 'tipo de usuario',
+        'lastName'              => 'segundo apellido'
         
     ],
 ];

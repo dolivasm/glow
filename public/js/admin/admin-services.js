@@ -1,5 +1,6 @@
 //This Functios is to Open a Add Services Modal
 function btn_addServices() {
+
     $.get('services/create', function(response) {
         $('#divForAddServices').html(response);
         //Validation method with jquery validate
@@ -80,7 +81,9 @@ function postServices() {
             alert(a+" | "+b+"| "+c);
             if (response.status == 422) {
                 displayFieldErrors(response);
-            } else {}
+            } else {
+                 notifyError("Lo sentimos ha ocurrido un error al ingresar el servicio");
+            }
         
         }
     });

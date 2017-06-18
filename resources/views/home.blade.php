@@ -101,72 +101,22 @@
             <div class="row">
 
                 <div class="col-md-offset-2 col-md-8">
-     {!!link_to('news', $title='Ver todos', $attributes = ['id'=>'btn-uptadeUser', 'class'=>'btn btn-normal btn-block text-uppercase'], $secure = null)!!}
+     {!!link_to('news', $title='Ver más anuncios', $attributes = ['id'=>'btn-uptadeUser', 'class'=>'btn btn-normal btn-block text-uppercase'], $secure = null)!!}
 
                 </div>
             </div>
             </div>
         </div>
         <!--End-News-->
- 
-    <!-- Appointment -->
-    <section id="appointment">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h1 class="text-center">Make An Appointment</h1>
-                    <div class="vs-15">
-                    </div>
-                    <p class="text-center">Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nullam id dolor id nibh.</p>
-                </div>
-            </div>
-            <div class="vs-35">   </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <img class="img-responsive" src="assets/img/blog/3.jpg" alt="blog3" />
-                </div>
-                <div class="col-xs-12 col-sm-6">
-
-                    <form method="post" action="index.html" class="default-form">
-                        <div class="row clearfix">
-                            <div class="form-group col-md-6 col-sm-12 col-xs-12">
-                                <input type="text" name="name" value="" placeholder="Your Name" required="">
-                            </div>
-                            <div class="form-group col-md-6 col-sm-12 col-xs-12">
-                                <input type="email" name="email" value="" placeholder="Your Email" required="">
-                            </div>
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                <select name="subject">
-                                    <option>-Subject to Discuss-</option>
-                                    <option>Personal Problems</option>
-                                    <option>Child Problems</option>
-                                    <option>Relationship Problems</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                <input type="text" name="phone" value="" placeholder="Your Phone Number" required="">
-                            </div>
-                            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                                <input type="text" name="datepicker" id="datepicker" value="" placeholder="Available Date" required="">
-                            </div>
-                            <div class="form-group padd-top-10 col-md-12 col-sm-12 col-xs-12">
-                                <button type="submit" class="btn btn-normal pull-right">Send Request</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Appointment -->
+        <div class="vs-30"></div>
     <!-- Dark Bg -->
     <div class="dark-bg  default-hovered animated-text">
         <div class="container pt-0 pb-0">
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
-                        <h2>Physiotherapy Pro HTML Template</h2>
-                        <h2>Buy Now !</h2>
+                        <h2>Clínica Glow</h2>
+                        <h2>Servicio de calidad!</h2>
                     </div>
                 </div>
             </div>
