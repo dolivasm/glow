@@ -45,7 +45,7 @@
                     $('#modal-event #_time_start').val(time_start);
                     $('#modal-event #_date_end').val(date_end);
                     $('#modal-event').modal('show');
-                }
+                }//
     		});
 
     	});
