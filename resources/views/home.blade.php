@@ -42,10 +42,10 @@
                         </li>
                         <li>
                             <h1>
-                                Hay
+                                Date
                                 <span class="color-text">
-                                    Una
-                                </span> Solución
+                                    Un
+                                </span> Gusto
                             </h1>
                         </li>
                     </ul>
@@ -59,15 +59,14 @@
         </div>
     </header>
     <!-- End Header -->
-   @include('services.index')
+   @include('mainpage-boxes')
    
     <div class="section-title text-center about-PhysiotherapyPro-top">
             <div class="parallax-section-divider">
                 <div class="container pt-0">
                     <p>
-                         ¿Necesitas una<span class="color-text"> Cita</span>?
+                         Esperamos tu <span class="color-text"> vsita</span>
                     </p>
-                    <a class="btn btn-normal-2 btn-large" href="appointment"><i class="icon-i-registration"></i> Reservar</a>
                 </div>
             </div>
         </div>
@@ -82,8 +81,7 @@
                     </p>
                 </div>
             </div>
-                  <div class="row">
-
+            <div class="row">
                 <div class="col-md-offset-2 col-md-8">
                     <div class="flexslider simple-caption">
                         <ul class="slides">
@@ -105,12 +103,11 @@
 
                 </div>
             </div>
-            </div>
         </div>
         <!--End-News-->
         <div class="vs-30"></div>
     <!-- Dark Bg -->
-    <div class="dark-bg  default-hovered animated-text">
+    <!-- <div class="dark-bg  default-hovered animated-text">
         <div class="container pt-0 pb-0">
             <div class="row">
                 <div class="col-md-12">
@@ -121,18 +118,18 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- End Dark Bg -->
     <!-- Photo Gallery -->
-    <section id="photo-gallery-1" class="bg-alternative">
+    <!--<section id="photo-gallery-1" class="bg-alternative">
         <div class="photo-gallery-wrapper">
             <div class="container">
                 <h1 class="text-center color-text">Photo Gallery Full Width</h1>
                 <br>
                 <p class="text-center heading-intro-p">Sed porttitor, justo in feugiat mollis, nunc velit luctus purus, in commodo nisi maga ut san. </p>
-                <div class="vs-30"></div>
+                <div class="vs-30"></div>-->
                 <!-- Photo Gallery Full Width  -->
-                <div id="photo-gallery-fw">
+                <!--<div id="photo-gallery-fw">
                     <div class="photo-gallery-item">
                         <figure class="image-overlay">
                             <div class="hover-image-wrapper">
@@ -277,14 +274,14 @@
                             </div>
                         </figure>
                     </div>
-                </div>
+                </div>-->
                 <!-- End Photo Gallery Full Width  -->
-            </div>
+            <!--</div>
         </div>
-    </section>
+    </section>-->
     <!-- End Photo Gallery -->
     <!-- Testimonials -->
-    <section id="testimonials">
+    <!--<section id="testimonials">
         <div class="testimonals-bg">
             <div class="container">
                 <div class='row'>
@@ -319,10 +316,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
     <!-- End Testimonials -->
     <!--Blog-->
-    <section id="blog">
+    <!--<section id="blog">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center blog-intro-header">
@@ -397,7 +394,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>-->
     <!--End Blog-->
     @endsection
     

@@ -51,6 +51,7 @@ function postServices() {
     archivos.append('name', $("#addServicesForm #name").val());
     archivos.append('description', $("#addServicesForm #description").val());
     archivos.append('price', $("#addServicesForm #price").val());
+    archivos.append('duration', $("#addServicesForm #duration").val());
 
     for (var i = 0; i < (formulario.find('input[type=file]').length); i++) {
 
@@ -101,6 +102,7 @@ function postServices() {
     archivos.append('name', $("#formEditServices #name").val());
     archivos.append('description', $("#formEditServices #description").val());
     archivos.append('price', $("#formEditServices #price").val());
+    archivos.append('duration', $("#formEditServices #duration").val());
 
     for (var i = 0; i < (formulario.find('input[type=file]').length); i++) {
 

@@ -19,6 +19,7 @@
       <link href="{{ asset('assets/css/project/style.css') }}" rel="stylesheet">
       <!--Google Web Fonts-->
       <link href="{{ asset('https://fonts.googleapis.com/css?family=Lato:300,400,700%7CRaleway:400,700') }}" rel="stylesheet">
+      
    </head>
    <body>
       <!-- Preloader -->
@@ -218,7 +219,8 @@
                      <div class="col-lg-12">
                         <p class="text-center">&copy;2017 Todos los derechos resevados|Glow</p>
                         <p class="text-center">
-                           <a href="https://www.facebook.com/Cl%C3%ADnica-FisioEst%C3%A9tica-Glow-109629109054741/" target="_blank" class="btn-social-media"><i class="fa fa-facebook"></i></a><a href="#" class="btn-social-media"><i class="fa fa-twitter"></i></a><a href="#" class="btn-social-media"><i class="fa fa-google-plus"></i></a>
+                           <a href="https://www.facebook.com/Cl%C3%ADnica-FisioEst%C3%A9tica-Glow-109629109054741/" target="_blank" class="btn-social-media"><i class="fa fa-facebook"></i></a>
+                           <a href="https://web.stagram.com/glow_fisioestetica" target="_blank" class="btn-social-media"><i class="fa fa-instagram"></i></a>
                         </p>
                      </div>
                   </div>

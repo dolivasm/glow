@@ -12,6 +12,18 @@
 <div class="form-group">
 	    {!!Form::number('price',null,['id'=>'price','required','min' => '1','max' => '99999999','class'=>'form-control','placeholder'=>'Eje: 1000'])!!}
 	</div>
+
+
+	
+<div class="form-group">
+		{!!Form::label('duration', 'Duración', array('class' => 'color-text'));!!}
+	</div>
+<div class="form-group">
+	    {!!Form::time('duration',null,['id'=>'duration','required','class'=>'form-control'])!!}
+	</div>
+
+	
+	
 <div class="form-group">
 			{!!Form::label('description', 'Descripción', array('class' => 'color-text'));!!}
 		</div>
@@ -29,3 +41,4 @@
 		    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
 		  </div>
 		</div>
+		

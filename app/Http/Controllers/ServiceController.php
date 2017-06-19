@@ -100,6 +100,7 @@ class ServiceController extends Controller
                 'name'=> ($request['name']),     
                 'description'=>($request['description']),
                 'price'=>($request['price']),
+                'duration'=>($request['duration']),
                 'imageUrl'=> $servicesImageUrl,
               ));
     
@@ -172,6 +173,7 @@ class ServiceController extends Controller
                 $services->name=($request['name']);   
                 $services->description=($request['description']);
                 $services->price=($request['price']);
+                $services->duration=($request['duration']);
                 
                 $services->imageUrl=$servicesImageUrl;
                 $services->save();

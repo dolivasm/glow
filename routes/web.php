@@ -21,6 +21,7 @@ Route::get('filter-services/{value?}','ServiceController@search');
 
 Route::get('productsDetail','ProductController@products_detail');
 Route::get('servicesDetail','ServiceController@services_detail');
+Route::get('appointmentList','AppointmentController@details');
 
 Route::post('update-news','NewsController@updateNews');
 Route::post('update-services','ServiceController@updateServices');
@@ -35,6 +36,7 @@ Route::resource('services','ServiceController');
 Route::resource('news','NewsController');
 Route::resource('products','ProductController');
 Route::resource('users', 'UserController');
+Route::resource('appointment', 'AppointmentController');
 
 Route::get('/home', 'HomeController@index');
 

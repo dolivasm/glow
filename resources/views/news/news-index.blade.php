@@ -83,6 +83,7 @@
 
         @if(!Auth::guest())
         @if((Auth::user()->role_id)==1)
+            {!!Html::script('js/admin/close-modal-onclick.js')!!}
               <script src="{{ asset('js/admin/admin-news.js') }}"></script>
               <script src="{{ asset('assets/js/external/jasny-bootstrap.js') }}"></script>
             @endif

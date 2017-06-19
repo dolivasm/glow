@@ -27,7 +27,7 @@ class ServicesRequest extends FormRequest
             'name'=>'required|min:3',
             'description'=>'required|min:3',
             'price'=>'required'
-            
+
         ];
     }
 }

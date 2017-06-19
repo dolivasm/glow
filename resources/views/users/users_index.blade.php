@@ -51,24 +51,24 @@
                         <td>{{$user->email}}</td>
                         <td>{{$user->phone}}</td>
                         @if($user->trashed())
-                        <td>Eliminado</td>
+                            <td>Eliminado</td>
                         @else
-                        <td>Activo</td>
+                            <td>Activo</td>
                         @endif
                         @if($user->role_id == 1)
-                        <td>Admin</td>
+                            <td>Admin</td>
                         @else
-                        <td>Cliente</td>
+                            <td>Cliente</td>
                         @endif
                         <td>
-                        <a id="btn_updateUser" OnClick="editUser({{$user->id}});" class="btn btn-normal-edit">Editar</a>
-                        @if(!$user->trashed())
-                        <a OnClick="getDeleteUser({{$user->id}}, '{{$user->name}}', '{{$user->firstName}}');" class="btn btn-danger-delete">Eliminar</a>
-                        @else
-                        <a OnClick="getActivateUser({{$user->id}}, '{{$user->name}}', '{{$user->firstName}}');" class="btn btn-normal-react">Activar</a>
-                        @endif
-                         </td>
-                        </tr>
+                            <a id="btn_updateUser" OnClick="editUser({{$user->id}});" class="btn btn-normal-edit">Editar</a>
+                            @if(!$user->trashed())
+                                <a OnClick="getDeleteUser({{$user->id}}, '{{$user->name}}', '{{$user->firstName}}');" class="btn btn-danger-delete">Eliminar</a>
+                            @else
+                                <a OnClick="getActivateUser({{$user->id}}, '{{$user->name}}', '{{$user->firstName}}');" class="btn btn-normal-react">Activar</a>
+                            @endif
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody> 
             </table>
@@ -77,6 +77,7 @@
     
     <!--Modals Section-->
      <div id="div-modals">
+        
         @include('users.edit_user_modal');
         @include('users.add_user_modal');
         
@@ -100,4 +101,5 @@
 
 @section('js')
     {!!Html::script('js/admin/admin-user.js')!!}
+    {!!Html::script('js/admin/close-usermodal-onclick.js')!!}
 @endsection

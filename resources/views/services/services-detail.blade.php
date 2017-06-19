@@ -66,6 +66,13 @@
                         </p>
                                 
                      </h3>
+                     <h4 class="blog-post-duration">
+                        <p>
+                           <a>Duración: {{$service->duration}}</a>
+                        </p>
+                                
+                     </h4>
+                     
                     <div class="blog-post-content">
                         <p>
                            {{$service->description}}
