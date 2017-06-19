@@ -20,9 +20,9 @@
                             <span class="icon-alternative-complementary"></span>
                         </div>
                         <div class="detail-box-bottom bg-yellow">
-                            <h3>Acupuncture</h3>
+                            <h3>Masaje Rejuvenecedor</h3>
                             <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
-                            <a href="services.html"><i class="fa fa-plus-square-o"></i></a>
+                            <a href="{{ asset('services') }}"><i class="fa fa-plus-square-o"></i></a>
                         </div>
                     </div>
 
@@ -30,12 +30,12 @@
                 <div class="col-lg-4 col-sm-4 col-md-4 col-xs-12 detail-three">
                     <div class="detail-box">
                         <div class="detail-box-top bg-blue-4-dark">
-                            <span class="icon-outpatient"></span>
+                            <span class="fa fa-shopping-bag"></span>
                         </div>
                         <div class="detail-box-bottom bg-blue-4">
-                            <h3>Orthopedic Bracing</h3>
+                            <h3>Aceite Orgnánico</h3>
                             <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
-                            <a href="services.html"><i class="fa fa-plus-square-o"></i></a>
+                            <a href="{{ asset('products') }}"><i class="fa fa-plus-square-o"></i></a>
                         </div>
                     </div>
                 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Appointment;
 
 class AppointmentController extends Controller
@@ -21,7 +22,8 @@ class AppointmentController extends Controller
      
      public function index()
     {
-        return view('appointment.index');
+        $serviceId =DB::table('services')->pluck('name', 'id');
+        return view('appointment.index')->with('serviceId',$serviceId)->render();
     }
     public function details()
     {
@@ -48,16 +50,17 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
+        $fechaEnd 	= date($request->date_start . ' ' . $request->time_start , (strtotime ("+1 hour")));
         $Appointment = new Appointment();
-        $Appointment->title = $request->title;
-        $Appointment->serviceId = "2";
+        $Appointment->title = "Reservado Por";
+        $Appointment->serviceId = $request->serviceId;
         $Appointment->start = $request->date_start . ' ' . $request->time_start;
-        $Appointment->end= $request->date_end;
+        $Appointment->end=  $fechaEnd;
         $Appointment->color ="#85d106" ;
         $Appointment->userId = $request->user()->id;
         $Appointment->save();
 
-        return redirect('/');
+        return redirect('/appointment');
     }
 
     /**

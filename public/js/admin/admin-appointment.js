@@ -52,11 +52,11 @@
 
         $('.colorpicker').colorpicker();
 
-        $('#time_start').bootstrapMaterialDatePicker({
+       /** $('#time_start').bootstrapMaterialDatePicker({
             date: false,
             shortTime: false,
             format: 'HH:mm:ss'
-        });
+        }); */
 
         $('#date_end').bootstrapMaterialDatePicker({
             date: true,
@@ -78,6 +78,7 @@
                 success: function(result){
                     $('#modal-event').modal('hide');
                     alert(result.message);
+                    $('#calendar').fullCalendar( 'refetchEvents');
                 },
                 error: function(result){
                     $('#modal-event').modal('hide');

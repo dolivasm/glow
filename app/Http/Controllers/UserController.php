@@ -37,8 +37,6 @@ class UserController extends Controller
      */
     public function index()
     {
-       /*$onlineUser = Auth::user();
-        $users = DB::table('users')->where('id', '!=', $onlineUser->id)->get();*/
         $users = User::withTrashed()->get()->except(Auth::id());
         return view('users.users_index', compact('users'))->render();
     }

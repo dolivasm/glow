@@ -39,7 +39,7 @@
                         <td><i class="fa fa-clock-o"></i></td>
                         <td>
                            <div class="icon-box-text">
-                              Lun - Vie 9:00 am-12:00 | pm 1:00 pm-7:00 pm<br />
+                              Lun - Vie 9:00 am-12:00 pm | 2:00 pm-7:00 pm<br />
                               Domingos Cerrado
                            </div>
                         </td>

@@ -10,8 +10,14 @@
 
       @section('content')
       
+        <section id="section-title" class="bg-alternative">
+            <div id="top-img-bg">
+                <h1 class="text-center">Citas</h1>
+            </div>
+        </section>
+      
         <div class="container">
-            @include('appointment.add-modal')
+            
             <div id='calendar'></div>
 
             <div id="modal-event" class="modal fade" tabindex="-1" data-backdrop="static">
@@ -62,9 +68,10 @@
             </div>
 
         </div>
+        @include('appointment.add-modal')
     @endsection
      @section('external-js')
-        <script src="{{ asset('assets/js/external/moment.min.js') }}"></script>\
+        <script src="{{ asset('assets/js/external/moment.min.js') }}"></script>
       <script src="{{ asset('js/external/fullcalendar.min.js') }}"></script>
       <script src="{{ asset('js/external/bootstrap-material-datetimepicker.js') }}"></script>
       <script src="{{ asset('js/external/bootstrap-colorpicker.min.js') }}"></script>
@@ -73,4 +80,5 @@
    
 @section('js')
 <script src="{{ asset('js/admin/admin-appointment.js') }}"></script>
+{!!Html::script('js/admin/close-appointmodal-onclick.js')!!}
 @endsection

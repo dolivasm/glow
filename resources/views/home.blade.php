@@ -50,7 +50,7 @@
                         </li>
                     </ul>
                     
-                                 <p>La belleza es la expresión estética del amor. </p>   
+                                 <p>La belleza es la expresión estética del amor.</p>   
                     
 
                 </div>
@@ -61,17 +61,33 @@
     <!-- End Header -->
    @include('mainpage-boxes')
    
-    <div class="section-title text-center about-PhysiotherapyPro-top">
+    <!--<div class="section-title text-center about-PhysiotherapyPro-top">
             <div class="parallax-section-divider">
                 <div class="container pt-0">
-                    <p>
+                    <h1 Style="color: white;">
                          Esperamos tu <span class="color-text"> vsita</span>
-                    </p>
+                    </h1>
+                </div>
+            </div>
+        </div>-->
+    <!-- Dark Bg -->
+    <div class="dark-bg  default-hovered animated-text">
+        <div class="container pt-0 pb-0">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <br> <br> <br>
+                        <h1 Style="color: white;">
+                             Esperamos tu visita
+                        </h1>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- End Dark Bg -->
         <!--News-->
-        <div id="newsSection">
+       <div id="newsSection">
             <div class="row">
                 <div class="col-lg-12 text-center blog-intro-header">
                     <h1>Anuncios</h1>
@@ -82,23 +98,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-offset-2 col-md-8">
-                    <div class="flexslider simple-caption">
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="flexslider simple-caption slide">
                         <ul class="slides">
                             @foreach($news as $new)
                             <li>
-                                <img  src="{{$new->imageUrl}}" />
+                                <img src="{{$new->imageUrl}}" />
                                 <p class="flex-caption"><span>{{$new->title}}</span><br> {{$new->description}}</p>
                             </li>
                             @endforeach
-                       
                         </ul>
                     </div>
                 </div>
             </div>
             <div class="row">
 
-                <div class="col-md-offset-2 col-md-8">
+                <div class="col-md-offset-3 col-md-6">
      {!!link_to('news', $title='Ver más anuncios', $attributes = ['id'=>'btn-uptadeUser', 'class'=>'btn btn-normal btn-block text-uppercase'], $secure = null)!!}
 
                 </div>
