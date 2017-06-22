@@ -100,7 +100,7 @@
                            <div class="collapse navbar-collapse" id="main-menu-navbar">
                               <ul class="nav navbar-nav pull-right">
                                  <li><a href="/">Inicio</a></li>
-                                 <li><a href="appointment">Cita</a></li>
+                                 <li><a href="appointment">Citas</a></li>
                                   @if (!Auth::guest()) 
                                   
                                   @if((Auth::user()->role_id)==1)
@@ -149,6 +149,11 @@
                                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">@if (!Auth::guest()) {{ Auth::user()->name }} @endif <i class="fa fa-user" aria-hidden="true"></i>
                                     <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
+                                       <li>
+                                          <a href="{{ asset('editMyInfo') }}">
+                                             Información
+                                          </a>
+                                       </li>
                                        <li>
                                           <a href="{{ route('logout') }}"
                                              onclick="event.preventDefault();
@@ -245,6 +250,9 @@
       @show
       <script src="{{ asset('assets/js/project/general-script.js') }}"></script>
       <script src="{{ asset('js/external/toastr.min.js') }}"></script>
+      
+      <!-- <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
+       <script src="{{ asset('js/admin/validate-error-message.js') }}"></script> -->
       
       <!--Project Scripts-->
       @section('js')

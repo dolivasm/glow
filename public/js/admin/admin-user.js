@@ -33,6 +33,7 @@ function addUser(route){
 
 //Método para agregar un nuevo usuario en la base de datos
 function postUser(){
+    document.getElementById("addSubmit").disabled = true;
     var token = $("#token").val();
     var route = "/users";
     var archivos = new FormData();
@@ -92,6 +93,7 @@ function postUser(){
  
 //Método para guardar cambios a un usuario existente en la base de datos
  function editUserPut() {
+     document.getElementById("addSubmit").disabled = true;
     var id = $("#formUpdateUser #id").val();
   var name = $("#formUpdateUser #name").val();
   var firstName = $("#formUpdateUser #firstName").val();
@@ -115,9 +117,9 @@ function postUser(){
     },
     success: function(response) {
         $("#editUserModal").modal('hide');
-        toastr.clear()
-        notifySuccess("Usuario Editado Correctamente");
         location.reload();
+        toastr.clear();
+        notifySuccess("Usuario Editado Correctamente");
     },
     error: function(response) {
       if (response.status == 422) {
@@ -141,6 +143,7 @@ function postUser(){
  
  //Método para "desactivar" a un usuario de la base de datos
  function deleteUser() {
+      document.getElementById("deleteUserS").disabled = true;
     var route = "users/" + $('#idUserToDelete').val() + "";
   var token = $("#token").val();
   $.ajax({
@@ -174,6 +177,7 @@ function postUser(){
  }
  
  function activateUser() {
+     document.getElementById("activateUserS").disabled = true;
     var route = "activateUser/" + $('#idUserToActivate').val() +"";
   var token = $("#token").val();
   $.ajax({
@@ -194,6 +198,22 @@ function postUser(){
     }
   });
  }
+ 
+ /*function loadUsers() {
+    $.ajax({
+        cache: false,
+        url: 'users',
+        contentType: 'application/html; charset=utf-8',
+        type: 'GET',
+        dataType: 'html'
+    })
+    .success(function (result) {
+        $("#divForList").html(result);
+    })
+    .error(function (xhr, status) {
+        notifyError("Lo sentimos no se han podido cargar los usuarios");
+    })
+}*/
 
  
  // Since confModal is essentially a nested modal it's enforceFocus method

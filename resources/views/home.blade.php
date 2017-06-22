@@ -8,6 +8,8 @@
     <link href="{{ asset('assets/css/external/wfmi-style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/external/lightbox.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/external/flexslider.css') }}" rel="stylesheet">
+    
+    <link href="{{ asset('css/removesidescroll.css') }}" rel="stylesheet">
 
 @endsection
 @extends('layouts.principal')
@@ -20,56 +22,33 @@
                     <ul class="title-slider">
                         <li>
                             <h1>
-                                <span class="color-text">
-                                    Fisioestetica
-                                </span> Ahora
+                                <span class="color-text">Fisioestetica</span> Ahora
                             </h1>
                         </li>
                         <li>
                             <h1>
-                                <span class="color-text">
-                                    No
-                                </span> Esperes más
+                                <span class="color-text">No</span> Esperes más
                             </h1>
                         </li>
                         <li>
                             <h1>
-                                Comienza	
-                                <span class="color-text">
-                                    Hoy mismo
-                                </span>
+                                Comienza <span class="color-text">Hoy mismo</span>
                             </h1>
                         </li>
                         <li>
                             <h1>
-                                Date
-                                <span class="color-text">
-                                    Un
-                                </span> Gusto
+                                Date <span class="color-text">Un</span> Gusto
                             </h1>
                         </li>
                     </ul>
-                    
-                                 <p>La belleza es la expresión estética del amor.</p>   
-                    
-
+                    <p>La belleza es la expresión estética del amor.</p>   
                 </div>
             </div>
-
         </div>
     </header>
     <!-- End Header -->
    @include('mainpage-boxes')
-   
-    <!--<div class="section-title text-center about-PhysiotherapyPro-top">
-            <div class="parallax-section-divider">
-                <div class="container pt-0">
-                    <h1 Style="color: white;">
-                         Esperamos tu <span class="color-text"> vsita</span>
-                    </h1>
-                </div>
-            </div>
-        </div>-->
+
     <!-- Dark Bg -->
     <div class="dark-bg  default-hovered animated-text">
         <div class="container pt-0 pb-0">
@@ -121,20 +100,6 @@
         </div>
         <!--End-News-->
         <div class="vs-30"></div>
-    <!-- Dark Bg -->
-    <!-- <div class="dark-bg  default-hovered animated-text">
-        <div class="container pt-0 pb-0">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <h2>Clínica Glow</h2>
-                        <h2>Servicio de calidad!</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- End Dark Bg -->
     <!-- Photo Gallery -->
     <!--<section id="photo-gallery-1" class="bg-alternative">
         <div class="photo-gallery-wrapper">

@@ -18,7 +18,7 @@
                     {!! Form::close() !!}
                      <button class="btn btn-normal-add btn-block" data-dismiss="modal"><i    class="ion-thumbsdown"> NO</i></button>
                    
-                    <button  class='btn btn-danger-delete btn-block'  OnClick="deleteUser()"><i class="ion-thumbsup">SI</i></button>
+                    <button  id="deleteUserS" class='btn btn-danger-delete btn-block'  OnClick="deleteUser()"><i class="ion-thumbsup">SI</i></button>
             </div>
         </div>
 

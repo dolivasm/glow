@@ -15,9 +15,13 @@ use App\Notifications\SuccessEditUser;
 use App\Notifications\SuccessDeleteUser;
 use App\Notifications\SuccessActivateUser;
 
+use Illuminate\Support\Facades\Hash;
+
 use App\Http\Requests\AddUserRequest;
 
 use App\Http\Requests\EditUserRequest;
+
+use App\Http\Requests\UpdateMyInfoRequest;
 
 use App\Http\Middleware\AdminUsers;
 
@@ -108,6 +112,15 @@ class UserController extends Controller
         $role_id = DB::table('roles')->pluck('name', 'id');
         return view('users.edit_user',['user'=>$user])->with('role_id', $role_id)->render();
     }
+    
+    /**
+     * 
+     */
+    public function editMyInfo() {
+        $id = Auth::user()->id;
+        $user = User::where('id', $id)->first();
+        return view('users.edit_my_info',['user'=>$user])->render();
+    }
 
     /**
      * Update the specified resource in storage.
@@ -138,6 +151,21 @@ class UserController extends Controller
                 ]);
         }
     }
+    
+    public function updateMyInfo(UpdateMyInfoRequest $request)
+    {
+        try {
+            $id = Auth::user()->id;
+            $user =User::find($id);
+            $user->username=$request['username'];
+            $user->email=$request['email'];
+            $user->phone=$request['phone'];
+            $user->save();
+            return response()->json(["mensaje" => "Datos Actualizados Correctamente"]); 
+        }catch (Exception $e){
+            return response()->json(["error" => "Los datos no se actualizaron"]);
+        }
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -154,6 +182,36 @@ class UserController extends Controller
         return response()->json(["mensaje"=>"Usuario borrado Correctamente"]);
         } catch (Exception $e) {
             return response()->json(["error"=>"Ha ocurrido un error al intentar eliminar al usuario."]);
+        }
+    }
+    
+    public function getPassword() {
+        try {
+            return view('users.change_password')->render();
+        } catch (Exception $e) {
+            
+        }
+    }
+    
+    public function changePassword(Request $request) {
+        try {
+            $current = $request['currentPassword'];
+            $new = $request['newPassword'];
+            $confirm = $request['confirmPassword'];
+            $id = Auth::user()->id;
+            $user = User::find($id);
+            $current_password = Auth::user()->password;
+            if ($new != $confirm) {
+                return response()->json(["error"=>"La contraseña nueva no coincide con la de confirmación."]);
+            } elseif (Hash::check($current, $current_password)) {
+                $user->password = Hash::make($new);
+                $user->save(); 
+                return response()->json(["mensaje"=>"La contraseña se cambió exitosamente."]);
+            } else {
+                return response()->json(["error"=>"La contraseña actual es incorrecta."]);
+            }
+        } catch (Exception $e) {
+            return response()->json(["error"=>"No se logró cambiar la contraseña."]);
         }
     }
     

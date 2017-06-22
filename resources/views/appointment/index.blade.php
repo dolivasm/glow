@@ -79,6 +79,8 @@
     @endsection
    
 @section('js')
-<script src="{{ asset('js/admin/admin-appointment.js') }}"></script>
-{!!Html::script('js/admin/close-appointmodal-onclick.js')!!}
+    <script src="{{ asset('js/admin/admin-appointment.js') }}"></script>
+     <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/admin/validate-error-message.js') }}"></script>
+    {!!Html::script('js/admin/close-appointmodal-onclick.js')!!}
 @endsection

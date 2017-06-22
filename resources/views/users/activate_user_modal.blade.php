@@ -18,7 +18,7 @@
                     {!! Form::close() !!}
                      <button class="btn btn-danger-delete btn-block" data-dismiss="modal"><i    class="ion-thumbsdown"> NO</i></button>
                    
-                    <button  class='btn btn-normal-add btn-block'  OnClick="activateUser()"><i class="ion-thumbsup">SI</i></button>
+                    <button  id="activateUserS" class='btn btn-normal-add btn-block'  OnClick="activateUser()"><i class="ion-thumbsup">SI</i></button>
             </div>
         </div>
 

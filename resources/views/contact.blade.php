@@ -52,20 +52,21 @@
                                     <h3 class="color-text">Dejanos tus consultas</h3>
                                     <p>Cuidado profesional de su salud y belleza corporal.</p>
                                     <!-- Contact Form -->
-                                    <form id="contact-form" action="post">
+                                    {!!Form::open(['id'=>'contact-form'])!!}
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                                         <fieldset>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            <input id="contact-name" class="form-control" name="contact-name" required="" placeholder="Nombre" type="text">
+                                                            {!!Form::text('contactName',null,['id'=>'contactName','class'=>'form-control','required','placeholder'=>'Nombre'])!!}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            <input id="contact-email" class="form-control" name="contact-email" required="" placeholder="Correo" type="email">
+                                                            {!!Form::email('contactEmail',null,['id'=>'contactEmail','class'=>'form-control','required','placeholder'=>'Correo'])!!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -74,7 +75,7 @@
                                                 <div class="col-md-12">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            <input id="contact-subject" name="contact-subject" class="form-control" required="" placeholder="Asunto" type="text">
+                                                            {!!Form::text('contactSubject',null,['id'=>'contactSubject','class'=>'form-control','required','placeholder'=>'Asunto'])!!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -83,7 +84,7 @@
                                                 <div class="col-md-12">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            <textarea id="contact-message" class="form-control" name="contact-message" rows="6" placeholder="Mensaje"></textarea>
+                                                            {!!Form::textarea('contactMessage',null,['id'=>'contactMessage','class'=>'form-control','required','placeholder'=>'Mensaje'])!!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -92,13 +93,13 @@
                                                 <div class="col-md-12">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            <button class="btn btn-normal btn-block" id="contact-send"><i class="fa fa-envelope-o fa-2x"></i> </button>
+                                                            {{Form::button('<i class="fa fa-envelope-o fa-2x"></i>', array('id'=>'button','type' => 'submit', 'class' => 'btn btn-normal btn-block'))}}
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </fieldset>
-                                    </form>
+                                    {{ Form::close() }}
                                     <!-- End Contact Form -->
                                 </div>
                             </div>
@@ -113,4 +114,5 @@
    @endsection
    @section('js')
      <script src="{{ asset('assets/js/external/jquery.easing.1.3.js') }}"></script>
+     {!!Html::script('js/admin/contact.js')!!}
     @endsection

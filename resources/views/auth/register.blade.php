@@ -5,17 +5,25 @@
 
 
 @section('content')
+
+<!-- Section Title -->
+    <section id="section-title" class="bg-alternative">
+        <div id="top-img-bg">
+            <h1 class="text-center">Cuenta Nueva</h1>
+        </div>
+    </section>
+    <!-- End Section Title -->
+
 <div id="exTab2" class="container login-section">
-  <ul class="nav nav-tabs">
+  <!-- <ul class="nav nav-tabs">
     <li class="active">
       <a href="#1" data-toggle="tab"><i class="fa fa-address-card"></i> Registrarse</a>
     </li>
 
-  </ul>
-
+  </ul> -->
   <div class="tab-content ">
     <div class="tab-pane active" id="1">
-        <div class="col-md-offset-2 col-md-8 col-sm-12 col-xs-12">
+        <div class="col-md-12 col-sm-12 col-xs-12">
            <form id="register-form" class="default-form" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
         <div class="row clearfix">
@@ -37,7 +45,7 @@
              @endif
           </div>
           <div class="form-group col-md-4 col-sm-12 col-xs-12">
-             <input id="lastName" type="text" maxlength="255" name="lastName" value="{{ old('lastName') }}" placeholder="Segundo Apellido" required="">
+             <input id="lastName" type="text" maxlength="255" name="lastName" value="{{ old('lastName') }}" placeholder="Segundo Apellido">
               @if ($errors->has('lastName'))
                  <span class="help-block">
                     <strong>{{ $errors->first('lastName') }}</strong>
@@ -46,7 +54,7 @@
           </div>
           
         <div class="form-group col-md-4 col-sm-12 col-xs-12">
-             <input id="birthday" type="text" name="birthday" value="{{ old('birthday') }}" required placeholder="Fecha Nacimiento"readonly>
+             <input id="birthday" type="text" name="birthday" value="{{ old('birthday') }}" required placeholder="Fecha de Nacimiento"readonly>
             @if ($errors->has('birthday'))
                  <span class="help-block">
                     <strong>{{ $errors->first('birthday') }}</strong>
@@ -55,7 +63,7 @@
           </div>
           
           <div class="form-group col-md-4 col-sm-12 col-xs-12">
-             <input id="phone" type="text" maxlength="8" name="phone" value="{{ old('phone') }}" placeholder="Télefono">
+             <input id="phone" type="text" maxlength="15" name="phone" value="{{ old('phone') }}" placeholder="Télefono">
              @if ($errors->has('phone'))
                  <span class="help-block">
                     <strong>{{ $errors->first('phone') }}</strong>
@@ -70,7 +78,7 @@
                  </span>
              @endif
           </div>
-           <div class="form-group col-md-6 col-sm-12 col-xs-12">
+           <div class="form-group  col-md-offset-2 col-md-4 col-sm-12 col-xs-12">
              <input id="username" type="text" maxlength="255" name="username" value="" placeholder="Usuario" required="">
               @if ($errors->has('username'))
                  <span class="help-block">
@@ -78,7 +86,7 @@
                  </span>
              @endif
           </div>
-          <div class="form-group col-md-6 col-sm-12 col-xs-12">
+          <div class="form-group col-md-4 col-sm-12 col-xs-12">
              <input id="password" type="password" maxlength="255" name="password" value="" placeholder="Contraseña" required="">
                @if ($errors->has('password'))
                      <span class="help-block">
@@ -86,14 +94,13 @@
                    </span>
                      @endif
           </div>
-           <div class="form-group col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+           <div class="form-group col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
               <input id="password-confirm" type="password" maxlength="255" name="password_confirmation" required="" placeholder="Confirme su contraseña">
              </div>
      
           
-          <div class="form-group col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-            <button type="submit" class="btn btn-normal btn-block text-uppercase"><i class="fa fa-floppy-o" aria-hidden="true"></i>
- Registrarme</button>
+          <div class="form-group col-md-offset-4 col-md-4 col-sm-12 col-xs-12">
+            <button type="submit" class="btn btn-normal btn-block text-uppercase"><i class="fa fa-floppy-o" aria-hidden="true"></i> Registrarme</button>
           </div>
         </div>
       </form>

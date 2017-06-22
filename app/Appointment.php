@@ -20,4 +20,6 @@ class Appointment extends Model
     protected $fillable = [
         'title', 'start', 'end', 'color', 'userId','serviceId'
     ];
+    //protected $dates = ['start', 'end'];
+
 }

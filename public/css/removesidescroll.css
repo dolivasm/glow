@@ -1,0 +1,4 @@
+html, body { /*This removes the side scroll in home page*/
+    max-width: 100%;
+    overflow-x: hidden;
+}
