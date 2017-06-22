@@ -79,33 +79,41 @@ class AppointmentController extends Controller
         $close=Schedule::find(3);//Take cloe time
         $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($close->start , 0 , 2 )), (integer)(substr ($close->start , 3 , 2 )), (integer)(substr ($close->start , 6 , 2 )));
         
-        $initialTime= Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
-        $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
-
-       $endTime=$this->addServiceTime($service,$endTime); 
+        $actualDate=Carbon::now();
+        
+        $initialTime=null;
+        $endTime=null   ;
+        if ($this->isActualDate($actualDate,$date)) {
+            $initialTime=Carbon::now();
+            $initialTime->addMinutes(5);//Add five minutes, to no reserve on actual time
+            $endTime=Carbon::now();
+            $endTime->addMinutes(5);
+        }else{
+            $initialTime= Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+            $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        }
+        $endTime=$this->addServiceTime($service,$endTime); 
       
          //$this->timeAvailables = array_add($this->timeAvailables,'9:00', $dt);//Para ver como queda despues de la suma
         $appointments=DB::table('appointments')->orderBy('start')->where('start', 'like','%'. $initialTime->toDateString().'%')->get();
        while ($endTime<=$closeTime){
-          
            for ($i = 0; $i < $appointments->count(); $i++) {//$appointments[$i]->start
-                if (($appointments[$i]->start==$initialTime || $appointments[$i]->start<$endTime) && $appointments[$i]->start>=$initialTime) {
+                if ((($appointments[$i]->start==$initialTime 
+                    || $appointments[$i]->start<$endTime) 
+                    && $appointments[$i]->start>=$initialTime)
+                    ||($this->isActualDate($actualDate,$date) && $initialTime<$appointments[$i]->end)
+                    ) {
                     $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 
                     $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);
                     $endTime=$this->addServiceTime($service,$endTime);
-                    //$i=0;
-                    
-                    
                 }
            }//end for
-          
            if (($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch) {
                         $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                         //Se actualiza el periodo de la cita 
                         $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);
                         $endTime=$this->addServiceTime($service,$endTime);
-                       // $i=0;
                     }else{
              if ($endTime<=$closeTime) {
                 $this->timeAvailables= array_add($this->timeAvailables,$initialTime->toTimeString(), $initialTime->toTimeString());
@@ -114,6 +122,11 @@ class AppointmentController extends Controller
           }}
         }//endWhile
         return $this->timeAvailables;
+    }
+    
+    public function isActualDate($actualDate,$selectedDate){
+        return ($actualDate->toDateString()==$selectedDate->toDateString());
+
     }
     public function addServiceTime($service,$date){
         $duration=$service->duration;
@@ -145,7 +158,7 @@ class AppointmentController extends Controller
             $Appointment->serviceId = $request->serviceId;
             $Appointment->start = $request->date_start . ' ' . $request->time_start;
             $Appointment->end=  $end;
-            $Appointment->color ="#5b006f" ;
+            $Appointment->color ="#336699" ;
             $Appointment->userId = $request->user()->id;
             $Appointment->save();
             return response()->json(["message" => "RESERVADO CORRECTAMENTE."]);

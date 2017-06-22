@@ -19,6 +19,10 @@
          timeFormat: 'H(:mm)',
          select: function(start) {
              start = moment(start.format());
+             var actualDate=getActualDate();
+             if (validate_date(actualDate,start.format('DD-MM-YYYY'))) {
+                 notifyInfo('No se puede reservar en días anteriores');
+             }else{
              $('#divForAddAppointment').html('Cargando contenido...');
              $.get('addAppointment/' + start.format('YYYY-MM-DD'), function(response) {
                  $('#divForAddAppointment').html(response);
@@ -40,12 +44,8 @@
                          
                      }
                  });
-
-
              });
-
-
-             
+            } 
          },
          events: function(start, end, timezone, callback) {
              $.get('/appointmentList', function(response) {
@@ -53,7 +53,7 @@
                      "title": "Cerrado",
                      start: '12:00',
                      end: '14:30',
-                     color:'#b44ab4',
+                     color:'#BDAEC6',
                      down: [1, 2]
                  });
                  callback(response);
@@ -162,3 +162,15 @@
          }
      });
  });
+         function validate_date(actuaDate,selectDate)
+
+        {
+            valuesStart=actuaDate.split("-");
+            valuesEnd=selectDate.split("-");
+            var dateStart=new Date(valuesStart[2],(valuesStart[1]-1),valuesStart[0]);
+            var dateEnd=new Date(valuesEnd[2],(valuesEnd[1]-1),valuesEnd[0]);
+            return (dateStart>dateEnd);
+
+
+
+        }

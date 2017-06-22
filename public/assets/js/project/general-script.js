@@ -78,6 +78,8 @@ function notifySuccess(message) {
 
     toastr.success(message, null, {
         newestOnTop: true,
+        progressBar: true,
+        closeButton: true,
         positionClass: 'toast-bottom-center'
 
     });
@@ -86,6 +88,8 @@ function notifySuccess(message) {
 function notifyError(message) {
     toastr.error(message, null, {
         newestOnTop: true,
+        progressBar: true,
+        closeButton: true,
         positionClass: 'toast-bottom-center'
     });
 }
@@ -93,6 +97,25 @@ function notifyError(message) {
 function notifyInfo(message) {
     toastr.warning(message, null, {
         newestOnTop: true,
+        progressBar: true,
+        closeButton: true,
         positionClass: 'toast-bottom-center'
     });
+}
+
+function getActualDate(){
+    var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+if(dd<10) {
+    dd = '0'+dd
+} 
+
+if(mm<10) {
+    mm = '0'+mm
+} 
+today = dd + '-' + mm + '-' + yyyy;
+return today;
 }

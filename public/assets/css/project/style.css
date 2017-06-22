@@ -4594,3 +4594,7 @@ input.error,textarea.error{
         
     }
 }
+
+.fc-event, .fc-event:hover, .ui-widget .fc-event {
+    color: black;
+}
