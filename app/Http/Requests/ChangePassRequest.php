@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateMyInfoRequest extends FormRequest
+class ChangePassRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,10 @@ class UpdateMyInfoRequest extends FormRequest
      */
     public function rules()
     {
-        $id = \Auth::user()->id;
         return [
-            'username'=>'required|max:255|unique:users,username,'.$id,
-            'email'=>'required|max:255|email|unique:users,email,'.$id,
-            'phone'=>'nullable|numeric|digits_between:0,20',
+            'currentPassword'=>'required|max:255',
+            'newPassword'=>'required|max:255',
+            'confirmPassword'=>'required|max:255',
         ];
     }
 }

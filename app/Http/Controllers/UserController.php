@@ -21,6 +21,8 @@ use App\Http\Requests\AddUserRequest;
 
 use App\Http\Requests\EditUserRequest;
 
+use App\Http\Requests\ChangePassRequest;
+
 use App\Http\Requests\UpdateMyInfoRequest;
 
 use App\Http\Middleware\AdminUsers;
@@ -30,7 +32,7 @@ class UserController extends Controller
     
     public function __construct()
     {
-        $this->middleware('adminUsers');
+        $this->middleware('adminUsers', ['except' => ['editMyInfo', 'updateMyInfo', 'getPassword', 'changePassword']]);
         $this->middleware('sentryContext');
     }
     
@@ -193,7 +195,7 @@ class UserController extends Controller
         }
     }
     
-    public function changePassword(Request $request) {
+    public function changePassword(ChangePassRequest $request) {
         try {
             $current = $request['currentPassword'];
             $new = $request['newPassword'];

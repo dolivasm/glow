@@ -89,3 +89,10 @@ function notifyError(message) {
         positionClass: 'toast-bottom-center'
     });
 }
+
+function notifyInfo(message) {
+    toastr.warning(message, null, {
+        newestOnTop: true,
+        positionClass: 'toast-bottom-center'
+    });
+}

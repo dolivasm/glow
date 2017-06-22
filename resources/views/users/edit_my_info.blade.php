@@ -71,16 +71,11 @@
 @endsection
 
 @section('external-js')
-    {!!Html::script('assets/js/external/moment.min.js')!!}
-    <!-- Incluye el Date Range Picker -->
-    {!!Html::script('assets/js/external/daterangepicker.js')!!}
-    {!!Html::script('js/mydatapicker.js')!!}
     <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/admin/validate-error-message.js') }}"></script>
 @endsection
 
 @section('js')
     {!!Html::script('js/edit-my-info.js')!!}
-    {!!Html::script('js/mydatapicker.js')!!}
     {!!Html::script('js/admin/close-onemodal-onclick.js')!!}
 @endsection

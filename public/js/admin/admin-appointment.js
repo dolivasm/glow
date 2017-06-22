@@ -22,11 +22,22 @@
              $('#divForAddAppointment').html('Cargando contenido...');
              $.get('addAppointment/' + start.format('YYYY-MM-DD'), function(response) {
                  $('#divForAddAppointment').html(response);
+                 if (response.message==null) {
+                     $('#addAppointmentModal').modal('show');
+                 }else{
+                     notifyInfo(response.message);
+                 }
+                 
                  //Validation method with jquery validate
                  $('#date_start').val(start.format('YYYY-MM-DD'));
                  $("#addAppointmentForm").validate({
                      submitHandler: function(form) {
-                         postAppointment();
+                         if ($("#addAppointmentForm #time_start").val()!=0) {
+                            postAppointment(); 
+                         }else{
+                             notifyInfo('No hay citas para este servicio ');
+                         }
+                         
                      }
                  });
 
@@ -34,14 +45,15 @@
              });
 
 
-             $('#addAppointmentModal').modal('show');
+             
          },
          events: function(start, end, timezone, callback) {
              $.get('/appointmentList', function(response) {
                  response.push({
-                     "title": "Cerrado(Hora Almuerzo)",
+                     "title": "Cerrado",
                      start: '12:00',
                      end: '14:30',
+                     color:'#b44ab4',
                      down: [1, 2]
                  });
                  callback(response);
@@ -75,6 +87,7 @@
 
 
  function postAppointment() {
+     
      var token = $("#addAppointmentForm #token").val();
      var route = "appointment";
 
@@ -83,7 +96,7 @@
      data.append('serviceId', $("#addAppointmentForm #serviceId").val());
      data.append('date_start', $("#addAppointmentForm #date_start").val());
      data.append('time_start', $("#addAppointmentForm #time_start").val());
-
+    $('#addAppointmentModal').modal('hide');
      $.ajax({
          url: route,
          headers: {
@@ -96,7 +109,6 @@
          dataType: 'json',
          data: data,
          success: function(response) {
-             $("#addAppointmentModal").modal('hide');
              toastr.clear()
              $('#calendar').fullCalendar('refetchEvents');
              notifySuccess(response.message);
@@ -109,6 +121,7 @@
              } else {
                  notifyError(response.error);
              }
+             $('#addAppointmentModal').modal('hide');
          }
      });
  }

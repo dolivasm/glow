@@ -139,8 +139,11 @@ return [
         'message'               => 'mensaje',
         'birthday'              => 'fecha de nacimiento',
         'firstName'             => 'primer apellido',
-        'role_id'              => 'tipo de usuario',
-        'lastName'              => 'segundo apellido'
+        'role_id'               => 'tipo de usuario',
+        'lastName'              => 'segundo apellido',
+        'currentPassword'       => 'contraseña actual',
+        'newPassword'           => 'nueva contraseña',
+        'confirmPassword'       => 'confirmación de contraseña',
         
     ],
 ];

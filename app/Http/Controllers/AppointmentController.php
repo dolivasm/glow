@@ -57,12 +57,17 @@ class AppointmentController extends Controller
         $serviceId =DB::table('services')->pluck('name', 'id');
         $firtsService=DB::table('services')->first();
         $availableTime= $this->getTimeAvailable($firtsService,$dt);
+        if (count($availableTime)==0) {
+            return Response()->json([
+                'message'=>'No hay citas diponibles en este día.'
+                ]);
+        }
         return view('appointment.add')->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
            
        } catch (Exception $e ) {
        }
     }
-    public function getTimeAvailable($service,$date){
+ public function getTimeAvailable($service,$date){
         //Es necesario recibir la fecha que se selecciona para consultar 
         $open=Schedule::find(1);//Take the open schedule
         $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
@@ -78,37 +83,35 @@ class AppointmentController extends Controller
         $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
 
        $endTime=$this->addServiceTime($service,$endTime); 
-       
+      
          //$this->timeAvailables = array_add($this->timeAvailables,'9:00', $dt);//Para ver como queda despues de la suma
         $appointments=DB::table('appointments')->orderBy('start')->where('start', 'like','%'. $initialTime->toDateString().'%')->get();
        while ($endTime<=$closeTime){
-            foreach ($appointments as $appointment) {
-                if (($appointment->start==$initialTime || $appointment->start<$endTime)&& $appointment->start>=$initialTime) {//Problema aqu
-                    
-                    $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
+          
+           for ($i = 0; $i < $appointments->count(); $i++) {//$appointments[$i]->start
+                if (($appointments[$i]->start==$initialTime || $appointments[$i]->start<$endTime) && $appointments[$i]->start>=$initialTime) {
+                    $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 
-                    $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->end);
+                    $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);
                     $endTime=$this->addServiceTime($service,$endTime);
-                }else {
-                    if (($endTime>$startLunch && $initialTime<$endLunch)) {
-                        var_dump('_________________________Almuerzoooo______________________________________');
+                    //$i=0;
+                    
+                    
+                }
+           }//end for
+          
+           if (($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch) {
                         $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                         //Se actualiza el periodo de la cita 
                         $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);
                         $endTime=$this->addServiceTime($service,$endTime);
-                    } 
-                }//End Foreach
-            }//End Foreach
+                       // $i=0;
+                    }else{
              if ($endTime<=$closeTime) {
-                            //Add available hour
-                     // $this->timeAvailables = array_add(['id' => $initialTime->toTimeString()], 'val', $initialTime->toTimeString());
                 $this->timeAvailables= array_add($this->timeAvailables,$initialTime->toTimeString(), $initialTime->toTimeString());
                 $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $endTime);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
-                            //Se actualiza el periodo de la cita 
                 $endTime=$this->addServiceTime($service,$endTime);
-                     
-               
-          }
+          }}
         }//endWhile
         return $this->timeAvailables;
     }
@@ -123,7 +126,6 @@ class AppointmentController extends Controller
         $date->addSeconds($secDuration);
         return $date;
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -163,6 +165,11 @@ class AppointmentController extends Controller
 
         $firtsService=Services::find($id);
         $availableTime= $this->getTimeAvailable($firtsService,$dt);
+         if (count($availableTime)==0) {
+            return Response()->json([
+                0=>'No hay citas diponibles para este servicio.'
+                ]);
+        }
         return Response()->json($availableTime);
            
        } catch (Exception $e ) {
