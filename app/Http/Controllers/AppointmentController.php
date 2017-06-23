@@ -246,6 +246,7 @@ public function edit($id,Request $request){
             $initialTime->addMinutes(5);//Add five minutes, to no reserve on actual time
             $endTime=Carbon::now();
             $endTime->addMinutes(5);
+            
         }else{
             $initialTime= Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
             $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
@@ -271,7 +272,9 @@ public function edit($id,Request $request){
                 if ((($appointments[$i]->start==$initialTime 
                     || $appointments[$i]->start<$endTime) 
                     && $appointments[$i]->start>=$initialTime)
-                    ||($this->isActualDate($actualDate,$date) && $initialTime<$appointments[$i]->end)
+                    ||($this->isActualDate($actualDate,$date) && 
+                        (($initialTime>=$appointments[$i]->start && 
+                        $initialTime< $appointments[$i]->end) || ($endTime>$appointments[$i]->start && $endTime< $appointments[$i]->end)) )
                     ) {
                     $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 
