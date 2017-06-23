@@ -4404,15 +4404,27 @@ font-size: 18px;
 }
 .btn-normal-add {
     border-radius: 0;
-    border-color: green;
+    border-color: #78184a;
     background-color: transparent;
-    color: green;
+    color: #78184a;
     -webkit-transition: all 250ms ease-in 0s;
     -moz-transition: all 250ms ease-in 0s;
     -o-transition: all 250ms ease-in 0s;
     transition: all 250ms ease-in 0s;
     width: 100%;
 }
+.btn-normal-warning {
+    border-radius: 0;
+    border-color: #bf94e4;
+    background-color: transparent;
+    color: #bf94e4;
+    -webkit-transition: all 250ms ease-in 0s;
+    -moz-transition: all 250ms ease-in 0s;
+    -o-transition: all 250ms ease-in 0s;
+    transition: all 250ms ease-in 0s;
+    width: 100%;
+}
+
 .btn-normal-react {
     border-radius: 0;
     border-color: green;
@@ -4434,7 +4446,13 @@ font-size: 18px;
     .btn-normal-add:hover,
     .btn-normal-add:hover {
         border-color: #fff;
-        background-color: green;
+        background-color: #78184a;
+        color: #fff;
+    }
+     .btn-normal-warning:hover,
+    .btn-normal-warning:hover {
+        border-color: #fff;
+        background-color: #bf94e4;
         color: #fff;
     }
      .btn-danger-delete:hover,

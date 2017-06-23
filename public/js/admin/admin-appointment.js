@@ -66,23 +66,22 @@
              var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
              var time_start = $.fullCalendar.moment(event.start).format('H(:mm)');
              var date_end = $.fullCalendar.moment(event.end).format('YYYY-MM-DD H(:mm)');
-             $('#modal-event #delete').attr('data-id', event.id);
-             $('#modal-event #_title').val(event.title);
-             $('#modal-event #_date_start').val(date_start);
-             $('#modal-event #_time_start').val(time_start);
-             $('#modal-event #_date_end').val(date_end);
-             $('#modal-event').modal('show');
+             $.get('appointment/' + event.id + '/edit', function(response) {
+                    $('#divForAEditAppointment').html(response);
+                    
+                     $('#editAppointmentModal #delete').attr('data', event.id);
+                     $('#editAppointmentModal #date_start').val(date_start);
+                    $("#formEditAppointment").validate({
+                        submitHandler: function(form) {
+                            //Send Put of Appointment
+                            updateAppointment();
+                        }
+                    });
+                    $('#editAppointmentModal').modal('show');
+                });
          } //
      });
 
- });
-
- $('.colorpicker').colorpicker();
-
- $('#date_end').bootstrapMaterialDatePicker({
-     date: true,
-     shortTime: false,
-     format: 'YYYY-MM-DD HH:mm:ss'
  });
 
 
@@ -92,10 +91,10 @@
      var route = "appointment";
 
      var data = new FormData();
-
      data.append('serviceId', $("#addAppointmentForm #serviceId").val());
      data.append('date_start', $("#addAppointmentForm #date_start").val());
      data.append('time_start', $("#addAppointmentForm #time_start").val());
+     
     $('#addAppointmentModal').modal('hide');
      $.ajax({
          url: route,
@@ -125,6 +124,41 @@
          }
      });
  }
+  function updateAppointment() {
+      
+    var token = $("#formEditAppointment #token").val();
+    var route = "appointment/"+$("#formEditAppointment #id").val();
+
+
+     var serviceId=$("#formEditAppointment #serviceId").val();
+     var date_start=$("#formEditAppointment #date_start").val();
+     var start=$("#formEditAppointment #start").val();
+    $('#editAppointmentModal').modal('hide');
+  
+  $.ajax({
+    url: route,
+    headers: {
+      'X-CSRF-TOKEN': token
+    },
+    type: 'PUT',
+    dataType: 'json',
+    data: {
+      serviceId,date_start,start
+    },
+    success: function(response) {
+        toastr.clear();
+         $('#calendar').fullCalendar('refetchEvents');
+        notifySuccess(response.message);
+    },
+    error: function(response) {
+    $('#editAppointmentModal').modal('show');
+      if (response.status == 422) {
+        displayFieldErrors(response);
+      } else {}
+    }
+  });
+ }
+ 
  function changeService(sel)
 {
      var route = "serviceAvailable/"+sel.value+"/" +  $("#addAppointmentForm #date_start").val();
@@ -140,11 +174,32 @@
         }
       });
 }
-
- $('#delete').on('click', function() {
-     var x = $(this);
-     var delete_url = '/appointment/' + x.attr('data-id');
+ function changeServiceEditing(sel)
+{
+     var route = "serviceAvailable/"+sel.value+"/" +  $("#formEditAppointment #date_start").val()+"/"+$("#formEditAppointment #id").val();
+      $("#formEditAppointment #start").empty();
+      $.get(route, function(res) {
+        if (res.length!=0) {
+          $.each(res, function(key, item) {
+                $("#formEditAppointment #start").append("<option value='" + key + "'>" + item + "</option>");
+         });
+        }else {
+            $("#formEditAppointment #start").append("<option value='" + 0 + "'>" + 'No hay citas disponibles' + "</option>");
+            
+        }
+      });
+}
+function cancelAppointment(btn){
+  var id=  $('#editAppointmentModal #delete').attr('data');
+  $("#deleteAppoitmentForm #Id").val(id);
+  $('#deleteAppoitmentModal').modal('show');
+  
+}
+function acceptDeleteAppoitment(){
+     $('#deleteAppoitmentModal').modal('hide');   
+     var delete_url = '/appointment/' + $('#editAppointmentModal #delete').attr('data');
      var token = $("#token").val();
+     $('#editAppointmentModal').modal('hide');
      $.ajax({
          url: delete_url,
          headers: {
@@ -152,17 +207,18 @@
          },
          type: 'DELETE',
          success: function(response) {
-             $('#modal-event').modal('hide');
-             notifySuccess(response.message);
              $('#calendar').fullCalendar('refetchEvents');
+             
+             notifySuccess(response.message);
+             
          },
          error: function(response) {
-             $('#modal-event').modal('hide');
-             notifySuccess(response.message);
+             $('#editAppointmentModal').modal('show');
+             notifyError(response.message);
          }
      });
- });
-         function validate_date(actuaDate,selectDate)
+}
+    function validate_date(actuaDate,selectDate)
 
         {
             valuesStart=actuaDate.split("-");

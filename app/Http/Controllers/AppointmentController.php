@@ -54,8 +54,8 @@ class AppointmentController extends Controller
         $dt->month  = (integer)(substr ($date , 6 , 2 ));
         $dt->day    = (integer)(substr ($date , 8 , 2 ));  
 
-        $serviceId =DB::table('services')->pluck('name', 'id');
-        $firtsService=DB::table('services')->first();
+        $serviceId =DB::table('services')->orderBy('duration', 'asc')->pluck('name', 'id');
+        $firtsService=DB::table('services')->orderBy('duration', 'asc')->first();
         $availableTime= $this->getTimeAvailable($firtsService,$dt);
         if (count($availableTime)==0) {
             return Response()->json([
@@ -67,7 +67,137 @@ class AppointmentController extends Controller
        } catch (Exception $e ) {
        }
     }
- public function getTimeAvailable($service,$date){
+    
+public function edit($id){
+        try {
+            $appointment=Appointment::find($id);
+            $serviceId =DB::table('services')->pluck('name', 'id');
+            $firtsService=Services::find($appointment->serviceId);
+            $dt=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start);
+            $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
+            $appointment->start=$dt->toTimeString();
+            
+            return view('appointment.edit',['appointment'=>$appointment])->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
+            
+        } catch (Exception $e) {
+           return response()->json(["message"=>"Lo sentimos,no se ha logrado cargar los datos de la cita"]);
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        try {
+            //Add the time of end the service
+            $end=Carbon::createFromFormat('Y-m-d H:i:s',$request->date_start . ' ' . $request->time_start );
+            $service=Services::find($request->serviceId);
+            $end=$this->addServiceTime($service,$end);
+            
+            $Appointment = new Appointment();
+            $Appointment->title = "Reservado";
+            $Appointment->serviceId = $request->serviceId;
+            $Appointment->start = $request->date_start . ' ' . $request->time_start;
+            $Appointment->end=  $end;
+            $Appointment->color ="#336699" ;
+            $Appointment->userId = $request->user()->id;
+            $Appointment->save();
+            return response()->json(["message" => "RESERVADO CORRECTAMENTE."]);
+        } catch (Exception $e) {
+            return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
+            }
+    }
+
+
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try {
+            $Appointment =Appointment::find($id);
+            
+            $end=Carbon::createFromFormat('Y-m-d H:i:s',$request->date_start . ' ' . $request->start);
+            $service=Services::find($request->serviceId);
+            $end=$this->addServiceTime($service,$end);
+            
+            $Appointment->serviceId = $request->serviceId;
+            $Appointment->start = $request->date_start . ' ' . $request->start;
+            $Appointment->end=  $end;
+            $Appointment->color ="#336699" ;
+            $Appointment->userId = $request->user()->id;
+            $Appointment->save();
+            return response()->json(["message" => "Cita actualizada correctamente."]);
+        } catch (Exception $e ) {
+            return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {try {
+        $Appointment = Appointment::find($id);
+
+        if($Appointment == null)
+            return Response()->json([
+                'message'   =>  'Lo sentimos, no se ha encontrado la cita solicitada.'
+            ]);
+
+        $Appointment->delete();
+
+        return Response()->json([
+            'message'   =>  'Cita cancelada correctamente.'
+        ]);
+        
+    } catch (Exception $e ) {
+        return Response()->json([
+                'message'   =>  'Lo sentimos, ha ocurrido un error al cancelar su cita.'
+            ]);
+    }
+        
+    
+    }
+    
+    public function timesAvailable($id,$date,$appointmentId=null)
+    {
+        try {
+         $dt = Carbon::now();
+        // date->//2017-05-30
+        $dt->year   = (integer)(substr ($date, 0 , 4 ));
+        $dt->month  = (integer)(substr ($date , 6 , 2 ));
+        $dt->day    = (integer)(substr ($date , 8 , 2 ));  
+
+        $firtsService=Services::find($id);
+        $appointment=null;
+        if ($appointmentId!=null) {
+           $appointment=Appointment::find($appointmentId);
+        }
+        $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
+         if (count($availableTime)==0) {
+            return Response()->json([
+                0=>'No hay citas diponibles para este servicio.'
+                ]);
+        }
+        return Response()->json($availableTime);
+           
+       } catch (Exception $e ) {
+        }
+    }
+     public function getTimeAvailable($service,$date,$selectedAppointment=null){
         //Es necesario recibir la fecha que se selecciona para consultar 
         $open=Schedule::find(1);//Take the open schedule
         $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
@@ -92,10 +222,22 @@ class AppointmentController extends Controller
             $initialTime= Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
             $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
         }
-        $endTime=$this->addServiceTime($service,$endTime); 
-      
-         //$this->timeAvailables = array_add($this->timeAvailables,'9:00', $dt);//Para ver como queda despues de la suma
-        $appointments=DB::table('appointments')->orderBy('start')->where('start', 'like','%'. $initialTime->toDateString().'%')->get();
+    $endTime=$this->addServiceTime($service,$endTime);
+    //if is editing an appointment ignore the actual appointment
+      if ($selectedAppointment!=null) {
+          $appointments=DB::table('appointments')
+            ->orderBy('start')
+                ->where('id','!=',$selectedAppointment->id)
+                    ->where('start', 'like','%'. $initialTime->toDateString().'%')
+                        ->get();
+      }else {
+        //if are adding an appointment take all actuals appointments
+          $appointments=DB::table('appointments')
+            ->orderBy('start')
+                    ->where('start', 'like','%'. $initialTime->toDateString().'%')
+                        ->get();
+      }
+         
        while ($endTime<=$closeTime){
            for ($i = 0; $i < $appointments->count(); $i++) {//$appointments[$i]->start
                 if ((($appointments[$i]->start==$initialTime 
@@ -138,107 +280,5 @@ class AppointmentController extends Controller
         $date->addMinutes($minDuration);
         $date->addSeconds($secDuration);
         return $date;
-    }
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        try {
-            //Add the time of end the service
-            $end=Carbon::createFromFormat('Y-m-d H:i:s',$request->date_start . ' ' . $request->time_start );
-            $service=Services::find($request->serviceId);
-            $end=$this->addServiceTime($service,$end);
-            
-            $Appointment = new Appointment();
-            $Appointment->title = "Reservado";
-            $Appointment->serviceId = $request->serviceId;
-            $Appointment->start = $request->date_start . ' ' . $request->time_start;
-            $Appointment->end=  $end;
-            $Appointment->color ="#336699" ;
-            $Appointment->userId = $request->user()->id;
-            $Appointment->save();
-            return response()->json(["message" => "RESERVADO CORRECTAMENTE."]);
-        } catch (Exception $e) {
-            return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
-            }
-    }
-
-    public function timesAvailable($id,$date)
-    {
-        try {
-         $dt = Carbon::now();
-        // date->//2017-05-30
-        $dt->year   = (integer)(substr ($date, 0 , 4 ));
-        $dt->month  = (integer)(substr ($date , 6 , 2 ));
-        $dt->day    = (integer)(substr ($date , 8 , 2 ));  
-
-        $firtsService=Services::find($id);
-        $availableTime= $this->getTimeAvailable($firtsService,$dt);
-         if (count($availableTime)==0) {
-            return Response()->json([
-                0=>'No hay citas diponibles para este servicio.'
-                ]);
-        }
-        return Response()->json($availableTime);
-           
-       } catch (Exception $e ) {
-       }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {try {
-        $Appointment = Appointment::find($id);
-
-        if($Appointment == null)
-            return Response()->json([
-                'message'   =>  'Lo sentimos, no se ha encontrado la cita solicitada.'
-            ]);
-
-        $Appointment->delete();
-
-        return Response()->json([
-            'message'   =>  'Cita cancelada correctamente.'
-        ]);
-        
-    } catch (Exception $e ) {
-        return Response()->json([
-                'message'   =>  'Lo sentimos, ha ocurrido un error al cancelar su cita.'
-            ]);
-    }
-        
-    
     }
 }
