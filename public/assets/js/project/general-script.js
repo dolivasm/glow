@@ -80,7 +80,7 @@ function notifySuccess(message) {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
-        positionClass: 'toast-bottom-center'
+        positionClass: 'toast-top-full-width'
 
     });
 }
@@ -90,7 +90,7 @@ function notifyError(message) {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
-        positionClass: 'toast-bottom-center'
+        positionClass: 'toast-top-full-width'
     });
 }
 
@@ -99,7 +99,7 @@ function notifyInfo(message) {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
-        positionClass: 'toast-bottom-center'
+        positionClass: 'toast-top-full-width'
     });
 }
 
