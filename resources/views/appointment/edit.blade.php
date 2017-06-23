@@ -12,6 +12,11 @@
   {{ Form::label('time_start', 'Hora') }}
   {{ Form::select('start', $time_start, null, array('required'=>'required','id'=>'start','class'=>'form-control','style'=>'' )) }}
 </div>
-{!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'editSubmit'])!!}
-<a OnClick="cancelAppointment(this);" id="delete" data-href="{{ url('appointment') }}" data="" class="btn btn-normal-warning btn-block text-uppercase">Eliminar</a>
+@if (!Auth::guest())
+         @if((Auth::user()->role_id)==1 ||(Auth::user()->id) ==$appointment->userId)
+             {!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'editSubmit'])!!}
+            <a OnClick="cancelAppointment(this);" id="delete" data-href="{{ url('appointment') }}" data="" class="btn btn-normal-warning btn-block text-uppercase">Eliminar</a>
+        @endif
+    @endif
+
 {!!Form::close()!!}

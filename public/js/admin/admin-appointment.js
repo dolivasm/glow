@@ -44,7 +44,18 @@
                          
                      }
                  });
-             });
+             }).fail( function(response) {
+                     switch (response.status) {
+                            case 401:
+                                notifyInfo('Inicie sesión para agregar o actualizar citas');
+                            break;
+                            case 408:
+                                notifyError('Lo sentimos, estamos teniendo problemas de conexión');
+                            break;
+                            default:
+                                notifyError('Lo sentimos, ha ocurrido un error');
+                    }
+                    });
             } 
          },
          events: function(start, end, timezone, callback) {
@@ -64,22 +75,49 @@
 
          eventClick: function(event, jsEvent, view) {
              var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
+              var actualDate=getActualDate();
+             if (validate_date(actualDate,$.fullCalendar.moment(event.start).format('DD-MM-YYYY'))) {
+                 notifyInfo('No se puede editar citas de días anteriores');
+             }else{
+                 
              var time_start = $.fullCalendar.moment(event.start).format('H(:mm)');
              var date_end = $.fullCalendar.moment(event.end).format('YYYY-MM-DD H(:mm)');
              $.get('appointment/' + event.id + '/edit', function(response) {
+                 if(response.warning==null){
+                     
+                 
                     $('#divForAEditAppointment').html(response);
                     
                      $('#editAppointmentModal #delete').attr('data', event.id);
                      $('#editAppointmentModal #date_start').val(date_start);
                     $("#formEditAppointment").validate({
                         submitHandler: function(form) {
-                            //Send Put of Appointment
-                            updateAppointment();
+                            if ($("#formEditAppointment start").val()!=0) {
+                            updateAppointment(); 
+                         }else{
+                             notifyInfo('No hay citas para este servicio ');
+                         }
+                            
                         }
                     });
                     $('#editAppointmentModal').modal('show');
-                });
-         } //
+                 }else {
+                     notifyInfo(response.warning);
+                 }
+                }).fail( function(response) {
+                    switch (response.status) {
+                            case 401:
+                                notifyInfo('Inicie sesión para agregar o actualizar citas');
+                            break;
+                            case 408:
+                                notifyError('Lo sentimos, estamos teniendo problemas de conexión');
+                            break;
+                            default:
+                                notifyError('Lo sentimos, ha ocurrido un error');
+                    }
+                    });
+         }
+         } //end else
      });
 
  });
@@ -208,7 +246,6 @@ function acceptDeleteAppoitment(){
          type: 'DELETE',
          success: function(response) {
              $('#calendar').fullCalendar('refetchEvents');
-             
              notifySuccess(response.message);
              
          },

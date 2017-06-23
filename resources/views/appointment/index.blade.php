@@ -17,8 +17,30 @@
         </section>
       
         <div class="container">
+            <div class="row">
+                <div class="col-md-offset-2 col-md-3 text-center">
+                    <h4 id="myAppointments">
+                        Mis reservaciones
+                    </h4>
+                </div>
+                <div class="col-md-3 text-center">
+                    <h4 id="AppointmentsReserved">
+                        Espacios reservados
+                    </h4>
+                    
+                </div>
+                <div class="col-md-3 text-center">
+                    <h4 id="specialEvent">
+                        Eventos Especiales
+                    </h4>
+                    
+                </div>
+            </div>
             <!-- Calendar is rendered on this section-->
-            <div id='calendar'></div>
+             <div class="row">
+                 <div id='calendar'></div>
+             </div>
+            
 
         </div>
         @include('appointment.add-modal')

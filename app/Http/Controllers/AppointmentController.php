@@ -9,6 +9,7 @@ use App\Schedule;
 use App\Services;
 use Carbon\Carbon;
 use DateTime;
+use Auth;
 
 class AppointmentController extends Controller
 {
@@ -21,7 +22,7 @@ class AppointmentController extends Controller
      private $timeAvailables;
      public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index','details');
         $this->middleware('sentryContext');
     }
      
@@ -29,9 +30,17 @@ class AppointmentController extends Controller
     {
         return view('appointment.index');
     }
-    public function details()
+    public function details(Request $request)
     {
-        $data = Appointment::get(['id', 'title', 'start', 'end', 'color']);
+        $data = Appointment::get(['id', 'title', 'start', 'end', 'color','userId']);
+        foreach ($data as $appointment ) {
+            if (Auth::check()) {
+                    if ($request->user()->id ==$appointment->userId )
+                    {
+                        $appointment->color ="#6f4a79";
+                    }
+                }
+        }
         
         return Response()->json($data);
     }
@@ -68,15 +77,34 @@ class AppointmentController extends Controller
        }
     }
     
-public function edit($id){
+public function edit($id,Request $request){
         try {
+            $date=Carbon::now();
+            $close=Schedule::find(3);//Take cloe time
+            $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($close->start , 0 , 2 )), (integer)(substr ($close->start , 3 , 2 )), (integer)(substr ($close->start , 6 , 2 )));
+            
+           
+        
             $appointment=Appointment::find($id);
+           
             $serviceId =DB::table('services')->pluck('name', 'id');
             $firtsService=Services::find($appointment->serviceId);
             $dt=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start);
+              if ($date>=$closeTime && $date->toDateString()==$dt->toDateString()) {
+            return Response()->json([
+                'warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.'
+                ]);
+            }
+            if (Auth::check()) {
+                    if ($request->user()->id ==$appointment->userId )
+                    {
+                        $appointment->color ="#6f4a79";
+                    }
+                }
             $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
             $appointment->start=$dt->toTimeString();
             
+           
             return view('appointment.edit',['appointment'=>$appointment])->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
             
         } catch (Exception $e) {
@@ -134,7 +162,7 @@ public function edit($id){
             $Appointment->start = $request->date_start . ' ' . $request->start;
             $Appointment->end=  $end;
             $Appointment->color ="#336699" ;
-            $Appointment->userId = $request->user()->id;
+            //$Appointment->userId = $request->user()->id;// No actualizar el usuario
             $Appointment->save();
             return response()->json(["message" => "Cita actualizada correctamente."]);
         } catch (Exception $e ) {

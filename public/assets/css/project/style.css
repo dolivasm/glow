@@ -4415,9 +4415,9 @@ font-size: 18px;
 }
 .btn-normal-warning {
     border-radius: 0;
-    border-color: #bf94e4;
+    border-color: #a95155;
     background-color: transparent;
-    color: #bf94e4;
+    color: #a95155;
     -webkit-transition: all 250ms ease-in 0s;
     -moz-transition: all 250ms ease-in 0s;
     -o-transition: all 250ms ease-in 0s;
@@ -4452,7 +4452,7 @@ font-size: 18px;
      .btn-normal-warning:hover,
     .btn-normal-warning:hover {
         border-color: #fff;
-        background-color: #bf94e4;
+        background-color: #a95155;
         color: #fff;
     }
      .btn-danger-delete:hover,
@@ -4616,3 +4616,25 @@ input.error,textarea.error{
 .fc-event, .fc-event:hover, .ui-widget .fc-event {
     color: black;
 }
+
+#myAppointments{
+    background: #6f4a79;
+    color: #fff;
+}
+
+#AppointmentsReserved{
+    background: #336699;
+    color: #fff;
+}
+
+
+#specialEvent{
+    background: #BDAEC6;
+    color: #fff;
+}
+.close{
+    color: #fff;
+    opacity: 1;
+    font-size: 26px;
+}
+
