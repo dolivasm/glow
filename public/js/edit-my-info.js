@@ -76,7 +76,5 @@
  
    //Método para llamar al modal para editar a un usuario
  function getPassword() {
-    $('#changePasswordModal').modal({
-    backdrop: 'static',
-    }, 'show');
+    $('#changePasswordModal').modal('show');
  }

@@ -12,6 +12,15 @@
             'overflow': 'visible'
         });
     })
+    
+    $('#div-forlist').on('load', function() {
+        var status = $('.userPreloader').fadeOut();
+        var preloader = $('.userStatus').delay(350).fadeOut('slow');
+        var delay = $('body').delay(350).css({
+            'overflow': 'visible'
+        });
+    })
+
 
     var homeHeight = $("#home").css({
         'height': ($(window).height()) + 'px'
@@ -75,8 +84,8 @@ function displayFieldErrors(response) {
 }
 
 function notifySuccess(message) {
-
-    toastr.success(message, null, {
+    toastr.clear()
+    toastr.success(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
@@ -86,7 +95,8 @@ function notifySuccess(message) {
 }
 
 function notifyError(message) {
-    toastr.error(message, null, {
+    toastr.clear()
+    toastr.error(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
@@ -95,7 +105,8 @@ function notifyError(message) {
 }
 
 function notifyInfo(message) {
-    toastr.warning(message, null, {
+    toastr.clear()
+    toastr.warning(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,
@@ -118,4 +129,22 @@ if(mm<10) {
 } 
 today = dd + '-' + mm + '-' + yyyy;
 return today;
+}
+
+function loadUsers() {
+    $.ajax({
+        cache: false,
+        url: 'getIndexUsers',
+        contentType: 'application/html; charset=utf-8',
+        type: 'GET',
+        dataType: 'html'
+    })
+    .success(function (result) {
+        $("#div-forcontent").html("");
+        $("#div-forlist").html(result);
+        $("#div-forlist").load();
+    })
+    .error(function (xhr, status) {
+        notifyError("Lo sentimos no se han podido cargar los usuarios");
+    })
 }

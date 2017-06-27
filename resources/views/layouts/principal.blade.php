@@ -178,7 +178,14 @@
          </div>
       </div>
       <!--End Header Intro-->
-      @yield('content')
+      <div id="page-wrapper">
+         
+         <div id="div-forcontent">
+            @yield('content')
+         </div>
+         <div id="div-forlist"></div>
+      </div>
+      
       <!-- Footer -->
       <footer class="bg-blue-3">
          <div class="container pb-0">
@@ -250,6 +257,8 @@
       @show
       <script src="{{ asset('assets/js/project/general-script.js') }}"></script>
       <script src="{{ asset('js/external/toastr.min.js') }}"></script>
+      <!-- <script src="{{ asset('assets/js/external/jquery-ui.js') }}"></script>
+      <script src="{{ asset('assets/js/external/jquery.blockUI.js') }}"></script> -->
       
       <!-- <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
        <script src="{{ asset('js/admin/validate-error-message.js') }}"></script> -->

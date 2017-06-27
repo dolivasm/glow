@@ -55,10 +55,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
-                        <br> <br> <br>
-                        <h1 Style="color: white;">
-                             Esperamos tu visita
-                        </h1>
+                        <br> <br> <br> <br>
+                        <h2>Esperamos tu visita</h2>
+                        <h2>Clínica Fisioestetica Glow</h2>
                     </div>
                 </div>
             </div>

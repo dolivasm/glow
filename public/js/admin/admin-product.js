@@ -12,9 +12,7 @@ function btn_addProducts() {
 
     });
 
-    $('#addProductsModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#addProductsModal').modal('show');
 }
 
  function postProducts(){
@@ -61,9 +59,7 @@ function btn_addProducts() {
  
  
 function deleteProduct(idProduct) {
-  $('#deleteProductsModal').modal({
-    backdrop: 'static',
-  }, 'show');
+  $('#deleteProductsModal').modal('show');
   $('#idProductsDelete').val(idProduct);
 }
 
@@ -99,9 +95,7 @@ function editProduct(id) {
             }
         });
     });
-    $('#editProductsModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#editProductsModal').modal('show');
 }
 
     //This method update the services selected to edit

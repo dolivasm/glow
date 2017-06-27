@@ -13,9 +13,7 @@ function btn_addNews() {
 
     });
 
-    $('#addNewsModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#addNewsModal').modal('show');
 }
 
 function editNews(id) {
@@ -28,15 +26,11 @@ function editNews(id) {
             }
         });
     });
-    $('#editNewsModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#editNewsModal').modal('show');
 }
 
 function deleteNews(id) {
-    $('#deleteNewsModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#deleteNewsModal').modal('show');
     $('#idNewsDelete').val(id);
 }
 //This method insert a new news.

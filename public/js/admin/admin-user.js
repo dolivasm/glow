@@ -26,9 +26,7 @@ function addUser(route){
      
       
      
-    $('#addUserModal').modal({
-    backdrop: 'static',
-    }, 'show');
+    $('#addUserModal').modal('show');
 }
 
 //Método para agregar un nuevo usuario en la base de datos
@@ -60,10 +58,9 @@ function postUser(){
             data:archivos, 
             success: function(response) {
                 $("#addUserModal").modal('hide');
-                toastr.clear()
+                toastr.clear();
+                loadUsers();
                 notifySuccess("Usuario creado exitosamente!");
-                //$('#usersTable').load('#usersTable');
-                location.reload();
             },
             error: function(response) {
               if (response.status == 422) {
@@ -86,9 +83,7 @@ function postUser(){
         });
      });
      
-    $('#editUserModal').modal({
-    backdrop: 'static',
-    }, 'show');
+    $('#editUserModal').modal('show');
  }
  
 //Método para guardar cambios a un usuario existente en la base de datos
@@ -117,8 +112,8 @@ function postUser(){
     },
     success: function(response) {
         $("#editUserModal").modal('hide');
-        location.reload();
         toastr.clear();
+        loadUsers();
         notifySuccess("Usuario Editado Correctamente");
     },
     error: function(response) {
@@ -136,9 +131,7 @@ function postUser(){
         $('#nameUserToDelete').text(name);
         $('#firstNameUserToDelete').text(fisrtName);
      });
-    $('#deleteUserModal').modal({
-    backdrop: 'static',
-    }, 'show');
+    $('#deleteUserModal').modal('show');
  }
  
  //Método para "desactivar" a un usuario de la base de datos
@@ -155,8 +148,8 @@ function postUser(){
     dataType: 'json',
     success: function() {
         $("#deleteUserModal").modal('hide');
-      notifySuccess('El usuario fue borrado exitosamente!');
-       location.reload();
+        loadUsers();
+        notifySuccess('El usuario fue borrado exitosamente!');
     },
     error: function(response) {
 
@@ -171,9 +164,7 @@ function postUser(){
         $('#nameUserToActivate').text(name);
         $('#firstNameUserToActivate').text(fisrtName);
      });
-    $('#activateUserModal').modal({
-    backdrop: 'static',
-    }, 'show');
+    $('#activateUserModal').modal('show');
  }
  
  function activateUser() {
@@ -189,8 +180,8 @@ function postUser(){
     dataType: 'json',
     success: function() {
         $("#activateUserModal").modal('hide');
-      notifySuccess('El usuario fue activado exitosamente!');
-      location.reload();
+        loadUsers();
+        notifySuccess('El usuario fue activado exitosamente!');
     },
     error: function(response) {
 

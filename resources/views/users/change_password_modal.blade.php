@@ -12,7 +12,7 @@
                 {!!Form::open(['id'=>'formChangePassword'])!!}
                     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
                     <div class="form-group">
-                        {!!Form::label('currentPassword', 'Contraseña Actula', array('class' => 'color-text'));!!}
+                        {!!Form::label('currentPassword', 'Contraseña Actual', array('class' => 'color-text'));!!}
                     </div>
                     <div class="form-group">
                         <input type="password" class="form-control" id="currentPassword" required="">

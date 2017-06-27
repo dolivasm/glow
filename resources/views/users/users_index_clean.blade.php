@@ -1,13 +1,15 @@
-@extends('layouts.principal')
-
-@section('external-css')
-    {!!Html::style('assets/css/external/dataTables.bootstrap.min.css')!!}
+   {!!Html::style('assets/css/external/dataTables.bootstrap.min.css')!!}
     
     {!!Html::style('assets/css/external/daterangepicker.css')!!}
-    
-@endsection
-
-@section('content')
+   
+   <!-- Preloader -->
+      <div id="preloader" class="userPreloader">
+         <div id="status" clas="userStatus">
+            &nbsp;
+         </div>
+      </div>
+      <!-- End Preloader -->
+   
     <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
         <div id="top-img-bg">
@@ -85,10 +87,8 @@
         @include('users.delete_user_modal');
     </div>
      <!--End Modals Section-->
-@endsection
-
-@section('external-js')
-    {!!Html::script('assets/js/external/jquery.dataTables.min.js')!!}
+     
+         {!!Html::script('assets/js/external/jquery.dataTables.min.js')!!}
     {!!Html::script('assets/js/external/dataTables.bootstrap.min.js')!!}
     
     {!!Html::script('assets/js/external/moment.min.js')!!}
@@ -98,8 +98,4 @@
     <script src="{{ asset('js/external/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('js/admin/validate-error-message.js') }}"></script>
     
-@endsection
-
-@section('js')
     {!!Html::script('js/admin/admin-user.js')!!}
-@endsection

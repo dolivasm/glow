@@ -46,6 +46,12 @@ class UserController extends Controller
         $users = User::withTrashed()->get()->except(Auth::id());
         return view('users.users_index', compact('users'))->render();
     }
+    
+    public function getIndex()
+    {
+        $users = User::withTrashed()->get()->except(Auth::id());
+        return view('users.users_index_clean', compact('users'))->render();
+    }
 
     /**
      * Show the form for creating a new resource.

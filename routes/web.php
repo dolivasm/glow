@@ -25,6 +25,9 @@ Route::get('productsDetail','ProductController@products_detail');
 Route::get('servicesDetail','ServiceController@services_detail');
 Route::get('appointmentList','AppointmentController@details');
 
+Route::get('getIndexUsers', 'UserController@getIndex');
+
+
 Route::get('serviceAvailable/{id}/{date}/{appointmentId?}','AppointmentController@timesAvailable');
 Route::get('addAppointment/{date}', 'AppointmentController@add');
 

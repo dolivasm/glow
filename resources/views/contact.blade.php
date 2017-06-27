@@ -59,14 +59,26 @@
                                                 <div class="col-md-6">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            {!!Form::text('contactName',null,['id'=>'contactName','class'=>'form-control','required','placeholder'=>'Nombre'])!!}
+                                                            @if (Auth::user())
+                                                                <?php
+                                                                    $name = Auth::user()->name.' '.Auth::user()->firstName.' '.Auth::user()->lastName;
+                                                                ?>
+                                                                {!!Form::text('contactName',$name,['id'=>'contactName','class'=>'form-control','required','placeholder'=>'Nombre'])!!}
+                                                            @else
+                                                                {!!Form::text('contactName',null,['id'=>'contactName','class'=>'form-control','required','placeholder'=>'Nombre'])!!}
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="control-group">
                                                         <div class="controls">
-                                                            {!!Form::email('contactEmail',null,['id'=>'contactEmail','class'=>'form-control','required','placeholder'=>'Correo'])!!}
+                                                            @if (Auth::user())
+                                                                {!!Form::email('contactEmail', Auth::user()->email,['id'=>'contactEmail','class'=>'form-control','required','placeholder'=>'Correo'])!!}
+                                                            @else
+                                                                {!!Form::email('contactEmail',null,['id'=>'contactEmail','class'=>'form-control','required','placeholder'=>'Correo'])!!}
+                                                            @endif
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>

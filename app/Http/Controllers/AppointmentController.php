@@ -274,7 +274,7 @@ public function edit($id,Request $request){
                     && $appointments[$i]->start>=$initialTime)
                     ||($this->isActualDate($actualDate,$date) && 
                         (($initialTime>=$appointments[$i]->start && 
-                        $initialTime< $appointments[$i]->end) || ($endTime>$appointments[$i]->start && $endTime< $appointments[$i]->end)) )
+                        $initialTime< $appointments[$i]->end) || ($endTime>$appointments[$i]->start && $endTime< $appointments[$i]->end)))
                     ) {
                     $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 

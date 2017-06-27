@@ -146,7 +146,6 @@
          dataType: 'json',
          data: data,
          success: function(response) {
-             toastr.clear()
              $('#calendar').fullCalendar('refetchEvents');
              notifySuccess(response.message);
 

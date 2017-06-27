@@ -77,5 +77,4 @@
 
 @section('js')
     {!!Html::script('js/edit-my-info.js')!!}
-    {!!Html::script('js/admin/close-onemodal-onclick.js')!!}
 @endsection

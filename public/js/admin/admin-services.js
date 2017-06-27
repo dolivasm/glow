@@ -14,9 +14,7 @@ function btn_addServices() {
 
     });
 
-    $('#addServicesModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#addServicesModal').modal('show');
 }
 
 function editServices(id) {
@@ -29,15 +27,11 @@ function editServices(id) {
             }
         });
     });
-    $('#editServicesModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#editServicesModal').modal('show');
 }
 
 function deleteServices(id) {
-    $('#deleteServicesModal').modal({
-        backdrop: 'static',
-    }, 'show');
+    $('#deleteServicesModal').modal('show');
     $('#idServicesDelete').val(id);
 }
 //This method insert a new services.
