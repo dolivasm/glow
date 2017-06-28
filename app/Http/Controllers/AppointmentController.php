@@ -12,6 +12,9 @@ use Carbon\Carbon;
 use DateTime;
 use Auth;
 use App\User;
+use App\Notifications\SuccesAddAppointment;
+use App\Notifications\SuccesEditAppointment;
+use App\Notifications\SuccesDeleteAppointment;
 
 class AppointmentController extends Controller
 {
@@ -104,6 +107,7 @@ class AppointmentController extends Controller
     }
     
 public function edit($id,Request $request){
+    
         try {
             $date=Carbon::now();
             $close=Schedule::find(3);//Take close time
@@ -190,7 +194,10 @@ public function edit($id,Request $request){
             $Appointment->color ="#336699" ;
             $Appointment->userId = $request->userId;
             $Appointment->save();
-            return response()->json(["message" => "RESERVADO CORRECTAMENTE."]);
+            $user=User::find($request->userId);
+            //Send notification to the user
+            $user->notify(new SuccesAddAppointment($Appointment->start));
+            return response()->json(["message" => "La cita a sido reservada correctamente."]);
         } catch (Exception $e) {
             return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
             }
@@ -219,8 +226,12 @@ public function edit($id,Request $request){
             $Appointment->userId=$request->userId;
             $Appointment->end=  $end;
             $Appointment->color ="#336699" ;
-            //$Appointment->userId = $request->user()->id;// No actualizar el usuario
             $Appointment->save();
+            
+            $user=User::find($request->userId);
+            //Send notification to the user
+            $user->notify(new SuccesEditAppointment($Appointment->start));
+            
             return response()->json(["message" => "Cita actualizada correctamente."]);
         } catch (Exception $e ) {
             return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
@@ -241,9 +252,12 @@ public function edit($id,Request $request){
             return Response()->json([
                 'message'   =>  'Lo sentimos, no se ha encontrado la cita solicitada.'
             ]);
-
+        $temptime=$Appointment->start;
+        $user=User::find($Appointment->userId);
         $Appointment->delete();
-
+        
+        $user->notify(new SuccesDeleteAppointment($temptime));
+    
         return Response()->json([
             'message'   =>  'Cita cancelada correctamente.'
         ]);
@@ -298,7 +312,7 @@ public function edit($id,Request $request){
         
         $initialTime=null;
         $endTime=null   ;
-        if ($this->isActualDate($actualDate,$date)) {
+        if ($this->isActualDate($actualDate,$date)&& $actualDate>$openTime) {
             $initialTime=Carbon::now();
             $initialTime->addMinutes(5);//Add five minutes, to no reserve on actual time
             $endTime=Carbon::now();
