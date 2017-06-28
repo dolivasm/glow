@@ -33,11 +33,10 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-       // if ($this->shouldReport($exception)) {
-                         //app('sentry')->captureException($exception);//Before do feedback
-                    // bind the event ID for Feedback
-        //   $this->sentryID = app('sentry')->captureException($exception);
-       // }
+        if ($this->shouldReport($exception)) {
+               
+          $this->sentryID = app('sentry')->captureException($exception);
+        }
         parent::report($exception);
     }
 
