@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use JavaScript;
 use App\Appointment;
 use App\Schedule;
 use App\Services;
 use Carbon\Carbon;
 use DateTime;
 use Auth;
+use App\User;
 
 class AppointmentController extends Controller
 {
@@ -28,6 +30,11 @@ class AppointmentController extends Controller
      
      public function index()
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
+        }
+      
         return view('appointment.index');
     }
     public function details(Request $request)
@@ -56,7 +63,17 @@ class AppointmentController extends Controller
     }
      public function add($date)
     {
+         
        try {
+           
+            if (Auth::check()) {
+                    if (Auth::user()->role_id ==1 )
+                    {
+                        $userId =  User::select(
+                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
+                            ->pluck('name', 'id');
+                    }
+                }
          $dt = Carbon::now();
         // date->//2017-05-30
         $dt->year   = (integer)(substr ($date, 0 , 4 ));
@@ -71,8 +88,17 @@ class AppointmentController extends Controller
                 'message'=>'No hay citas diponibles en este día.'
                 ]);
         }
-        return view('appointment.add')->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
-           
+         if (Auth::check()) {
+            if (Auth::user()->role_id ==1 )
+            {
+                return view('appointment.add')
+                    ->with('serviceId',$serviceId)
+                    ->with('time_start',$availableTime)
+                    ->with('userId',$userId)->render();
+            }else {
+               return view('appointment.add')->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
+            }
+         } 
        } catch (Exception $e ) {
        }
     }
@@ -80,7 +106,7 @@ class AppointmentController extends Controller
 public function edit($id,Request $request){
         try {
             $date=Carbon::now();
-            $close=Schedule::find(3);//Take cloe time
+            $close=Schedule::find(3);//Take close time
             $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($close->start , 0 , 2 )), (integer)(substr ($close->start , 3 , 2 )), (integer)(substr ($close->start , 6 , 2 )));
             
            
@@ -95,17 +121,45 @@ public function edit($id,Request $request){
                 'warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.'
                 ]);
             }
+            $isPassDay=$this->isLastDays($dt);
+            $availableTime=null;
             if (Auth::check()) {
-                    if ($request->user()->id ==$appointment->userId )
+                $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
+                   if (Auth::user()->role_id ==1)
                     {
-                        $appointment->color ="#6f4a79";
+                        if ($isPassDay!=true) {
+                            $userId =  User::select(
+                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
+                            ->pluck('name', 'id');
+                        }else {
+                            //If is a pass day only get the user information
+                           $userId =  User::select(
+                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
+                            ->where('id',$appointment->userId)
+                            ->pluck('name', 'id');
+                            $availableTime=null;
+                            $availableTime= array_add($availableTime,$dt->toTimeString(),$dt->toTimeString());
+                        }
+                        
                     }
                 }
-            $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
             $appointment->start=$dt->toTimeString();
+                    if (Auth::check()) {
+                        if (Auth::user()->role_id ==1 )
+                        {
+                            return view('appointment.edit',['appointment'=>$appointment])
+                            ->with('serviceId',$serviceId)
+                            ->with('time_start',$availableTime)
+                            ->with('passDay',$isPassDay)
+                            ->with('userId',$userId)->render();
+                        }else {
+                           return view('appointment.edit',['appointment'=>$appointment])
+                                ->with('serviceId',$serviceId)
+                                ->with('time_start',$availableTime)
+                                ->with('passDay',$isPassDay)->render();
+                        }
+                     } 
             
-           
-            return view('appointment.edit',['appointment'=>$appointment])->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
             
         } catch (Exception $e) {
            return response()->json(["message"=>"Lo sentimos,no se ha logrado cargar los datos de la cita"]);
@@ -120,7 +174,9 @@ public function edit($id,Request $request){
      */
     public function store(Request $request)
     {
+        
         try {
+
             //Add the time of end the service
             $end=Carbon::createFromFormat('Y-m-d H:i:s',$request->date_start . ' ' . $request->time_start );
             $service=Services::find($request->serviceId);
@@ -132,7 +188,7 @@ public function edit($id,Request $request){
             $Appointment->start = $request->date_start . ' ' . $request->time_start;
             $Appointment->end=  $end;
             $Appointment->color ="#336699" ;
-            $Appointment->userId = $request->user()->id;
+            $Appointment->userId = $request->userId;
             $Appointment->save();
             return response()->json(["message" => "RESERVADO CORRECTAMENTE."]);
         } catch (Exception $e) {
@@ -160,6 +216,7 @@ public function edit($id,Request $request){
             
             $Appointment->serviceId = $request->serviceId;
             $Appointment->start = $request->date_start . ' ' . $request->start;
+            $Appointment->userId=$request->userId;
             $Appointment->end=  $end;
             $Appointment->color ="#336699" ;
             //$Appointment->userId = $request->user()->id;// No actualizar el usuario
@@ -274,7 +331,9 @@ public function edit($id,Request $request){
                     && $appointments[$i]->start>=$initialTime)
                     ||($this->isActualDate($actualDate,$date) && 
                         (($initialTime>=$appointments[$i]->start && 
-                        $initialTime< $appointments[$i]->end) || ($endTime>$appointments[$i]->start && $endTime< $appointments[$i]->end)))
+                        $initialTime< $appointments[$i]->end) 
+                        || ($endTime>$appointments[$i]->start 
+                        && $endTime< $appointments[$i]->end)))
                     ) {
                     $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 
@@ -299,6 +358,11 @@ public function edit($id,Request $request){
     
     public function isActualDate($actualDate,$selectedDate){
         return ($actualDate->toDateString()==$selectedDate->toDateString());
+
+    }
+    public function isLastDays($selectedDate){
+        $actualDate=Carbon::now();
+        return ($actualDate>$selectedDate);
 
     }
     public function addServiceTime($service,$date){
