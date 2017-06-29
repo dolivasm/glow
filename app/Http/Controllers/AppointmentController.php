@@ -38,10 +38,11 @@ class AppointmentController extends Controller
             $lunch=Schedule::find(2);
             Javascript::put([  'openTime' => $open->start,'lunchStart' => $lunch->start, 'lunchEnd' => $lunch->end, 'closeTime' => $open->end]);
             if (Auth::check()) {
-            $user = Auth::user();
-            Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
+                $user = Auth::user();
+                Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
+                
+            }
             return view('appointment.index');
-        }
             
         } catch (Exception $e ) {
             return Response()->json(['message'=>'Lo sentimos, ha ocurrido un error al cargar las citas.']);

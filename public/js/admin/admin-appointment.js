@@ -11,6 +11,7 @@
          },
          navLinks: true, // can click day/week names to navigate views
          editable: false,
+         eventOverlap:false,
          selectable: true,
          selectHelper: true,
          buttonIcons: true,
