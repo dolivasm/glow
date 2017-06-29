@@ -125,9 +125,9 @@ public function edit($id,Request $request){
             $serviceId =DB::table('services')->pluck('name', 'id');
             $firtsService=Services::find($appointment->serviceId);
             $dt=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start);
-            if ($date>=$closeTime && $date->toDateString()==$dt->toDateString()) {
-                return Response()->json(['warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.']);
-            }
+            // ($date>=$closeTime && $date->toDateString()==$dt->toDateString()) {
+            //    return Response()->json(['warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.']);
+            //}
             $isPassDay=$this->isLastDays($dt);
             $availableTime=null;
                 if (($isPassDay==true) && $isAdmin || Auth::user()->id==$appointment->userId) {
