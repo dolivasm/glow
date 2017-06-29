@@ -48,5 +48,7 @@ Route::resource('news','NewsController');
 Route::resource('products','ProductController');
 Route::resource('users', 'UserController');
 Route::resource('appointment', 'AppointmentController');
+Route::resource('schedule', 'ScheduleController');
+
 
 Route::get('/home', 'HomeController@index');

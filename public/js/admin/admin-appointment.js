@@ -146,7 +146,6 @@
 
  });
 
-
  function postAppointment() {
 
      var token = $("#addAppointmentForm #token").val();
@@ -214,7 +213,6 @@
              start
          },
          success: function(response) {
-             toastr.clear();
              $('#calendar').fullCalendar('refetchEvents');
              notifySuccess(response.message);
          },
@@ -312,4 +310,94 @@ function appendOptionToEditTimeSelect(value,option){
      var dateEnd = new Date(valuesEnd[2], (valuesEnd[1] - 1), valuesEnd[0]);
      return (dateStart > dateEnd);
 
+ }
+  function updateSchedule(route){
+   
+     $.get(route, function(response) {
+        $('#divForEditSchedule').html(response);
+        $("#formUpdateSchedule").validate({
+            submitHandler: function(form) {
+                //This methos is callback  when the form is valid
+                putScheduleData();
+            }
+        });
+        $('#openStart').clockpicker({ autoclose: true});
+        var tempOpenEnd;
+        $('#openEnd').clockpicker(
+          { autoclose: true,
+          beforeDone:function(){
+            tempOpenEnd=$('#openEnd').val();
+          },
+           
+          afterDone:function(){
+           
+
+              if((new Date(2000, 1, 1, parseInt($('#openStart').val().split(':')[0]), parseInt($('#openStart').val().split(':')[1]), 0, 0)) >
+           				(new Date(2000, 1, 1, parseInt($('#openEnd').val().split(':')[0]), parseInt($('#openEnd').val().split(':')[1]), 0, 0))
+           			){
+           			 $('#openEnd').val(tempOpenEnd);
+       			       notifyWarning("La hora de cierre de local no puede ser menor a la de abrir");
+       		     	}
+             
+          }});
+        $('#lunchStart').clockpicker({ autoclose: true});
+        $('#lunchEnd').clockpicker({ autoclose: true,
+          beforeDone:function(){
+            tempOpenEnd=$('#lunchEnd').val();
+          },
+           
+          afterDone:function(){
+              if((new Date(2000, 1, 1, parseInt($('#lunchStart').val().split(':')[0]), parseInt($('#lunchStart').val().split(':')[1]), 0, 0)) >
+           				(new Date(2000, 1, 1, parseInt($('#lunchEnd').val().split(':')[0]), parseInt($('#lunchEnd').val().split(':')[1]), 0, 0))
+           			){
+           			 $('#lunchEnd').val(tempOpenEnd);
+       			       notifyWarning("La hora de fin de almuerzo no puede ser menor a la de inicio!");
+       		     	}
+             
+          }});
+        $('#updateScheduleModal').modal('show');
+     });
+     
+      
+     
+    
+  
+ }
+ function putScheduleData(){
+     document.getElementById("updateSubmitSchedule").disabled = true;
+     var token = $("#formUpdateSchedule #token").val();
+     var route = "schedule/" + 1;
+    
+    var openStart = $('#openStart').val();
+     var openEnd = $('#openEnd').val();
+     var lunchStart =$('#lunchStart').val();
+     var lunchEnd = $('#lunchEnd').val();
+     
+
+     $.ajax({
+         url: route,
+         headers: {
+             'X-CSRF-TOKEN': token
+         },
+         type: 'PUT',
+         dataType: 'json',
+         data: {
+             openStart,
+             openEnd,
+             lunchStart,
+             lunchEnd
+         },
+         success: function(response) {
+             $('#updateScheduleModal').modal('hide');
+             notifySuccess(response.message);
+             location.reload(); 
+         },
+         error: function(response) {
+          document.getElementById("updateSubmitSchedule").disabled = false;
+             if (response.status == 422) {
+                 displayFieldErrors(response);
+             } else {}
+         }
+     });
+ 
  }
