@@ -16,14 +16,12 @@
 
 	
 <div class="form-group">
-		{!!Form::label('duration', 'Duración', array('class' => 'color-text'));!!}
+		{!!Form::label('duration', 'Duración**', array('readonly','class' => 'color-text'));!!}
 	</div>
 <div class="form-group">
-	    {!!Form::time('duration',null,['id'=>'duration','required','class'=>'form-control'])!!}
+	 {{ Form::text('duration', null, ['required'=>'required','class' => 'form-control', 'readonly' => 'true']) }}
 	</div>
 
-	
-	
 <div class="form-group">
 			{!!Form::label('description', 'Descripción', array('class' => 'color-text'));!!}
 		</div>
@@ -40,5 +38,10 @@
 		    <span class="btn btn-default btn-file"><span class="fileinput-new">Nueva</span><span class="fileinput-exists">Cambiar</span>{!!Form::file('imageUrl', ['id'=>'imageUrl','name'=>'imageUrl' ,'class' => 'inputfile','accept'=>'image/jpeg']) !!}</span>
 		    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
 		  </div>
+		</div>
+		
+		<div class="form-group">
+			{!!Form::label('name', '**Agregar en el orden HH:mm', array('class' => 'color-text'));!!}
+			
 		</div>
 		

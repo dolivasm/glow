@@ -3,6 +3,7 @@ function btn_addServices() {
 
     $.get('services/create', function(response) {
         $('#divForAddServices').html(response);
+        $('#addServicesForm #duration').clockpicker({ autoclose: true});
         //Validation method with jquery validate
         $("#addServicesForm").validate({
             submitHandler: function(form) {
@@ -11,15 +12,16 @@ function btn_addServices() {
             }
         });
 
-
+    $('#addServicesModal').modal('show');
     });
 
-    $('#addServicesModal').modal('show');
+   
 }
 
 function editServices(id) {
     $.get('services/' + id + '/edit', function(response) {
         $('#divForEditServices').html(response);
+        $('#formEditServices #duration').clockpicker({ autoclose: true});
          $("#formEditServices").validate({
             submitHandler: function(form) {
                 //This methos is callback  when the form is valid

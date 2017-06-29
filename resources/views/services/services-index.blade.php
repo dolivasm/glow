@@ -1,7 +1,8 @@
 @section('external-css')
     <link href="{{ asset('assets/css/external/lightbox.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/external/jasny-bootstrap.css') }}" rel="stylesheet">
-     <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/external/bootstrap-clockpicker.min.css') }}" rel="stylesheet">
 @endsection
 
 @extends('layouts.principal')
@@ -77,6 +78,7 @@
     
     @section('external-js')
         <script src="{{ asset('assets/js/external/lightbox-2.6.min.js') }}"></script>
+        <script src="{{ asset('js/external/bootstrap-clockpicker.min.js') }}"></script>
     @endsection
     
     @section("js")
