@@ -4634,3 +4634,7 @@ input.error,textarea.error{
     font-size: 26px;
 }
 
+
+#toast-container > div {
+  opacity: 1;
+}

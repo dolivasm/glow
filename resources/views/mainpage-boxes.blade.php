@@ -23,7 +23,7 @@
                             <h3>Servicios</h3>
                             <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
                             <!-- <a href="{{ asset('services') }}"><i class="fa fa-plus-square-o"></i></a> -->
-                            <a href="{{ asset('services') }}" class="btn btn-sm btn-normal-boxes"><span class="icon-alternative-complementary"></span> Ver Todos</a>
+                            <a href="{{ asset('services') }}" class="btn btn-sm btn-normal-boxes"><span class="icon-physical-therapy"></span> Ver Todos</a>
                         </div>
                     </div>
 

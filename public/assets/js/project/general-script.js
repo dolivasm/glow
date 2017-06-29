@@ -99,25 +99,26 @@ function notifyError(message) {
     toastr.error(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
+         preventDuplicates:true,
         closeButton: true,
         positionClass: 'toast-top-full-width'
     });
 }
 
 function notifyWarning(message) {
-    toastr.clear()
     toastr.warning(message.toUpperCase(), null, {
         newestOnTop: true,
+        preventDuplicates:true,
         progressBar: true,
         closeButton: true,
         positionClass: 'toast-top-full-width'
     });
 }
 function notifyInformation(message) {
-    toastr.clear()
     toastr.info(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
+         preventDuplicates:true,
         closeButton: true,
         positionClass: 'toast-top-full-width'
     });
