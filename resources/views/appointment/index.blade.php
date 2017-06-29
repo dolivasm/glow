@@ -60,7 +60,11 @@
         @include('appointment.edit-modal')
         @include('appointment.delete-modal')
         @include('appointment.change-time')
-        @include('schedule.update-modal')
+        @if (!Auth::guest())
+            @if((Auth::user()->role_id)==1)
+                @include('schedule.update-modal')
+                @endif
+        @endif
     @endsection
      @section('external-js')
     <script src="{{ asset('assets/js/external/moment.min.js') }}"></script>
