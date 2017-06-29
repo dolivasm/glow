@@ -16,6 +16,7 @@ function btn_addProducts() {
 }
 
  function postProducts(){
+     document.getElementById("addProductSubmit").disabled = true;
     var token = $("#token").val();
     var route = "/products";
     var formulario = $('#addProductsForm');
@@ -48,6 +49,7 @@ function btn_addProducts() {
             loadProducts();
             },
             error: function(response) {
+                 document.getElementById("addProductSubmit").disabled = false;
               if (response.status == 422) {
                 displayFieldErrors(response);
               } else {
@@ -100,6 +102,7 @@ function editProduct(id) {
 
     //This method update the services selected to edit
     function putProducts() {
+    document.getElementById("editProductSubmit").disabled = true;
     var value = $("#formEditProducts #id").val();
     var token = $("#formEditProducts #token").val();
     var route = "/update-products";
@@ -136,6 +139,7 @@ function editProduct(id) {
 
         },
         error: function(a,b,c) {
+            document.getElementById("editProductSubmit").disabled = true;
             if (response.status == 422) {
                 displayFieldErrors(response);
             } else {}

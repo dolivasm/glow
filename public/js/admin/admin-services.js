@@ -36,6 +36,7 @@ function deleteServices(id) {
 }
 //This method insert a new services.
 function postServices() {
+    document.getElementById("addServiceSubmit").disabled = true;
     var token = $("#token").val();
     var route = "/services";
     var formulario = $('#addServicesForm');
@@ -73,6 +74,7 @@ function postServices() {
 
         },
         error: function(a,b,c) {
+            document.getElementById("addServiceSubmit").disabled = false;
             alert(a+" | "+b+"| "+c);
             if (response.status == 422) {
                 displayFieldErrors(response);
@@ -85,6 +87,7 @@ function postServices() {
 }
     //This method update the services selected to edit
     function putServices() {
+    document.getElementById("editServiceSubmit").disabled = true;
     var value = $("#formEditServices #id").val();
     var token = $("#formEditServices #token").val();
     var route = "/update-services";
@@ -122,6 +125,7 @@ function postServices() {
 
         },
         error: function(a,b,c) {
+            document.getElementById("editServiceSubmit").disabled = false;
             if (response.status == 422) {
                 displayFieldErrors(response);
             } else {}

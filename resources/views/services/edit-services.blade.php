@@ -2,5 +2,5 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
     <input type="hidden" value="{{ $services->id }}" id="id">
     	@include('services.forms.services')
-    {!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block','id' => 'editSubmit'])!!} 
+    {!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block','id' => 'editServiceSubmit'])!!} 
     {!!Form::close()!!}

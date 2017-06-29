@@ -35,6 +35,7 @@ function deleteNews(id) {
 }
 //This method insert a new news.
 function postNews() {
+    document.getElementById("addNewsSubmit").disabled = true;
     var token = $("#token").val();
     var route = "/news";
     var formulario = $('#addNewsForm');
@@ -68,6 +69,7 @@ function postNews() {
 
         },
         error: function(response) {
+                document.getElementById("addNewsSubmit").disabled = false;
             if (response.status == 422) {
                 displayFieldErrors(response);
             } else {
@@ -78,6 +80,7 @@ function postNews() {
 }
 //This method update the news selected to edit
 function putNews() {
+    document.getElementById("editNewsSubmit").disabled = true;
     var value = $("#formEditNews #id").val();
     var token = $("#formEditNews #token").val();
     var route = "/update-news";
@@ -113,6 +116,7 @@ function putNews() {
 
         },
         error: function(response) {
+            document.getElementById("editNewsSubmit").disabled = false;
             if (response.status == 422) {
                 displayFieldErrors(response);
             } else {

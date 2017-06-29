@@ -2,5 +2,5 @@
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}" id="token">
      @include('products.forms.products')
-     {!!  Form::submit('Guardar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'addSubmit'])!!}
+     {!!  Form::submit('Guardar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'addProductSubmit'])!!}
     {!!Form::close()!!}
