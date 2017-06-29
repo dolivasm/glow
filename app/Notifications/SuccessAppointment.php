@@ -7,18 +7,16 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SuccesAddAppointment extends Notification
+class SuccessAppointment extends Notification
 {
     use Queueable;
-    private $tempTime;
-    
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($time)
+      public function __construct($time)
     {
         $this->tempTime=$time;
     }
@@ -43,7 +41,7 @@ class SuccesAddAppointment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Reservación Exitosa!')
+                    ->subject('Cita para el día '.$this->tempTime)
                     ->greeting('Hola ' . $notifiable->name.'!')
                     ->line('Tu reservación ha sido registrada exitosamente.')
                     ->line('Fecha y Hora: '.$this->tempTime)

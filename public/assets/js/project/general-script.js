@@ -104,9 +104,18 @@ function notifyError(message) {
     });
 }
 
-function notifyInfo(message) {
+function notifyWarning(message) {
     toastr.clear()
     toastr.warning(message.toUpperCase(), null, {
+        newestOnTop: true,
+        progressBar: true,
+        closeButton: true,
+        positionClass: 'toast-top-full-width'
+    });
+}
+function notifyInformation(message) {
+    toastr.clear()
+    toastr.info(message.toUpperCase(), null, {
         newestOnTop: true,
         progressBar: true,
         closeButton: true,

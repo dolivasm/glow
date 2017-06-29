@@ -2,8 +2,8 @@
  $(document).ready(function() {
 
      $('#calendar').fullCalendar({
-         minTime: "09:00:00",
-         maxTime: "19:00:00",
+         minTime: openTime,
+         maxTime: closeTime,
          header: {
              left: 'prev,next today',
              center: 'title',
@@ -20,8 +20,11 @@
          select: function(start) {
              start = moment(start.format());
              var actualDate = getActualDate();
+             if (typeof userId === 'undefined') {
+                notifyWarning('Por favor,inicie sesión para agregar o actualizar citas');
+             }else{
              if (validate_date(actualDate, start.format('DD-MM-YYYY'))) {
-                 notifyInfo('No se puede reservar en días anteriores');
+                 notifyWarning('No se puede reservar en días anteriores');
              } else {
                  $('#divForAddAppointment').html('Cargando contenido...');
                  $.get('addAppointment/' + start.format('YYYY-MM-DD'), function(response) {
@@ -30,7 +33,7 @@
                          $('.selectpicker').selectpicker();
                          $('#addAppointmentModal').modal('show');
                      } else {
-                         notifyInfo(response.message);
+                         notifyWarning(response.message);
                      }
 
                      //Validation method with jquery validate
@@ -40,7 +43,7 @@
                              if ($("#addAppointmentForm #time_start").val() != 0) {
                                  postAppointment();
                              } else {
-                                 notifyInfo('No hay citas para este servicio ');
+                                 notifyWarning('No hay citas para este servicio ');
                              }
 
                          }
@@ -48,7 +51,7 @@
                  }).fail(function(response) {
                      switch (response.status) {
                          case 401:
-                             notifyInfo('Inicie sesión para agregar o actualizar citas');
+                             notifyWarning('Inicie sesión para agregar o actualizar citas');
                              break;
                          case 408:
                              notifyError('Lo sentimos, estamos teniendo problemas de conexión');
@@ -58,14 +61,15 @@
                      }
                  });
              }
+         }
          },
          events: function(start, end, timezone, callback) {
              $.get('/appointmentList', function(response) {
                  response.push({
                      id:0,
                      "title": "Cerrado",
-                     start: '12:00',
-                     end: '14:30',
+                     start: lunchStart,
+                     end: lunchEnd,
                      color: '#BDAEC6',
                      down: [1, 2]
                  });
@@ -76,20 +80,15 @@
          },
 
          eventClick: function(event, jsEvent, view) {
-            
+             if (event.id==0) {
+                 notifyInformation("La hora de almuerzo es de "+$.fullCalendar.moment(event.start).format('H(:mm)')+" a "+$.fullCalendar.moment(event.end).format('H(:mm)'));
+             }else{//modify event
              //User is not autenthicated
              if (typeof userId === 'undefined') {
-                 notifyInfo('Por favor,inicie sesión para agregar o actualizar citas');
+                 notifyWarning('Por favor,inicie sesión para agregar o actualizar citas');
              } else { //The user are loggin
-             //Modify Schedule
-              if (event.id==0 && userRole==1) {
-                 alert('Modificar Horario');
-             }else{//modify event
+
                  var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
-                 var actualDate = getActualDate();
-                 if (validate_date(actualDate, $.fullCalendar.moment(event.start).format('DD-MM-YYYY')) &&userRole!=1) {
-                     notifyInfo('No se puede editar citas de días anteriores');
-                 } else {
                      //Check if the user can edit
                      if (userRole == 1 || event.userId == userId) {
                          var time_start = $.fullCalendar.moment(event.start).format('H(:mm)');
@@ -102,7 +101,7 @@
                                  $('#editAppointmentModal #date_start').val(date_start);
                                  $("#formEditAppointment").validate({
                                      submitHandler: function(form) {
-                                         if ($("#formEditAppointment start").val() != 0) { 
+                                         if ($("#formEditAppointment #start").val() != 0) { 
                                              var tempStart = $("#formEditAppointment #tempStart").val();
                                              var newStart = $("#formEditAppointment #start").val();
                                              if (tempStart== newStart) {
@@ -114,19 +113,19 @@
                                              
                                              
                                          } else {
-                                             notifyInfo('No hay citas para este servicio ');
+                                             notifyWarning('No hay citas para le servicio seleccionado');
                                          }
                                      }
                                  });
                                  $('.selectpicker').selectpicker();
                                  $('#editAppointmentModal').modal('show');
                              } else {
-                                 notifyInfo(response.warning);
+                                 notifyWarning(response.warning);
                              }
                          }).fail(function(response) {
                              switch (response.status) {
                                  case 401:
-                                     notifyInfo('Inicie sesión para agregar o actualizar citas');
+                                     notifyWarning('Inicie sesión para agregar o actualizar citas');
                                      break;
                                  case 408:
                                      notifyError('Lo sentimos, estamos teniendo problemas de conexión');
@@ -137,11 +136,11 @@
                          });
 
                      } else {
-                         notifyInfo('Solo puedes editar tus citas');
+                         notifyWarning('Solo puedes editar tus citas');
                      }
-                 }
+                 
              }//end modify event
-             }
+             }//end else of check logging
          } //end else
      });
 
@@ -231,32 +230,46 @@
  function changeService(sel) {
      var route = "serviceAvailable/" + sel.value + "/" + $("#addAppointmentForm #date_start").val();
      $("#addAppointmentForm #time_start").empty();
+     appendOptionToAddTimeSelect(-1,'Cargando disponibilidad...');
+     refreshSelects();
      $.get(route, function(res) {
+      $("#addAppointmentForm #time_start").empty();
          if (res.length != 0) {
              $.each(res, function(key, item) {
-                 $("#addAppointmentForm #time_start").append("<option value='" + key + "'>" + item + "</option>");
+                 appendOptionToAddTimeSelect(key,item);
              });
          } else {
-             $("#addAppointmentForm #time_start").append("<option value='" + 0 + "'>" + 'No hay citas disponibles' + "</option>");
+             appendOptionToAddTimeSelect(0,'No hay citas disponibles');
 
          }
-         $('#addAppointmentForm .selectpicker').selectpicker('refresh');
+         refreshSelects();
      });
  }
-
+  function refreshSelects(){
+   $('.selectpicker').selectpicker('refresh');
+  }
+  function appendOptionToAddTimeSelect(value,option){
+    $("#addAppointmentForm #time_start").append("<option value='" + value+ "'>" + option+ "</option>");
+  }
+function appendOptionToEditTimeSelect(value,option){
+    $("#formEditAppointment #start").append("<option value='" + value+ "'>" + option+ "</option>");
+  }
  function changeServiceEditing(sel) {
      var route = "serviceAvailable/" + sel.value + "/" + $("#formEditAppointment #date_start").val() + "/" + $("#formEditAppointment #id").val();
      $("#formEditAppointment #start").empty();
+     appendOptionToEditTimeSelect(-1,'Cargando disponibilidad...');
+     refreshSelects();
      $.get(route, function(res) {
+      $("#formEditAppointment #start").empty();
          if (res.length != 0) {
              $.each(res, function(key, item) {
-                 $("#formEditAppointment #start").append("<option value='" + key + "'>" + item + "</option>");
+                 appendOptionToEditTimeSelect(key,item);
              });
          } else {
-             $("#formEditAppointment #start").append("<option value='" + 0 + "'>" + 'No hay citas disponibles' + "</option>");
+          appendOptionToEditTimeSelect(0,'No hay citas disponibles');
 
          }
-         $('#formEditAppointment .selectpicker').selectpicker('refresh');
+         refreshSelects();
      });
  }
 

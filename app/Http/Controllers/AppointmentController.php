@@ -12,7 +12,7 @@ use Carbon\Carbon;
 use DateTime;
 use Auth;
 use App\User;
-use App\Notifications\SuccesAddAppointment;
+use App\Notifications\SuccessAppointment;
 use App\Notifications\SuccesEditAppointment;
 use App\Notifications\SuccesDeleteAppointment;
 
@@ -30,15 +30,25 @@ class AppointmentController extends Controller
         $this->middleware('auth')->except('index','details');
         $this->middleware('sentryContext');
     }
-     
+    
      public function index()
     {
-        if (Auth::check()) {
+        try {
+            $open=Schedule::find(1);
+            $lunch=Schedule::find(2);
+            Javascript::put([  'openTime' => $open->start,'lunchStart' => $lunch->start, 'lunchEnd' => $lunch->end, 'closeTime' => $open->end]);
+            if (Auth::check()) {
             $user = Auth::user();
             Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
+            return view('appointment.index');
         }
+            
+        } catch (Exception $e ) {
+            return Response()->json(['message'=>'Lo sentimos, ha ocurrido un error al cargar las citas.']);
+        }
+        
       
-        return view('appointment.index');
+        
     }
     public function details(Request $request)
     {
@@ -55,28 +65,13 @@ class AppointmentController extends Controller
         return Response()->json($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        
-    }
-     public function add($date)
-    {
+     public function add($date){
          
        try {
-           
-            if (Auth::check()) {
-                    if (Auth::user()->role_id ==1 )
-                    {
-                        $userId =  User::select(
-                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
-                            ->pluck('name', 'id');
-                    }
-                }
+           $isAdmin=$this->userIsAdmin();
+            if ($isAdmin){
+                 $userId =$this->getConcatenateUsers();
+            }                
          $dt = Carbon::now();
         // date->//2017-05-30
         $dt->year   = (integer)(substr ($date, 0 , 4 ));
@@ -91,79 +86,73 @@ class AppointmentController extends Controller
                 'message'=>'No hay citas diponibles en este día.'
                 ]);
         }
-         if (Auth::check()) {
-            if (Auth::user()->role_id ==1 )
-            {
-                return view('appointment.add')
-                    ->with('serviceId',$serviceId)
-                    ->with('time_start',$availableTime)
-                    ->with('userId',$userId)->render();
+ 
+            if ($isAdmin) {
+                return view('appointment.add')->with('serviceId',$serviceId)->with('time_start',$availableTime)->with('userId',$userId)->render();
             }else {
                return view('appointment.add')->with('serviceId',$serviceId)->with('time_start',$availableTime)->render();
             }
-         } 
+         
        } catch (Exception $e ) {
        }
     }
     
+    public function userIsAdmin(){
+        if (Auth::check()) {
+                return (Auth::user()->role_id ==1 );
+        }
+        return false;
+    }
+    public function getConcatenateUsers(){
+        try {
+            return User::select(DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')->pluck('name', 'id');
+        } catch (Exception $e) {
+            throw $e;
+        }
+        
+    }
 public function edit($id,Request $request){
     
         try {
-            $date=Carbon::now();
-            $close=Schedule::find(3);//Take close time
-            $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($close->start , 0 , 2 )), (integer)(substr ($close->start , 3 , 2 )), (integer)(substr ($close->start , 6 , 2 )));
+            $isAdmin=$this->userIsAdmin();
             
-           
-        
+            $date=Carbon::now();
+            $open=Schedule::find(1);//Take close time
+            $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
+
             $appointment=Appointment::find($id);
            
             $serviceId =DB::table('services')->pluck('name', 'id');
             $firtsService=Services::find($appointment->serviceId);
             $dt=Carbon::createFromFormat('Y-m-d H:i:s', $appointment->start);
-              if ($date>=$closeTime && $date->toDateString()==$dt->toDateString()) {
-            return Response()->json([
-                'warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.'
-                ]);
+            if ($date>=$closeTime && $date->toDateString()==$dt->toDateString()) {
+                return Response()->json(['warning'=>'No se puede agregar ni actualizar más citas por el día de hoy.']);
             }
             $isPassDay=$this->isLastDays($dt);
             $availableTime=null;
-            if (Auth::check()) {
-                $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
-                   if (Auth::user()->role_id ==1)
-                    {
-                        if ($isPassDay!=true) {
-                            $userId =  User::select(
-                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
-                            ->pluck('name', 'id');
-                        }else {
-                            //If is a pass day only get the user information
-                           $userId =  User::select(
-                            DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')
-                            ->where('id',$appointment->userId)
-                            ->pluck('name', 'id');
-                            $availableTime=null;
-                            $availableTime= array_add($availableTime,$dt->toTimeString(),$dt->toTimeString());
-                        }
-                        
-                    }
+                if (($isPassDay==true) && $isAdmin || Auth::user()->id==$appointment->userId) {
+                    if($isAdmin)
+                        $userId =  User::select(DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')->where('id',$appointment->userId)
+                                        ->pluck('name', 'id');
+                        $availableTime= array_add($availableTime,$dt->toTimeString(),$dt->toTimeString());
+                }else{
+                    if($isAdmin)
+                        $userId =$this->getConcatenateUsers();
+                     $availableTime= $this->getTimeAvailable($firtsService,$dt,$appointment);
                 }
             $appointment->start=$dt->toTimeString();
-                    if (Auth::check()) {
-                        if (Auth::user()->role_id ==1 )
-                        {
+                        if ($isAdmin) {
                             return view('appointment.edit',['appointment'=>$appointment])
                             ->with('serviceId',$serviceId)
-                            ->with('time_start',$availableTime)
-                            ->with('passDay',$isPassDay)
-                            ->with('userId',$userId)->render();
+                                ->with('time_start',$availableTime)
+                                    ->with('passDay',$isPassDay)
+                                        ->with('userId',$userId)->render();
                         }else {
                            return view('appointment.edit',['appointment'=>$appointment])
                                 ->with('serviceId',$serviceId)
-                                ->with('time_start',$availableTime)
-                                ->with('passDay',$isPassDay)->render();
+                                    ->with('time_start',$availableTime)
+                                        ->with('passDay',$isPassDay)->render();
                         }
-                     } 
-            
             
         } catch (Exception $e) {
            return response()->json(["message"=>"Lo sentimos,no se ha logrado cargar los datos de la cita"]);
@@ -196,7 +185,7 @@ public function edit($id,Request $request){
             $Appointment->save();
             $user=User::find($request->userId);
             //Send notification to the user
-            $user->notify(new SuccesAddAppointment($Appointment->start));
+            $user->notify(new SuccessAppointment($Appointment->start));
             return response()->json(["message" => "La cita a sido reservada correctamente."]);
         } catch (Exception $e) {
             return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
@@ -305,8 +294,7 @@ public function edit($id,Request $request){
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
         $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));
 
-        $close=Schedule::find(3);//Take cloe time
-        $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($close->start , 0 , 2 )), (integer)(substr ($close->start , 3 , 2 )), (integer)(substr ($close->start , 6 , 2 )));
+        $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
         
         $actualDate=Carbon::now();
         
@@ -390,4 +378,8 @@ public function edit($id,Request $request){
         $date->addSeconds($secDuration);
         return $date;
     }
+    
+public function getOpenTime(){
+    
+}
 }

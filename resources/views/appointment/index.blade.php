@@ -3,6 +3,7 @@
         <link href="{{ asset('css/external/fullcalendar.print.min.css') }}" rel="stylesheet" media='print'>
     <link href="{{ asset('css/external/bootstrap-material-datetimepicker.css') }}" rel="stylesheet">
     <link href="{{ asset('css/external/bootstrap-select.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/external/bootstrap-clockpicker.css') }}" rel="stylesheet">
 
 @endsection
     
@@ -54,6 +55,7 @@
       <script src="{{ asset('js/external/bootstrap-material-datetimepicker.js') }}"></script>
       <script src="{{ asset('js/external/bootstrap-select.js') }}"></script>
       <script src="{{ asset('js/external/locale-all.js') }}"></script>
+      <script src="{{ asset('js/external/bootstrap-clockpicker.js') }}"></script>
     @endsection
    
 @section('js')
