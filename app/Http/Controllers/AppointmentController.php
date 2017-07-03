@@ -53,10 +53,10 @@ class AppointmentController extends Controller
     }
     public function details(Request $request)
     {
-        $data = Appointment::get(['id', 'title', 'start', 'end', 'color','userId']);
+        $data = Appointment::get(['id', 'title', 'start', 'end', 'color','userId','serviceId']);
         foreach ($data as $appointment ) {
             if (Auth::check()) {
-                    if ($request->user()->id ==$appointment->userId )
+                    if ($request->user()->id ==$appointment->userId && ($appointment->color)!="#BDAEC6" )
                     {
                         $appointment->color ="#6f4a79";
                     }
@@ -159,6 +159,19 @@ public function edit($id,Request $request){
            return response()->json(["message"=>"Lo sentimos,no se ha logrado cargar los datos de la cita"]);
         }
     }
+    
+    public function editRestriction($id,Request $request){
+    
+        try {
+            $restriction=Appointment::find($id);
+            $dt=Carbon::createFromFormat('Y-m-d H:i:s', $restriction->start);
+            $isPassDay=$this->isLastDays($dt);
+            return view('appointment.edit-block',['restriction'=>$restriction])->with('passDay',$isPassDay)->render();
+            
+        } catch (Exception $e) {
+           return response()->json(["message"=>"Lo sentimos,no se ha logrado cargar los datos de la restricción"]);
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -183,11 +196,60 @@ public function edit($id,Request $request){
             $Appointment->end=  $end;
             $Appointment->color ="#336699" ;
             $Appointment->userId = $request->userId;
-            $Appointment->save();
+            if ($this->ckeckIndividualTime( $Appointment->start, $Appointment->end,true)) {
+                $Appointment->save(); // code...
+            }else {
+                return response()->json(["error" => "reservado"]);
+            }
+           
             $user=User::find($request->userId);
             //Send notification to the user
             $user->notify(new SuccessAppointment($Appointment->start));
             return response()->json(["message" => "La cita a sido reservada correctamente."]);
+        } catch (Exception $e) {
+            return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
+            }
+    }
+     public function addRestrictionHour(){
+         try {
+             return view('appointment.block-hours');
+         } catch (Exception $e ) {
+              return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su solicitud."]);
+         }
+     }
+      public function saveRestrictionHour(Request $request){
+        try {
+            //Add the time of end the service
+            $Appointment = new Appointment();
+            $Appointment->title = $request->title;
+            $Appointment->start = $request->date_start ;
+            $Appointment->end=  $request->date_end ;;
+            $Appointment->color ="#BDAEC6" ;
+            $Appointment->userId = $request->userId;
+             if ($this->ckeckIndividualTime( $Appointment->start, $Appointment->end,true)) {
+                $Appointment->save(); // code...
+            }else {
+                return response()->json(["error" => "reservado"]);
+            }
+           
+            return response()->json(["message" => "Se han bloqueado las horas seleccionadas exitosamente."]);
+        } catch (Exception $e) {
+            return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
+            }
+    }
+     public function editRestrictionHour(Request $request){
+        try {
+            
+          
+            //Add the time of end the service
+            $Appointment = Appointment::find($request->id);
+            $Appointment->title = $request->title;
+            $Appointment->start = $request->date_start ;
+            $Appointment->end=  $request->date_end ;;
+            $Appointment->color ="#BDAEC6" ;
+            $Appointment->userId = $request->userId;
+            $Appointment->save();
+            return response()->json(["message" => "Actualixación realizada exitosamente."]);
         } catch (Exception $e) {
             return response()->json(["message" => "Lo sentimos, ha ocurrido un error al procesar su reservación."]);
             }
@@ -255,6 +317,28 @@ public function edit($id,Request $request){
     } catch (Exception $e ) {
         return Response()->json([
                 'message'   =>  'Lo sentimos, ha ocurrido un error al cancelar su cita.'
+            ]);
+    }
+        
+    
+    } 
+    public function destroyRestriction($id){
+        try {
+        $restriction = Appointment::find($id);
+        if($restriction == null)
+            return Response()->json([
+                'message'   =>  'Lo sentimos, no se ha encontrado los rangos seleccionados.'
+            ]);
+
+        $restriction->delete();
+
+        return Response()->json([
+            'message'   =>  'Bloqueo borrado correctamente.'
+        ]);
+        
+    } catch (Exception $e ) {
+        return Response()->json([
+                'message'   =>  'Lo sentimos, ha ocurrido un error al eliminar las horas bloqueadas.'
             ]);
     }
         
@@ -359,6 +443,48 @@ public function edit($id,Request $request){
         return $this->timeAvailables;
     }
     
+    public function ckeckIndividualTime($start,$end,$isLocal=false){
+        $initialTime= Carbon::createFromFormat('Y-m-d H:i:s',$start);
+        $endTime =Carbon::createFromFormat('Y-m-d H:i:s',$end);
+        $date=$initialTime;
+        $open=Schedule::find(1);//Take the open schedule
+        $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        
+        $lunch=Schedule::find(2);//The lunch time
+        $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
+        $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));
+
+        $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
+
+          $appointments=DB::table('appointments')
+            ->orderBy('start')
+                    ->where('start', 'like','%'. $initialTime->toDateString().'%')
+                        ->get();
+                for ($i = 0; $i < $appointments->count(); $i++) {//$appointments[$i]->start
+                if($appointments[$i]->start==($initialTime->toDateString().' '.$initialTime->toTimeString())
+                ||($appointments[$i]->start<$endTime && $appointments[$i]->start>$initialTime)
+                ||($appointments[$i]->end<$endTime && $appointments[$i]->end>$initialTime)
+                ){
+                    if(!$isLocal)
+                        return response()->json(["available" => false]);
+                        else
+                            return false;
+                }
+               }//end for
+           if (($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch) {
+                    if(!$isLocal)
+                        return response()->json(["available" => false]);
+                        else
+                            return false;
+                    }else{
+             if ($endTime<=$closeTime) {
+                  if(!$isLocal)
+                    return response()->json(["available" => true]);
+                    else
+                            return true;
+          }}
+    }
+    
     public function isActualDate($actualDate,$selectedDate){
         return ($actualDate->toDateString()==$selectedDate->toDateString());
 
@@ -380,7 +506,5 @@ public function edit($id,Request $request){
         return $date;
     }
     
-public function getOpenTime(){
-    
-}
+
 }

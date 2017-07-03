@@ -31,6 +31,14 @@ Route::get('getIndexUsers', 'UserController@getIndex');
 Route::get('serviceAvailable/{id}/{date}/{appointmentId?}','AppointmentController@timesAvailable');
 Route::get('addAppointment/{date}', 'AppointmentController@add');
 
+Route::get('addRestrictionHour', 'AppointmentController@addRestrictionHour');
+Route::post('saveRestrictionHour','AppointmentController@saveRestrictionHour');
+Route::post('editRestrictionHour','AppointmentController@editRestrictionHour');
+Route::delete('deleteRestriction/{id}','AppointmentController@destroyRestriction');
+Route::get('editRestriction/{id}', 'AppointmentController@editRestriction');
+
+Route::get('checkTime/{start}/{end}', 'AppointmentController@ckeckIndividualTime');
+
 Route::post('update-news','NewsController@updateNews');
 Route::post('update-services','ServiceController@updateServices');
 Route::post('update-products','ProductController@updateProducts');

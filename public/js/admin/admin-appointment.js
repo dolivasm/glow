@@ -11,14 +11,20 @@
          },
          navLinks: true, // can click day/week names to navigate views
          editable: false,
-         eventOverlap:false,
+         slotEventOverlap:false,
          selectable: true,
          selectHelper: true,
          buttonIcons: true,
          locale: 'es',
          weekends: false,
-         timeFormat: 'H(:mm)',
-         select: function(start) {
+         timeFormat: 'HH:mm',
+         select: function(start,end) {
+             
+            var date_start = $.fullCalendar.moment(start).format('YYYY-MM-DD HH:mm:ss');
+            var date_end = $.fullCalendar.moment(end).format('YYYY-MM-DD HH:mm:ss');
+            
+            //checkOverlap(date_start,date_end);
+            
              start = moment(start.format());
              var actualDate = getActualDate();
              if (typeof userId === 'undefined') {
@@ -27,40 +33,14 @@
              if (validate_date(actualDate, start.format('DD-MM-YYYY'))) {
                  notifyWarning('No se puede reservar en días anteriores');
              } else {
-                 $('#divForAddAppointment').html('Cargando contenido...');
-                 $.get('addAppointment/' + start.format('YYYY-MM-DD'), function(response) {
-                     $('#divForAddAppointment').html(response);
-                     if (response.message == null) {
-                         $('.selectpicker').selectpicker();
-                         $('#addAppointmentModal').modal('show');
-                     } else {
-                         notifyWarning(response.message);
-                     }
-
-                     //Validation method with jquery validate
-                     $('#date_start').val(start.format('YYYY-MM-DD'));
-                     $("#addAppointmentForm").validate({
-                         submitHandler: function(form) {
-                             if ($("#addAppointmentForm #time_start").val() != 0) {
-                                 postAppointment();
-                             } else {
-                                 notifyWarning('No hay citas para este servicio ');
-                             }
-
-                         }
-                     });
-                 }).fail(function(response) {
-                     switch (response.status) {
-                         case 401:
-                             notifyWarning('Inicie sesión para agregar o actualizar citas');
-                             break;
-                         case 408:
-                             notifyError('Lo sentimos, estamos teniendo problemas de conexión');
-                             break;
-                         default:
-                             notifyError('Lo sentimos, ha ocurrido un error');
-                     }
-                 });
+                    if (userRole==1) {
+                        $('#adminOptions #start').val(date_start);
+                        $('#adminOptions #end').val(date_end);
+                       $('#optionsAppoitmentModal').modal('show');
+                    }else{
+                        doReservation(date_start);
+                    }
+                        
              }
          }
          },
@@ -81,8 +61,13 @@
          },
 
          eventClick: function(event, jsEvent, view) {
-             if (event.id==0) {
-                 notifyInformation("La hora de almuerzo es de "+$.fullCalendar.moment(event.start).format('H(:mm)')+" a "+$.fullCalendar.moment(event.end).format('H(:mm)'));
+             if (event.serviceId==null) {
+                 if (event.id==0) {
+                 notifyInformation("La hora de almuerzo es de "+$.fullCalendar.moment(event.start).format('HH:mm')+" a "+$.fullCalendar.moment(event.end).format('HH:mm'));    
+                 }else{
+                     showBlockedHoursModal(event);
+                 }
+                 
              }else{//modify event
              //User is not autenthicated
              if (typeof userId === 'undefined') {
@@ -92,8 +77,6 @@
                  var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
                      //Check if the user can edit
                      if (userRole == 1 || event.userId == userId) {
-                         var time_start = $.fullCalendar.moment(event.start).format('H(:mm)');
-                         var date_end = $.fullCalendar.moment(event.end).format('YYYY-MM-DD H(:mm)');
                          $.get('appointment/' + event.id + '/edit', function(response) {
                              if (response.warning == null) {
                                  
@@ -146,19 +129,34 @@
      });
 
  });
+ function showBlockedHoursModal(event){
+        $.get('editRestriction/' + event.id , function(response) {
+            $('#divDetailsBlockHour').html(response);
+            $("#editblockHoursForm #Id").val(event.id);
+                $('#editblockHoursForm').validate(  {
+                        submitHandler: function(form) {
+                            putHourRestriction();
 
- function postAppointment() {
+                         }
+                   });
+                   $('#detailsBlockHourModal').modal('show');
+            });
 
-     var token = $("#addAppointmentForm #token").val();
-     var route = "appointment";
+               
+ }
+ function  putHourRestriction(){
+
+     var token = $("#editblockHoursForm #token").val();
+     var route = "editRestrictionHour";
 
      var data = new FormData();
-     data.append('userId', $("#addAppointmentForm #userId").val());
-     data.append('serviceId', $("#addAppointmentForm #serviceId").val());
-     data.append('date_start', $("#addAppointmentForm #date_start").val());
-     data.append('time_start', $("#addAppointmentForm #time_start").val());
+     data.append('id', $("#editblockHoursForm #Id").val());
+     data.append('userId', userId);
+     data.append('title', $("#editblockHoursForm #title").val());
+     data.append('date_start', $("#editblockHoursForm #start").val());
+     data.append('date_end', $("#editblockHoursForm #end").val());
 
-     $('#addAppointmentModal').modal('hide');
+     $('#detailsBlockHourModal').modal('hide');
      $.ajax({
          url: route,
          headers: {
@@ -174,6 +172,127 @@
              $('#calendar').fullCalendar('refetchEvents');
              notifySuccess(response.message);
 
+         },
+         error: function(response) {
+             if (response.status == 422) {
+                 displayFieldErrors(response);
+             } else {
+                 notifyError(response.error);
+             }
+             $('#detailsBlockHourModal').modal('show');
+         }
+     });
+ 
+ }
+ 
+ function doReservation(startTime=null){
+        $('#optionsAppoitmentModal').modal('hide');
+        var start;
+        if (startTime==null) 
+          start=$('#adminOptions #start').val(); 
+            else
+            start= startTime
+                 $('#divForAddAppointment').html('Cargando contenido...');
+                 $.get('addAppointment/' + start, function(response) {
+                     $('#divForAddAppointment').html(response);
+                     if (response.message == null) {
+                         $('.selectpicker').selectpicker();
+                         $('#addAppointmentModal').modal('show');
+                     } else {
+                         notifyWarning(response.message);
+                     }
+
+                     //Validation method with jquery validate
+                     $('#date_start').val(start.substring(0,10));
+                     $("#addAppointmentForm").validate({
+                         submitHandler: function(form) {
+                             if ($("#addAppointmentForm #time_start").val() != 0) {
+                                 postAppointment();
+                             } else {
+                                 notifyWarning('No hay citas para este servicio ');
+                             }
+
+                         }
+                     });
+                 }).fail(function(response) {
+                     switch (response.status) {
+                         case 401:
+                             notifyWarning('Inicie sesión para agregar o actualizar citas');
+                             break;
+                         case 408:
+                             notifyError('Lo sentimos, estamos teniendo problemas de conexión');
+                             break;
+                         default:
+                             notifyError('Lo sentimos, ha ocurrido un error');
+                     }
+                 });
+     
+ }
+ function blockHours(){
+     $('#optionsAppoitmentModal').modal('hide');
+     var start=$('#adminOptions #start').val();
+     var end=$('#adminOptions #end').val();
+     checkOverlap(start,end);
+
+    
+}
+ function checkOverlap(start,end) {  
+            $.get('checkTime/' + start + '/'+end, function(response) {
+                if ( response.available==true){
+                $.get('addRestrictionHour', function(response) {
+                    $('#divForblockHours').html(response);
+                     $("#blockHoursForm #date_start").val(start);
+                     $("#blockHoursForm #date_end").val(end);
+
+                   $('#blockHoursForm').validate(  {
+                        submitHandler: function(form) {
+                            postHourRestriction();
+
+                         }
+                   });
+                   $('#blockHoursModal').modal('show');
+                });
+                
+            }else {
+                        notifyWarning("El lapso seleccionado no se puede bloquear, porque ya existen eventos");
+            }
+                    });  
+            
+  }
+   function postHourRestriction() {
+
+     var token = $("#blockHoursForm #token").val();
+     var route = "saveRestrictionHour";
+
+     var data = new FormData();
+     data.append('userId', userId);
+     data.append('title', $("#blockHoursForm #title").val());
+     data.append('date_start', $("#blockHoursForm #date_start").val());
+     data.append('date_end', $("#blockHoursForm #date_end").val());
+
+     $.ajax({
+         url: route,
+         headers: {
+             'X-CSRF-TOKEN': token
+         },
+         cache: false,
+         contentType: false,
+         processData: false,
+         type: 'POST',
+         dataType: 'json',
+         data: data,
+         success: function(response) {
+              $('#calendar').fullCalendar('refetchEvents');
+              if (response.error==null) {
+                notifySuccess(response.message);
+                 $('#blockHoursModal').modal('hide');
+                  
+              }else{
+                  if (response.error=="reservado") {
+                     notifyError("Lo sentimos, la hora seleccionada ya ha sido reservada. Por favor, seleccioné un nuevo rango");
+                      $('#blockHoursModal').modal('hide');
+                 }
+              }
 
          },
          error: function(response) {
@@ -182,7 +301,53 @@
              } else {
                  notifyError(response.error);
              }
-             $('#addAppointmentModal').modal('hide');
+         }
+     });
+ }
+
+ function postAppointment() {
+
+     var token = $("#addAppointmentForm #token").val();
+     var route = "appointment";
+
+     var data = new FormData();
+     data.append('userId', $("#addAppointmentForm #userId").val());
+     data.append('serviceId', $("#addAppointmentForm #serviceId").val());
+     data.append('date_start', $("#addAppointmentForm #date_start").val());
+     data.append('time_start', $("#addAppointmentForm #time_start").val());
+     $.ajax({
+         url: route,
+         headers: {
+             'X-CSRF-TOKEN': token
+         },
+         cache: false,
+         contentType: false,
+         processData: false,
+         type: 'POST',
+         dataType: 'json',
+         data: data,
+         success: function(response) {
+             $('#calendar').fullCalendar('refetchEvents');
+             if (response.error==null) {
+                 
+                notifySuccess(response.message);
+                   $('#addAppointmentModal').modal('hide'); 
+             }else{
+                 if (response.error=="reservado") {
+                    changeService($("#addAppointmentForm #serviceId"));
+                     notifyError("Lo sentimos, la hora seleccionada ya ha sido reservada. Por favor, seleccioné una nueva");
+                 }
+             }
+            
+
+
+         },
+         error: function(response) {
+             if (response.status == 422) {
+                 displayFieldErrors(response);
+             } else {
+                 notifyError(response.error);
+             }
          }
      });
  }
@@ -227,7 +392,7 @@
  }
 
  function changeService(sel) {
-     var route = "serviceAvailable/" + sel.value + "/" + $("#addAppointmentForm #date_start").val();
+     var route = "serviceAvailable/" + sel.val() + "/" + $("#addAppointmentForm #date_start").val();
      $("#addAppointmentForm #time_start").empty();
      appendOptionToAddTimeSelect(-1,'Cargando disponibilidad...');
      refreshSelects();
@@ -297,6 +462,33 @@ function appendOptionToEditTimeSelect(value,option){
          },
          error: function(response) {
              $('#editAppointmentModal').modal('show');
+             notifyError(response.message);
+         }
+     });
+ }
+ function   deleteBlockHour(btn){
+     var id = $('#editblockHoursForm #Id').val();
+     $("#deleteRestriction #Id").val(id);
+     $('#deleteBlockHourModal').modal('show');
+ }
+  function acceptDeleteBlockHour() {
+     $('#deleteBlockHourModal').modal('hide');
+     var delete_url = 'deleteRestriction/' +$("#deleteRestriction #Id").val();
+     var token = $("#token").val();
+     $('#detailsBlockHourModal').modal('hide');
+     $.ajax({
+         url: delete_url,
+         headers: {
+             'X-CSRF-TOKEN': token
+         },
+         type: 'DELETE',
+         success: function(response) {
+             $('#calendar').fullCalendar('refetchEvents');
+             notifySuccess(response.message);
+
+         },
+         error: function(response) {
+             $('#detailsBlockHourModal').modal('show');
              notifyError(response.message);
          }
      });

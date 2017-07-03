@@ -23,7 +23,7 @@
                      <div class="row">
                         <div class="col-md-offset-3 col-md-6 text-center">
                             <a class="btn btn-normal-add btn-lg" OnClick="updateSchedule('schedule/create');" style="padding-bottom=10px;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 
-                             Mofificar Horario</a>
+                             Modificar Horario</a>
                         </div>
                     </div>
                     @endif
@@ -56,14 +56,20 @@
             
 
         </div>
+       
+        @if (!Auth::guest())
         @include('appointment.add-modal')
         @include('appointment.edit-modal')
         @include('appointment.delete-modal')
         @include('appointment.change-time')
-        @if (!Auth::guest())
             @if((Auth::user()->role_id)==1)
                 @include('schedule.update-modal')
+                @include('appointment.admin-options')
+                @include('appointment.block-hours-modal')
+                @include('appointment.edit-block-hours-modal')
+                @include('appointment.delete-block-modal')
                 @endif
+            @include('appointment.edit-block-hours-modal')
         @endif
     @endsection
      @section('external-js')
