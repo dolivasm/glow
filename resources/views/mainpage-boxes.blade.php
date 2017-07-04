@@ -21,7 +21,8 @@
                         </div> -->
                         <div class="detail-box-bottom bg-yellow">
                             <h3>Servicios</h3>
-                            <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
+                            <p>Ofrecemos gran variedad de servicios relajantes y de belleza. Consulte todos nuestros servicios disponibles.</p>
+                            <!-- <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p> -->
                             <!-- <a href="{{ asset('services') }}"><i class="fa fa-plus-square-o"></i></a> -->
                             <a href="{{ asset('services') }}" class="btn btn-sm btn-normal-boxes"><span class="icon-physical-therapy"></span> Ver Todos</a>
                         </div>
@@ -35,7 +36,8 @@
                         </div> -->
                         <div class="detail-box-bottom bg-blue-4">
                             <h3>Productos</h3>
-                            <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
+                            <p>Ofrecemos productos de la mejor calidad para su cuidado personal. Consulte todos nuestros productos disponibles.</p>
+                            <!-- <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p> -->
                             <!-- <a href="{{ asset('products') }}"><i class="fa fa-plus-square-o"></i></a> -->
                             <a href="{{ asset('products') }}" class="btn btn-sm btn-normal-boxes"><span class="fa fa-shopping-bag"></span> Ver Todos</a>
                         </div>
@@ -48,7 +50,8 @@
                         </div> -->
                         <div class="detail-box-bottom bg-orange">
                             <h3>Solicitar Cita</h3>
-                            <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p>
+                            <p>Ofrecemos un sistema para reservar citas en línea. Además, puede conusltar nuestra diponibilidad facilmente.</p>
+                            <!-- <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p> -->
                             <a href="appointment" class="btn btn-sm btn-normal-boxes"><span class="fa fa-calendar"></span> Reservar</a>
                         </div>
                     </div>

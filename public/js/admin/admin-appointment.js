@@ -600,3 +600,12 @@ function appendOptionToEditTimeSelect(value,option){
      });
  
  }
+ 
+ function showHowToModal() {
+  /*$.get('users/' +id+ '', function(response) {
+        $('#idUserToDelete').val(id);
+        $('#nameUserToDelete').text(name);
+        $('#firstNameUserToDelete').text(fisrtName);
+     });*/
+    $('#howtomodal').modal('show');
+ }

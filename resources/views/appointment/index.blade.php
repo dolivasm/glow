@@ -28,7 +28,9 @@
                     </div>
                     @endif
             @endif
-            
+            <br>
+            <a OnClick="showHowToModal();" class="btn btn-normal btn-block text-uppercase">¿Cómo reservar una cita?</a>
+            <br>
             <div class="row">
                 <div class="col-md-offset-2 col-md-3 text-center">
                     <h4 id="myAppointments">
@@ -56,7 +58,7 @@
             
 
         </div>
-       
+       @include('appointment.howto-modal')
         @if (!Auth::guest())
         @include('appointment.add-modal')
         @include('appointment.edit-modal')
@@ -68,7 +70,7 @@
                 @include('appointment.block-hours-modal')
                 @include('appointment.edit-block-hours-modal')
                 @include('appointment.delete-block-modal')
-                @endif
+            @endif
             @include('appointment.edit-block-hours-modal')
         @endif
     @endsection

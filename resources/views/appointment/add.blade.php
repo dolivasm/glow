@@ -14,7 +14,7 @@
 
 <div class="form-group">
   {{ Form::label('title', 'Servicio') }}
-  {{ Form::select('serviceId', $serviceId, null, array('required'=>'required','onchange'=>'changeService(this);','id'=>'serviceId','class'=>'selectpicker form-control','style'=>'' )) }}
+  {{ Form::select('serviceId', $serviceId, null, array('required'=>'required','onchange'=>'changeService($("#addAppointmentForm #serviceId"));','id'=>'serviceId','class'=>'selectpicker form-control','style'=>'' )) }}
 </div>
 <div class="form-group">
   {{ Form::label('date_start', 'Fecha') }}

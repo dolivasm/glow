@@ -136,7 +136,7 @@ public function edit($id,Request $request){
             //}
             $isPassDay=$this->isLastDays($dt);
             $availableTime=null;
-                if (($isPassDay==true) && $isAdmin || Auth::user()->id==$appointment->userId) {
+                if (($isPassDay==true) && $isAdmin || (Auth::user()->id==$appointment->userId && ($isPassDay==true))) {
                     if($isAdmin)
                         $userId =  User::select(DB::raw("CONCAT(name,' ',firstName,' ',lastName) AS name"),'id')->where('id',$appointment->userId)
                                         ->pluck('name', 'id');
