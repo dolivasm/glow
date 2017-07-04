@@ -80,6 +80,11 @@ class AppointmentController extends Controller
         $dt->day    = (integer)(substr ($date , 8 , 2 ));  
 
         $serviceId =DB::table('services')->orderBy('duration', 'asc')->pluck('name', 'id');
+        if (count($serviceId)==0) {
+            return Response()->json([
+                'warning'=>'No hay servicios disponibles actualmente.'
+                ]);
+        }
         $firtsService=DB::table('services')->orderBy('duration', 'asc')->first();
         $availableTime= $this->getTimeAvailable($firtsService,$dt);
         if (count($availableTime)==0) {

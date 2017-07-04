@@ -194,6 +194,9 @@
             start= startTime
                  $('#divForAddAppointment').html('Cargando contenido...');
                  $.get('addAppointment/' + start, function(response) {
+                     if (response.warning==null) {
+                         
+                     
                      $('#divForAddAppointment').html(response);
                      if (response.message == null) {
                          $('.selectpicker').selectpicker();
@@ -214,6 +217,9 @@
 
                          }
                      });
+                    }else {
+                        notifyWarning(response.warning);
+                    }
                  }).fail(function(response) {
                      switch (response.status) {
                          case 401:
