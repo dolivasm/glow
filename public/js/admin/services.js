@@ -8,6 +8,11 @@ $(document).ready(function () {
         });    
 });
 
+function seeAllServices(){
+   $("#searchServicesForm #txt_search").val("")
+   filter();
+}
+
 
 function loadServices() {
     

@@ -40,10 +40,14 @@
     	            </div>
     	          
     	       </div>
-    	       <div class="col-md-4">
+    	       <div class="col-md-2">
     	           {!!  Form::submit('Buscar',['class' => 'btn btn-normal btn-block text-uppercase','id' => 'addSubmit'])!!}
     	             {!! Form::close() !!}
                 </div>
+                 <div class="col-md-2">
+    	             <button  class='btn btn-normal btn-block text-uppercase'  OnClick="seeAllServices();"><i class="ion-thumbsup"> </i>Ver todos</button>
+                </div>
+                
                 
                 
             </div>

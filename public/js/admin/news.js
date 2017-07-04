@@ -25,7 +25,10 @@ function loadNews() {
         })
 
 }
-
+function seeAllNews(){
+   $("#searchNewsForm #txt_search").val("")
+   filter();
+}
 function filter() {
     var searchValue = $("#searchNewsForm #txt_search").val();
     if (searchValue != "") {

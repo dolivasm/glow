@@ -8,6 +8,11 @@ $(document).ready(function() {
         });
 });
 
+function seeAllProducts(){
+   $("#searchProductsForm #txt_search").val("")
+   filter();
+}
+
 function loadProducts() {
     $.ajax({
         cache: false,
