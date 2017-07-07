@@ -24,5 +24,5 @@
   {{ Form::label('time_start', 'Hora') }}
   {{ Form::select('time_start', $time_start, null, array('required'=>'required','id'=>'time_start','class'=>'selectpicker form-control','data-size'=>'4' )) }}
 </div>
-{!!  Form::submit('Guardar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'addSubmit'])!!}
+{!!  Form::submit('Guardar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'addAppointmentSubmit'])!!}
 {{ Form::close() }}

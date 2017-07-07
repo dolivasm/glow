@@ -40,7 +40,7 @@
 </div>
 @if (!Auth::guest())
          @if(((Auth::user()->role_id)==1 ||(Auth::user()->id) ==$appointment->userId) && $passDay!=true)
-             {!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'editSubmit'])!!}
+             {!!  Form::submit('Actualizar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'editAppointmentSubmit'])!!}
             <a OnClick="cancelAppointment(this);" id="delete" data-href="{{ url('appointment') }}" data="" class="btn btn-normal-warning btn-block text-uppercase">Eliminar</a>
         @endif
     @endif

@@ -477,20 +477,20 @@ input[type="color"]:focus,
     background-color: #004175;
 }
 .bg-blue-4 {
-    background-color: #030FFD/*#001fe3*/;
+    background-color: #336699/*#001fe3*/;
 }
 
 .bg-blue-4-dark {
     background-color: #0018ab;
 }
 .bg-yellow{
-    background-color:#ffb700;
+    background-color:#6f4a79/*ffb700*/;
 }
 .bg-yellow-dark{
     background-color:#c48d00;
 }
 .bg-orange{
-    background-color:#ff8700;
+    background-color:#8A67E8/*ff8700*/;
 }
 .bg-orange-dark{
     background-color:#c46800;

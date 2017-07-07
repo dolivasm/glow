@@ -39,8 +39,9 @@
                         <td><i class="fa fa-clock-o"></i></td>
                         <td>
                            <div class="icon-box-text">
-                              <!-- Lun - Vie 9:00 am-12:00 pm | 2:00 pm-7:00 pm-->{!!$schedule!!}<br />
-                              Domingos Cerrado
+                              {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00' }}
+                              <br />
+                              Sábados y Domingos Cerrado
                            </div>
                         </td>
                      </tr>
@@ -210,15 +211,16 @@
                   <h3>Contactenos</h3>
                   <p>
                      Dirección: Alajuela, Grecia, 25 sur de los bomberos.<br />
-                     Teléfono: (+506) 8814-01 36<br />
+                     Teléfono: (+506) 8814-0136<br />
                      Correo: clinica.glow.cr@gmail.com
                   </p>
                </div>
                <div class="col-md-3 col-xs-12 col-sm-6">
                   <h3>Horario</h3>
                   <p>
-                     <!-- Lun - Vie 9:00 am-12:00 | pm 1:00 pm-7:00 pm -->{!!$schedule!!}<br />
-                     Domingos Cerrado
+                     {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00' }}
+                     <br />
+                     Sábados y Domingos Cerrado
                   </p>
                </div>
             </div>
@@ -230,6 +232,7 @@
                   <div class="footer-inner">
                      <div class="col-lg-12">
                         <p class="text-center">&copy;2017 Todos los derechos resevados|Glow</p>
+                        <p class="text-center">Desarrollado por: Allan Zuñiga, Daniel Elizondo, David Olivas y Esteban Bogantes</p>
                         <p class="text-center">
                            <a href="https://www.facebook.com/Cl%C3%ADnica-FisioEst%C3%A9tica-Glow-109629109054741/" target="_blank" class="btn-social-media"><i class="fa fa-facebook"></i></a>
                            <a href="https://web.stagram.com/glow_fisioestetica" target="_blank" class="btn-social-media"><i class="fa fa-instagram"></i></a>
