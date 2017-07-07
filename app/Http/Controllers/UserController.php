@@ -52,7 +52,18 @@ class UserController extends Controller
         
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        $users = User::withTrashed()->get()->except(Auth::id());
+         $users = User::withTrashed()->get(['id', 
+                            'name', 
+                            'firstName',
+                            'lastName',
+                            'birthday',
+                            'username',
+                            'email',
+                            'role_id',
+                            'created_at',
+                            'updated_at',
+                            'phone'])->except(Auth::id());
+        //$users = User::withTrashed()->get()->except(Auth::id());
         return view('users.users_index', compact('users'))->with('schedule',$schedule)->with('schedule2', $schedule2)->render();
     }
     
