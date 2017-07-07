@@ -39,7 +39,13 @@ class NewsController extends Controller
     
     public function news_detail(){
         try {
-             $news = DB::table('news')->orderBy('updated_at', 'desc')->get();
+             $news = News::orderBy('updated_at', 'desc')->get(['id', 
+                            'title', 
+                            'description', 
+                            'imageUrl', 
+                            'created_at',
+                            'updated_at']);
+                            
             return  view('news.news-detail',compact('news'))->render();
         } catch (Exception $e) {
             return response()->json(["error"=>"Lo sentimos, no se a podido consultar los anuncios existentes."]);

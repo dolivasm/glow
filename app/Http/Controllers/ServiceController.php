@@ -46,7 +46,15 @@ class ServiceController extends Controller
     
     {
         try {
-             $services = DB::table('services')->orderBy('updated_at', 'desc')->get();
+             $services = Services::orderBy('updated_at', 'desc')->get(['id', 
+                            'name', 
+                            'description',
+                            'price',
+                            'imageUrl', 
+                            'created_at',
+                            'updated_at',
+                            'duration']);
+            
             return  view('services.services-detail',compact('services'))->render();
         } catch (Exception $e) {
             return "Ha sucedido un error con el siguiente mensaje: ".$e->getMessage();

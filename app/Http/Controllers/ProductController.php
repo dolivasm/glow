@@ -41,7 +41,13 @@ class ProductController extends Controller
     
     {
         try {
-            $products = DB::table('products')->orderBy('updated_at', 'desc')->get();
+            $products = Product::orderBy('updated_at', 'desc')->get(['id', 
+                            'name', 
+                            'description', 
+                            'imageUrl', 
+                            'created_at',
+                            'updated_at',
+                            'price']);
             return  view('products.products-detail',compact('products'))->render();
         } catch (Exception $e) {
             return "Ha sucedido un error con el siguiente mensaje: ".$e->getMessage();
