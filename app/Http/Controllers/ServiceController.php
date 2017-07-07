@@ -4,6 +4,7 @@ namespace App\Http\Controllers; //Nos permite definir la ubicación donde se enc
 
 use Illuminate\Http\Request;
 use App\Services; //Nos permite llamar a otras clases para poder utilizarlas
+use App\Schedule;
 use Exception;
 use App\Helpers\ImageHelper;
 use App\Http\Requests\ServicesRequest;
@@ -29,8 +30,12 @@ class ServiceController extends Controller
      private $imgDefault="img/news/img-default.png";
     public function index() //Lo utilizaremos para mostrar la página inicial
     {
-
-        return view($this->path.'.services-index');
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
+        return view($this->path.'.services-index')->with('schedule',$schedule);
     }
     
 

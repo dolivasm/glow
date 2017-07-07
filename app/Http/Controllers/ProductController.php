@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\User;
+use App\Schedule;
 use App\Helpers\ImageHelper;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,12 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return  view('products.products');
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
+        return  view('products.products')->with('schedule',$schedule);
     }
     
     public function products_detail()

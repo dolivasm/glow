@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule])
 
 @section('external-css')
     {!!Html::style('assets/css/external/dataTables.bootstrap.min.css')!!}

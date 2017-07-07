@@ -39,7 +39,7 @@
                         <td><i class="fa fa-clock-o"></i></td>
                         <td>
                            <div class="icon-box-text">
-                              Lun - Vie 9:00 am-12:00 pm | 2:00 pm-7:00 pm<br />
+                              <!-- Lun - Vie 9:00 am-12:00 pm | 2:00 pm-7:00 pm-->{!!$schedule!!}<br />
                               Domingos Cerrado
                            </div>
                         </td>
@@ -210,14 +210,14 @@
                   <h3>Contactenos</h3>
                   <p>
                      Dirección: Alajuela, Grecia, 25 sur de los bomberos.<br />
-                     Teléfono: (+506) 8814-01 36 // 24 94 0108<br />
-                     Correo: info@site.com
+                     Teléfono: (+506) 8814-01 36<br />
+                     Correo: clinica.glow.cr@gmail.com
                   </p>
                </div>
                <div class="col-md-3 col-xs-12 col-sm-6">
                   <h3>Horario</h3>
                   <p>
-                     Lun - Vie 9:00 am-12:00 | pm 1:00 pm-7:00 pm<br />
+                     <!-- Lun - Vie 9:00 am-12:00 | pm 1:00 pm-7:00 pm -->{!!$schedule!!}<br />
                      Domingos Cerrado
                   </p>
                </div>

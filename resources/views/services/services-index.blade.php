@@ -5,7 +5,7 @@
     <link href="{{ asset('css/external/bootstrap-clockpicker.min.css') }}" rel="stylesheet">
 @endsection
 
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule])
     @section('content')
     
      <!-- Section Title -->

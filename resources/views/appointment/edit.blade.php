@@ -33,9 +33,9 @@
 <div class="form-group">
   {{ Form::label('time_start', 'Hora') }}
   @if (!$passDay)
-    {{ Form::select('start', $time_start, null, array('required'=>'required','id'=>'start','class'=>'selectpicker form-control' )) }}
+    {{ Form::select('start', $time_start, null, array('required'=>'required','id'=>'start','class'=>'selectpicker form-control','data-size'=>'4' )) }}
     @else
-      {{ Form::select('start', $time_start, null, array('required'=>'required','id'=>'start','disabled','class'=>'selectpicker form-control' )) }}
+      {{ Form::select('start', $time_start, null, array('required'=>'required','id'=>'start','disabled','class'=>'selectpicker form-control','data-size'=>'4')) }}
   @endif
 </div>
 @if (!Auth::guest())

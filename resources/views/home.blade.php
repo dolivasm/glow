@@ -12,7 +12,7 @@
     <link href="{{ asset('css/removesidescroll.css') }}" rel="stylesheet">
 
 @endsection
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule])
     @section('content')
     <!-- Header -->
     <header id="home-half">

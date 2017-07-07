@@ -42,7 +42,9 @@ class AppointmentController extends Controller
                 Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
                 
             }
-            return view('appointment.index');
+            $schedule = "Lun-Vie ". $open->start . " - ". $lunch->start ." | ". $lunch->end ." - ". $open->end;
+        
+            return view('appointment.index')->with('schedule',$schedule);
             
         } catch (Exception $e ) {
             return Response()->json(['message'=>'Lo sentimos, ha ocurrido un error al cargar las citas.']);
@@ -418,14 +420,9 @@ public function edit($id,Request $request){
          
        while ($endTime<=$closeTime){
            for ($i = 0; $i < $appointments->count(); $i++) {//$appointments[$i]->start
-                if ((($appointments[$i]->start==$initialTime 
-                    || $appointments[$i]->start<$endTime) 
-                    && $appointments[$i]->start>=$initialTime)
-                    ||($this->isActualDate($actualDate,$date) && 
-                        (($initialTime>=$appointments[$i]->start && 
-                        $initialTime< $appointments[$i]->end) 
-                        || ($endTime>$appointments[$i]->start 
-                        && $endTime< $appointments[$i]->end)))
+                if ($appointments[$i]->start==($initialTime->toDateString().' '.$initialTime->toTimeString())
+                    ||($appointments[$i]->start<$endTime && $appointments[$i]->start>$initialTime)
+                    ||($appointments[$i]->end<$endTime && $appointments[$i]->end>$initialTime)
                     ) {
                     $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $appointments[$i]->end);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                     //Se actualiza el periodo de la cita 
@@ -438,10 +435,14 @@ public function edit($id,Request $request){
                         //Se actualiza el periodo de la cita 
                         $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);
                         $endTime=$this->addServiceTime($service,$endTime);
+                       
                     }else{
              if ($endTime<=$closeTime) {
+               
                 $this->timeAvailables= array_add($this->timeAvailables,$initialTime->toTimeString(), $initialTime->toTimeString());
-                $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $endTime);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
+                //$initialTime=Carbon::createFromFormat('Y-m-d H:i:s' , $endTime);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
+                $initialTime->addMinutes(15);
+                $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $initialTime);
                 $endTime=$this->addServiceTime($service,$endTime);
           }}
         }//endWhile

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\User;
+use App\Schedule;
 
 use DB;
 
@@ -43,8 +44,13 @@ class UserController extends Controller
      */
     public function index()
     {
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
         $users = User::withTrashed()->get()->except(Auth::id());
-        return view('users.users_index', compact('users'))->render();
+        return view('users.users_index', compact('users'))->with('schedule',$schedule)->render();
     }
     
     public function getIndex()

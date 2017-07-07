@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\News;
+use App\Schedule;
 use App\Helpers\ImageHelper;
 use App\Http\Requests\NewsRequest;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,12 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        return  view('news.news-index');
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
+        return  view('news.news-index')->with('schedule',$schedule);
     }
     
     public function news_detail(){

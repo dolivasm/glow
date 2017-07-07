@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Schedule;
+
 use App\Mail\ContactForm;
 
 class HomeController extends Controller
@@ -26,12 +28,22 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
         $news = DB::table('news')->orderBy('updated_at', 'desc')->take(4)->get();
-        return view('home')->with('news',$news);
+        return view('home')->with('news',$news)->with('schedule',$schedule);
     }
    
     public function contact() {
-        return view('contact');
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
+        return view('contact')->with('schedule',$schedule);
     }
     
     public function sendContactEmail(Request $request) {
@@ -45,6 +57,11 @@ class HomeController extends Controller
     }
     
      public function abaut(){
-        return view('abaut');
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
+        return view('abaut')->with('schedule',$schedule);
     }
 }

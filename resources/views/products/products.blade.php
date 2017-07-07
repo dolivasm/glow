@@ -4,7 +4,7 @@
      <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
 @endsection
 
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule])
     @section('content')
     
      <!-- Section Title -->

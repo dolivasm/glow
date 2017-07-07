@@ -477,7 +477,7 @@ input[type="color"]:focus,
     background-color: #004175;
 }
 .bg-blue-4 {
-    background-color: #001fe3;
+    background-color: #030FFD/*#001fe3*/;
 }
 
 .bg-blue-4-dark {

@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule])
     @section('content')
   
     <!-- Section Title -->
