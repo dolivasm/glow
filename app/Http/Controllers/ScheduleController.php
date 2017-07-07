@@ -85,6 +85,11 @@ class ScheduleController extends Controller
             $lunch->start=$request->lunchStart;
             $lunch->end=$request->lunchEnd;
             $lunch->save();
+            //Update Saturday Clinic Schedule
+            $saturday=Schedule::find(3);
+            $saturday->start=$request->saturdayStart;
+            $saturday->end=$request->saturdayEnd;
+            $saturday->save();
             
             return response()->json(["message" => "Horario actualizado correctamente."]);
         } catch (Exception $e ) {

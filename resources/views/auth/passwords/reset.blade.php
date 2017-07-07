@@ -2,6 +2,14 @@
 @extends('layouts.principal')
 
 @section('content')
+<!-- Section Title -->
+    <section id="section-title" class="bg-alternative">
+        <div id="top-img-bg">
+            <h1 class="text-center">Restablecer Contraseña</h1>
+        </div>
+    </section>
+    <!-- End Section Title -->
+
 <div class="container">
     <div class="row">
         <div class="col-md-offset-4 col-md-4 col-sm-12 col-xs-12">

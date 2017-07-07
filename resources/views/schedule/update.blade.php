@@ -21,12 +21,27 @@
                   {{ Form::label('lunchEnd', 'Finaliza Almuerzo*') }}
                   {{ Form::text('lunchEnd', $schedule->end, ['required'=>'required','class' => 'form-control', 'readonly' => 'true']) }}
                 </div>
+                @else
+                  @if($schedule->id==3)
+                <div class="form-group">
+                  {{ Form::label('saturdayStart', 'Abrir Sábados*') }}
+                  {{ Form::text('saturdayStart', $schedule->start, ['required'=>'required','class' => 'form-control', 'readonly' => 'true']) }}
+                </div>
+                
+                <div class="form-group">
+                  {{ Form::label('saturdayEnd', 'Cerrar Sábados*') }}
+                  {{ Form::text('saturdayEnd', $schedule->end, ['required'=>'required','class' => 'form-control', 'readonly' => 'true']) }}
+                </div>
+                
             @endif
+                
+            @endif
+        
+    @endif
+@endforeach
          <div class="form-group">
                   {{ Form::label('info', 'La hora se selecciona en un formato de 24h con la secuencia de HH:mm') }}
                 </div>
-    @endif
-@endforeach
 
 {!!  Form::submit('Guardar',['class' => 'btn btn-normal-add btn-block text-uppercase','id' => 'updateSubmitSchedule'])!!}
 {{ Form::close() }}

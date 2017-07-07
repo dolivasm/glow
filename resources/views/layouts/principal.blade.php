@@ -39,9 +39,11 @@
                         <td><i class="fa fa-clock-o"></i></td>
                         <td>
                            <div class="icon-box-text">
-                              {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00' }}
+                              {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00.' }}
                               <br />
-                              Sábados y Domingos Cerrado
+                              {{ $schedule2 or 'Sábado 08:00:00 - 13:00:00.' }}
+                              <br />
+                              Domingos Cerrado
                            </div>
                         </td>
                      </tr>
@@ -218,9 +220,11 @@
                <div class="col-md-3 col-xs-12 col-sm-6">
                   <h3>Horario</h3>
                   <p>
-                     {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00' }}
+                     {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00.' }}
                      <br />
-                     Sábados y Domingos Cerrado
+                     {{ $schedule2 or 'Sábado 08:00:00 - 13:00:00.' }}
+                     <br />
+                     Domingos Cerrado
                   </p>
                </div>
             </div>

@@ -36,15 +36,18 @@ class AppointmentController extends Controller
         try {
             $open=Schedule::find(1);
             $lunch=Schedule::find(2);
+            $satSchedule = Schedule::find(3);
             Javascript::put([  'openTime' => $open->start,'lunchStart' => $lunch->start, 'lunchEnd' => $lunch->end, 'closeTime' => $open->end]);
             if (Auth::check()) {
                 $user = Auth::user();
                 Javascript::put([ 'userId' => $user->id, 'userRole' => $user->role_id ]);
                 
             }
+            
+            $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
             $schedule = "Lun-Vie ". $open->start . " - ". $lunch->start ." | ". $lunch->end ." - ". $open->end;
         
-            return view('appointment.index')->with('schedule',$schedule);
+            return view('appointment.index')->with('schedule',$schedule)->with('schedule2', $schedule2);
             
         } catch (Exception $e ) {
             return Response()->json(['message'=>'Lo sentimos, ha ocurrido un error al cargar las citas.']);
@@ -378,9 +381,16 @@ public function edit($id,Request $request){
         }
     }
      public function getTimeAvailable($service,$date,$selectedAppointment=null){
+         
+        
+        
         //Es necesario recibir la fecha que se selecciona para consultar 
-        $open=Schedule::find(1);//Take the open schedule
+        if($date->dayOfWeek != Carbon::SATURDAY)
+            $open=Schedule::find(1);//Take the open schedule
+            else
+              $open=Schedule::find(3);  
         $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        
         
         $lunch=Schedule::find(2);//The lunch time
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
@@ -430,7 +440,7 @@ public function edit($id,Request $request){
                     $endTime=$this->addServiceTime($service,$endTime);
                 }
            }//end for
-           if (($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch) {
+           if ((($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch)&&($date->dayOfWeek != Carbon::SATURDAY)) {
                         $initialTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);//La hora en que podria ininiciar una citas es en la hora que finaliza la anterior
                         //Se actualiza el periodo de la cita 
                         $endTime=Carbon::createFromFormat('Y-m-d H:i:s', $endLunch);
@@ -453,9 +463,16 @@ public function edit($id,Request $request){
         $initialTime= Carbon::createFromFormat('Y-m-d H:i:s',$start);
         $endTime =Carbon::createFromFormat('Y-m-d H:i:s',$end);
         $date=$initialTime;
-        $open=Schedule::find(1);//Take the open schedule
+      
+      if($date->dayOfWeek != Carbon::SATURDAY)
+            $open=Schedule::find(1);//Take the open schedule of normal schedule, Monday, Friday
+            else
+              $open=Schedule::find(3); //Take the open schedule of Saturday
         $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
         
+        if ($initialTime<$openTime) {
+             return response()->json(["available" => false,"message"=>"Seleccione un rango donde la hora de inicio sea mayor a la hora de abrir el local y menor al de cerrar"]);
+        }
         $lunch=Schedule::find(2);//The lunch time
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
         $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));
@@ -472,20 +489,20 @@ public function edit($id,Request $request){
                 ||($appointments[$i]->end<$endTime && $appointments[$i]->end>$initialTime)
                 ){
                     if(!$isLocal)
-                        return response()->json(["available" => false]);
+                        return response()->json(["available" => false,"message"=>"El bloque seleccionado choca con alguna de las reservas existentes"]);
                         else
                             return false;
                 }
                }//end for
-           if (($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch) {
+           if ((($endTime>$startLunch && $initialTime<$endLunch)|| $initialTime==$startLunch)&&($date->dayOfWeek != Carbon::SATURDAY)) {
                     if(!$isLocal)
-                        return response()->json(["available" => false]);
+                        return response()->json(["available" => false,"message"=>"El bloque seleccionado choca con la hora de almuerzo"]);
                         else
                             return false;
                     }else{
              if ($endTime<=$closeTime) {
                   if(!$isLocal)
-                    return response()->json(["available" => true]);
+                    return response()->json(["available" => true,"message"=>"El bloque puede ser bloqueado"]);
                     else
                             return true;
           }}

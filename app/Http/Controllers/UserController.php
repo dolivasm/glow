@@ -47,10 +47,13 @@ class UserController extends Controller
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
         $users = User::withTrashed()->get()->except(Auth::id());
-        return view('users.users_index', compact('users'))->with('schedule',$schedule)->render();
+        return view('users.users_index', compact('users'))->with('schedule',$schedule)->with('schedule2', $schedule2)->render();
     }
     
     public function getIndex()
@@ -131,9 +134,17 @@ class UserController extends Controller
      * 
      */
     public function editMyInfo() {
+        $attentionSchedule = Schedule::find(1);
+        $lunchSchedule = Schedule::find(2);
+        
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
+        $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
+        
         $id = Auth::user()->id;
         $user = User::where('id', $id)->first();
-        return view('users.edit_my_info',['user'=>$user])->render();
+        return view('users.edit_my_info',['user'=>$user])->with('schedule',$schedule)->with('schedule2', $schedule2)->render();
     }
 
     /**

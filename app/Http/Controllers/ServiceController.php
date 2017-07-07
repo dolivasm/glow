@@ -27,15 +27,18 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
      private $destinationPath = 'img/services/';
-     private $imgDefault="img/news/img-default.png";
+     private $imgDefault="img/news/img-default.jpg";
     public function index() //Lo utilizaremos para mostrar la página inicial
     {
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        return view($this->path.'.services-index')->with('schedule',$schedule);
+        return view($this->path.'.services-index')->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
     
 

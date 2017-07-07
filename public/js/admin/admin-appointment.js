@@ -47,12 +47,12 @@
          events: function(start, end, timezone, callback) {
              $.get('/appointmentList', function(response) {
                  response.push({
+                     dow: [1,2,3, 4, 5 ],
                      id:0,
                      "title": "Cerrado",
                      start: lunchStart,
                      end: lunchEnd,
-                     color: '#BDAEC6',
-                     down: [1, 2]
+                     color: '#BDAEC6'
                  });
                  callback(response);
              }); //this should be a JSON request
@@ -260,7 +260,7 @@
                 });
                 
             }else {
-                        notifyWarning("El lapso seleccionado no se puede bloquear, porque ya existen eventos");
+                        notifyWarning(response.message);
             }
                     });  
             
@@ -586,6 +586,43 @@ function appendOptionToEditTimeSelect(value,option){
        		     	}
              
           }});
+          
+        //Saturday Options
+        $('#saturdayStart').clockpicker({ autoclose: true,
+          beforeDone:function(){
+            tempOpenStart=$('#saturdayStart').val();
+          },
+           
+          afterDone:function(){
+           
+
+              if((new Date(2000, 1, 1, parseInt($('#saturdayStart').val().split(':')[0]), parseInt($('#saturdayStart').val().split(':')[1]), 0, 0)) >=
+           				(new Date(2000, 1, 1, parseInt($('#saturdayEnd').val().split(':')[0]), parseInt($('#saturdayEnd').val().split(':')[1]), 0, 0))
+           			){
+           			 $('#saturdayStart').val(tempOpenStart);
+       			       notifyWarning("La hora de abrir el local no puede ser mayor o igual a la de cerrar");
+       		     	}
+             
+          }});
+        var tempOpenEnd;
+        $('#saturdayEnd').clockpicker(
+          { autoclose: true,
+          beforeDone:function(){
+            tempOpenEnd=$('#saturdayEnd').val();
+          },
+           
+          afterDone:function(){
+           
+
+              if((new Date(2000, 1, 1, parseInt($('#saturdayStart').val().split(':')[0]), parseInt($('#saturdayStart').val().split(':')[1]), 0, 0)) >=
+           				(new Date(2000, 1, 1, parseInt($('#saturdayEnd').val().split(':')[0]), parseInt($('#saturdayEnd').val().split(':')[1]), 0, 0))
+           			){
+           			 $('#saturdayEnd').val(tempOpenEnd);
+       			       notifyWarning("La hora de cierre de local no puede ser menor o igual a la de abrir");
+       		     	}
+             
+          }});
+          
         $('#updateScheduleModal').modal('show');
      });
      
@@ -601,6 +638,8 @@ function appendOptionToEditTimeSelect(value,option){
     
     var openStart = $('#openStart').val();
      var openEnd = $('#openEnd').val();
+     var saturdayStart = $('#saturdayStart').val();
+     var saturdayEnd = $('#saturdayEnd').val();
      var lunchStart =$('#lunchStart').val();
      var lunchEnd = $('#lunchEnd').val();
      
@@ -616,7 +655,9 @@ function appendOptionToEditTimeSelect(value,option){
              openStart,
              openEnd,
              lunchStart,
-             lunchEnd
+             lunchEnd,
+             saturdayStart,
+             saturdayEnd
          },
          success: function(response) {
              $('#updateScheduleModal').modal('hide');

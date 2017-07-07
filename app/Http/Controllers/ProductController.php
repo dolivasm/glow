@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $this->middleware('sentryContext');
     }
-    private $imgDefault="img/products/img-default.png";
+    private $imgDefault="img/products/img-default.jpg";
     private $destinationPath = 'img/products/';
     /**
      * Display a listing of the resource.
@@ -29,9 +29,12 @@ class ProductController extends Controller
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        return  view('products.products')->with('schedule',$schedule);
+        return  view('products.products')->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
     
     public function products_detail()

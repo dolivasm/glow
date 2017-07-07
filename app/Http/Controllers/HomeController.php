@@ -31,19 +31,25 @@ class HomeController extends Controller
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
         $news = DB::table('news')->orderBy('updated_at', 'desc')->take(4)->get();
-        return view('home')->with('news',$news)->with('schedule',$schedule);
+        return view('home')->with('news',$news)->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
    
     public function contact() {
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        return view('contact')->with('schedule',$schedule);
+        return view('contact')->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
     
     public function sendContactEmail(Request $request) {
@@ -60,8 +66,11 @@ class HomeController extends Controller
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        return view('abaut')->with('schedule',$schedule);
+        return view('abaut')->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
 }

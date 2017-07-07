@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
         <div id="asd">
-            <h5>Para poder realizar una cita debe tener una sesión activa.</h5>
+            <h5>Para poder realizar una cita debe haber iniciado sesión.</h5>
             <h4>Computadora</h4>
             <p>Para reservar una cita desde una computadora simplemente haga click sobre el día en que quiera reservar y seleccione el 
             servicio y hora que desee.</p>

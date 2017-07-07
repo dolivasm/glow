@@ -1,4 +1,4 @@
-@extends('layouts.principal')
+@extends('layouts.principal', ['schedule' => $schedule], ['schedule2' => $schedule2])
 
 @section('external-css')
     {!!Html::style('assets/css/external/daterangepicker.css')!!}

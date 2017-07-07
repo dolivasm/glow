@@ -29,9 +29,12 @@ class NewsController extends Controller
         $attentionSchedule = Schedule::find(1);
         $lunchSchedule = Schedule::find(2);
         
+        $satSchedule = Schedule::find(3);
+        $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
+        
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
         
-        return  view('news.news-index')->with('schedule',$schedule);
+        return  view('news.news-index')->with('schedule',$schedule)->with('schedule2', $schedule2);
     }
     
     public function news_detail(){
