@@ -154,13 +154,12 @@
                <div class="col-md-3 col-xs-12 col-sm-6">
                   <h3> Servicios Brindados</h3>
                   <ul class="provided-services">
-                     <li><a href="#">Belleza</a></li>
-                     <li><a href="#">Cósmetica</a></li>
-                     <li><a href="#">Cuidado Personal</a></li>
+                     <li><p>Belleza</p></li>
+                     <li><p>Cosmética</p></li>
                   </ul>
                   <ul class="provided-services">
-                     <li><a href="#">Terapéuticos</a></li>
-                     <li><a href="#">Tratamientos estéticos</a></li>
+                     <li><p>Estética</p></li>
+                     <li><p>Cuidado Personal</p></li>
                   </ul>
                </div>
                <div class="col-md-3 col-xs-12 col-sm-6">

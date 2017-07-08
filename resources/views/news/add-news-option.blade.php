@@ -9,6 +9,6 @@
    </div>
    <div class="vs-20"></div>
    <h1 class="news-post-title bold-text">
-      ¿Quieres agregar un anuncio nuevo?
+      Agregar un nuevo anuncio
    </h1>
 </div>

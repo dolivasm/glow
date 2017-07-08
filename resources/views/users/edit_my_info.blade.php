@@ -18,7 +18,7 @@
       <div class="tab-content ">
         <div class="tab-pane active" id="1">
             <div class="col-md-12 col-sm-12 col-xs-12">
-                <h4>Si desea cambiar su nombre o fecha de nacimiento por favor contactenos y con mucho gusto le ayudaremos.</h4>
+                <h4>Si desea cambiar su nombre o fecha de nacimiento por favor contáctenos y con mucho gusto le ayudaremos.</h4>
                 <div class="container pb-0"></div>
                 <!--<form id="register-form" class="default-form" role="form" method="POST" action="{{ route('register') }}">
                 {{ csrf_field() }} -->
