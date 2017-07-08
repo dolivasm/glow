@@ -50,7 +50,7 @@
                         </div> -->
                         <div class="detail-box-bottom bg-orange">
                             <h3>Solicitar Cita</h3>
-                            <p>Ofrecemos un sistema para reservar citas en línea. Además, puede conusltar nuestra diponibilidad facilmente.</p>
+                            <p>Ofrecemos un sistema para reservar citas en línea. Además, puede consultar nuestra disponibilidad fácilmente.</p>
                             <!-- <p>Praesent fringilla congue eros ut porttitor. Fusce vel metus vel diam varius pellentesque. In eget laoreet neque.</p> -->
                             <a href="appointment" class="btn btn-sm btn-normal-boxes"><span class="fa fa-calendar"></span> Reservar</a>
                         </div>

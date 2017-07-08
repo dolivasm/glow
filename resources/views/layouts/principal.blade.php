@@ -164,7 +164,7 @@
                   </ul>
                </div>
                <div class="col-md-3 col-xs-12 col-sm-6">
-                  <h3>Contactenos</h3>
+                  <h3>Contáctenos</h3>
                   <p>
                      Dirección: Alajuela, Grecia, 25 sur de los bomberos.<br />
                      Teléfono: (+506) 8814-0136<br />
@@ -178,7 +178,7 @@
                      <br />
                      {{ $schedule2 or 'Sábado 08:00:00 - 13:00:00.' }}
                      <br />
-                     Domingos Cerrado
+                     Domingo Cerrado
                   </p>
                </div>
             </div>

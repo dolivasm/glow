@@ -18,7 +18,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="font-icon">
-                                <h1 class="text-center color-text"><i class="fa fa-map-o"></i> &nbsp; Localizanos con facilidad.</h1>
+                                <h1 class="text-center color-text"><i class="fa fa-map-o"></i> &nbsp; Localízanos con facilidad.</h1>
                             </div>
                             <div class="vs-25"></div>
                             <div class="seperator-text">
@@ -49,7 +49,7 @@
                         <div class="row">
                             <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
                                 <div class="contact-form">
-                                    <h3 class="color-text">Dejanos tus consultas</h3>
+                                    <h3 class="color-text">Déjanos tus consultas</h3>
                                     <p>Cuidado profesional de su salud y belleza corporal.</p>
                                     <!-- Contact Form -->
                                     {!!Form::open(['id'=>'contact-form'])!!}

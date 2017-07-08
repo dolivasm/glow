@@ -10,7 +10,7 @@
       </div>
       <div class="modal-body">
           <div id="divForEditServices">
-              <p>Some text in the modal.</p>
+            <p>Cargando contenido.</p>
           </div>
         <button type="button" class="btn btn-danger-delete btn-block" data-dismiss="modal">Cancelar</button>
       </div>

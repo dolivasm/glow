@@ -383,7 +383,6 @@ public function edit($id,Request $request){
      public function getTimeAvailable($service,$date,$selectedAppointment=null){
         $openTime=$this->getOpenCloseTime($date,1);
         
-        
         $lunch=Schedule::find(2);//The lunch time
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
         $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));

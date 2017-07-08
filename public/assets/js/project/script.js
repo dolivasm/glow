@@ -61,12 +61,6 @@ $(document).ready(function () {
         auto: true,
         controls: false
     });
-    /*-----------------------------------------------------------------------------------*/
-    /*	Full Screen Video 
-    /*-----------------------------------------------------------------------------------*/
-    
-       var fsvideo= $(".player").mb_YTPlayer();
-    
 
     /*-----------------------------------------------------------------------------------*/
     /*	Go Back  Top Button
@@ -89,29 +83,7 @@ $(document).ready(function () {
     
       var datepicker=  $(".datepicker").datepicker();
     
-    /*-----------------------------------------------------------------------------------*/
-    /*	Pricing Table
-    /*-----------------------------------------------------------------------------------*/
-     var plan = $('.plan');
-     var mostPopular = $('#most-popular');
-     var pricingTable3ColumnsEnter=$('body').on('mouseenter', '#pricing-table-3-columns .plan', function () {         
-          plan.removeClass('plan-active');
-          var $this= $(this);
-          $this.addClass('plan-active');
-    });
-     var pricingTable3ColumnsLeave=$('body').on('mouseleave', '#pricing-table-3-columns .plan', function () {
-        plan.removeClass('plan-active');
-        mostPopular.addClass('plan-active');
-    })
-     var pricingTable4ColumnsEnter=$('body').on('mouseenter', '#pricing-table-4-columns .plan', function () {
-        plan.removeClass('plan-active');
-        var $this = $(this);
-        $this.addClass('plan-active');
-    });
-     var pricingTable4ColumnsLeave=$('body').on('mouseleave', '#pricing-table-4-columns .plan', function () {
-        plan.removeClass('plan-active');
-        mostPopular.addClass('plan-active');
-    })
+
     /*-----------------------------------------------------------------------------------*/
     /*	Progress Bars
     /*-----------------------------------------------------------------------------------*/
@@ -119,41 +91,7 @@ $(document).ready(function () {
     
        var progressbar= $('.progress .progress-bar').progressbar({ display_text: 'fill' });
    
-    /*-----------------------------------------------------------------------------------*/
-    /*	Our Numbers
-    /*-----------------------------------------------------------------------------------*/
 
-    
-        var shownx = false;
-
-       var ourNumbers= $('#our-numbers').waypoint(function () {
-
-            if (!shownx) {
-
-                function count(options) {
-                    var $this = $(this);
-                    options = $.extend({}, options || {}, $this.data('countToOptions') || {});
-                    $this.countTo(options);
-                    shownx = true;
-                }
-                $('.timer').each(count);
-            }
-
-        }, { offset: '80%' });
- 
-
-    /*-----------------------------------------------------------------------------------*/
-    /*	Testimonals
-    /*-----------------------------------------------------------------------------------*/
-   var testimonialSlider= $('.testimonals-slider').slick({
-        autoplay: true,
-        dots: false,
-        infinite: true,
-        arrows: false,
-        speed: 300,
-        slidesToShow: 1
-    });
-    
 /*-----------------------------------------------------------------------------------*/
 /*  Scroll Navigation
 /*-----------------------------------------------------------------------------------*/
