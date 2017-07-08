@@ -30,53 +30,6 @@
          </div>
       </div>
       <!-- End Preloader -->
-      <!--Header Intro-->
-      <div class="header-intro visible-lg">
-         <div class="container pt-0 pb-0 ">
-            <div class="header-intro-section">
-               <div class="icon-box">
-                  <table>
-                     <tr>
-                        <td><i class="fa fa-clock-o"></i></td>
-                        <td>
-                           <div class="icon-box-text">
-                              {{ $schedule or 'Lun-Vie 09:00:00 - 12:00:00 | 14:30:00 - 19:00:00.' }}
-                              <br />
-                              {{ $schedule2 or 'Sábado 08:00:00 - 13:00:00.' }}
-                              <br />
-                              Domingos Cerrado
-                           </div>
-                        </td>
-                     </tr>
-                  </table>
-               </div>
-               <div class="icon-box">
-                  <table>
-                     <tr>
-                        <td><i class="fa fa-envelope-o"></i></td>
-                        <td>
-                           <div class="icon-box-text">
-                              clinica.glow.cr@gmail.com
-                           </div>
-                        </td>
-                     </tr>
-                  </table>
-               </div>
-               <div class="icon-box pull-right">
-                  <table>
-                     <tr>
-                        <td><i class="fa fa-smile-o"></i></td>
-                        <td>
-                           <div class="icon-box-text">
-                              Te esperamos!
-                           </div>
-                        </td>
-                     </tr>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
       <div class="header-intro-2">
          <div class="container pt-0 pb-0">
             <div class="row ml-0 mr-0">
