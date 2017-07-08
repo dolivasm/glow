@@ -381,22 +381,14 @@ public function edit($id,Request $request){
         }
     }
      public function getTimeAvailable($service,$date,$selectedAppointment=null){
-         
-        
-        
-        //Es necesario recibir la fecha que se selecciona para consultar 
-        if($date->dayOfWeek != Carbon::SATURDAY)
-            $open=Schedule::find(1);//Take the open schedule
-            else
-              $open=Schedule::find(3);  
-        $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        $openTime=$this->getOpenCloseTime($date,1);
         
         
         $lunch=Schedule::find(2);//The lunch time
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
         $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));
 
-        $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
+        $closeTime=$this->getOpenCloseTime($date,2);
         
         $actualDate=Carbon::now();
         
@@ -409,8 +401,9 @@ public function edit($id,Request $request){
             $endTime->addMinutes(5);
             
         }else{
-            $initialTime= Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
-            $endTime =Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        $initialTime=$this->getOpenCloseTime($date,1);
+        $endTime=$this->getOpenCloseTime($date,1);
+            
         }
     $endTime=$this->addServiceTime($service,$endTime);
     //if is editing an appointment ignore the actual appointment
@@ -458,27 +451,36 @@ public function edit($id,Request $request){
         }//endWhile
         return $this->timeAvailables;
     }
-    
+    //Get open and close time, if option ==1 return open time and 2 return close time
+    public function getOpenCloseTime($date,$option){
+         if($date->dayOfWeek != Carbon::SATURDAY)
+            $open=Schedule::find(1);//Take the open schedule
+            else
+              $open=Schedule::find(3);
+        if ($option==1) {
+            return Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+        
+        }else{
+            return  Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
+        
+        }
+        
+    }
     public function ckeckIndividualTime($start,$end,$isLocal=false){
         $initialTime= Carbon::createFromFormat('Y-m-d H:i:s',$start);
         $endTime =Carbon::createFromFormat('Y-m-d H:i:s',$end);
         $date=$initialTime;
-      
-      if($date->dayOfWeek != Carbon::SATURDAY)
-            $open=Schedule::find(1);//Take the open schedule of normal schedule, Monday, Friday
-            else
-              $open=Schedule::find(3); //Take the open schedule of Saturday
-        $openTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->start , 0 , 2 )), (integer)(substr ($open->start , 3 , 2 )), (integer)(substr ($open->start , 6 , 2 )));
+     
+        $openTime=$this->getOpenCloseTime($date,1);
+        $closeTime=$this->getOpenCloseTime($date,2);
         
-        if ($initialTime<$openTime) {
+        if ($initialTime<$openTime  || $endTime>$closeTime ) {
              return response()->json(["available" => false,"message"=>"Seleccione un rango donde la hora de inicio sea mayor a la hora de abrir el local y menor al de cerrar"]);
         }
         $lunch=Schedule::find(2);//The lunch time
         $startLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->start , 0 , 2 )), (integer)(substr ($lunch->start , 3 , 2 )), (integer)(substr ($lunch->start , 6 , 2 )));
         $endLunch=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($lunch->end , 0 , 2 )), (integer)(substr ($lunch->end , 3 , 2 )), (integer)(substr ($lunch->end , 6 , 2 )));
-
-        $closeTime=Carbon::create(($date->year),($date->month),($date->day),(integer)(substr ($open->end , 0 , 2 )), (integer)(substr ($open->end , 3 , 2 )), (integer)(substr ($open->end , 6 , 2 )));
-
+        
           $appointments=DB::table('appointments')
             ->orderBy('start')
                     ->where('start', 'like','%'. $initialTime->toDateString().'%')
