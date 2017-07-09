@@ -148,9 +148,16 @@ function  acceptDeleteServices () {
     type: 'DELETE',
     dataType: 'json',
     success: function(response) {
-      notifySuccess(response.message);
-      loadServices();
-      $("#deleteServicesModal").modal('hide');
+        $("#deleteServicesModal").modal('hide'); 
+        if (response.error==null) {
+            notifySuccess(response.message);
+            loadServices();
+            
+        }else{
+            
+            notifyError(response.error);
+        }
+     
     },
     error: function(response) {
       notifyError(response.error);

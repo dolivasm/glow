@@ -26,7 +26,7 @@
 			{!!Form::label('description', 'Descripción', array('class' => 'color-text'));!!}
 		</div>
 <div class="form-group">
-		{!!Form::textarea('description', null, ['id'=>'description','size'=>'30x4', 'class' => 'form-control','required'])!!}
+		{!!Form::textarea('description', null, ['minlength'=>'3','id'=>'description','size'=>'30x4', 'class' => 'form-control','required'])!!}
 	</div>
 <div class="form-group">
 			{!!Form::label('name', 'Imagen', array('class' => 'color-text'));!!}
