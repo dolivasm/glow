@@ -964,7 +964,7 @@ input[type="color"]:focus,
 }
 /*Details*/
 .physiotherapy-details {
-    margin-top: -70px;/*-120*/
+    margin-top: -40px;
 }
 
 .detail-box {
@@ -2571,6 +2571,16 @@ footer hr {
         color: #fff;
         border-color: #3b5998;
         background-color: #3b5998;
+        -moz-transition: all ease-in .2s;
+        -o-transition: all ease-in .2s;
+        -webkit-transition: all ease-in .2s;
+        transition: all ease-in .2s;
+    }
+    
+    .btn-social-media:hover .fa-instagram {
+        color: #fff;
+        border-color: #d10869;
+        background-color: #d10869;
         -moz-transition: all ease-in .2s;
         -o-transition: all ease-in .2s;
         -webkit-transition: all ease-in .2s;

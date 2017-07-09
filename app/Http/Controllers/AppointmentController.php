@@ -466,13 +466,16 @@ public function edit($id,Request $request){
         
     }
     public function ckeckIndividualTime($start,$end,$isLocal=false){
+        $actualDate=Carbon::now();
         $initialTime= Carbon::createFromFormat('Y-m-d H:i:s',$start);
         $endTime =Carbon::createFromFormat('Y-m-d H:i:s',$end);
         $date=$initialTime;
      
         $openTime=$this->getOpenCloseTime($date,1);
         $closeTime=$this->getOpenCloseTime($date,2);
-        
+        if ($initialTime<$actualDate) {
+             return response()->json(["available" => false,"message"=>"No puede se puede bloquear horas pasadas"]);
+        }
         if ($initialTime<$openTime  || $endTime>$closeTime ) {
              return response()->json(["available" => false,"message"=>"Seleccione un rango donde la hora de inicio sea mayor a la hora de abrir el local y menor al de cerrar"]);
         }
