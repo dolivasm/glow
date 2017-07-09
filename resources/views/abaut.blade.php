@@ -1,4 +1,9 @@
 @extends('layouts.principal', ['schedule' => $schedule], ['schedule2' => $schedule2])
+@section('external-css')
+    <link href="{{ asset('assets/css/external/lightbox.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/external/jasny-bootstrap.css') }}" rel="stylesheet">
+     <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
+@endsection
     @section('content')
     <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
@@ -44,149 +49,31 @@
                         <div class="team-member-img">
                             <figure class="image-overlay">
                                 <div class="hover-image-wrapper">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="person-details.html" class="btn-social-media"><i class="fa fa-search"></i></a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <img src="assets/img/people/smile-1.jpg" class="img-responsive" alt='' />
+                                    <a href="img/foto_amanda.jpeg" data-lightbox="webdesign">
+                                <span class="hover-image-wrap"><span class="hover-image"><i class="fa fa-search"></i></span></span>
+                                <img src="img/foto_amanda.jpeg" class="img-responsive" alt="Amanda Barrantes">
+                                    </a>
                                 </div>
                             </figure>
 
                         </div>
                         <div class="team-member-details bg-blue text-center">
                             <h4>Amanda Barrantes</h4>
-                            <h5>Fisioterapeuta</h5>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
+                            <h5>Fisioterapeuta y Esteticista</h5>
+                            <p>Graduada de CEM Escuelas Europeas de Estética.</p>
+                            <p>Licenciada en Terapia Física/Universidad Americana.</p>
 
-                        </div>
-                        <!-- <div class="team-member-links text-center bg-blue-dark">
-                            <div class="vs-10"></div>
-                            <div>
-                                <a href="#" class="btn-social-media"><i class="fa fa-facebook"></i></a><a href="#" class="btn-social-media"><i class="fa fa-twitter"></i></a><a href="#" class="btn-social-media"><i class="fa fa-google-plus"></i></a><a href="#" class="btn-social-media"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                            <div class="vs-10"></div>
-                        </div> -->
-                    </div>
-                </div>
-                <!-- <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="team-member-wrap">
-                        <div class="team-member-img">
-                            <figure class="image-overlay">
-                                <div class="hover-image-wrapper">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="person-details.html" class="btn-social-media"><i class="fa fa-search"></i></a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <img src="assets/img/people/smile-2.jpg" class="img-responsive" alt='' />
-                                </div>
-                            </figure>
-                        </div>
-                        <div class="team-member-details bg-blue text-center">
-                            <h4>John Doe</h4>
-                            <h5>PhysioTherapist</h5>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-
-                        </div>
-                        <div class="team-member-links text-center bg-blue-dark">
-                            <div class="vs-10"></div>
-                            <div>
-                                <a href="#" class="btn-social-media"><i class="fa fa-facebook"></i></a><a href="#" class="btn-social-media"><i class="fa fa-twitter"></i></a><a href="#" class="btn-social-media"><i class="fa fa-google-plus"></i></a><a href="#" class="btn-social-media"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                            <div class="vs-10"></div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="team-member-wrap">
-                        <div class="team-member-img">
-                            <figure class="image-overlay">
-                                <div class="hover-image-wrapper">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="person-details.html" class="btn-social-media"><i class="fa fa-search"></i></a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <img src="assets/img/people/smile-3.jpg" class="img-responsive" alt='' />
-                                </div>
-                            </figure>
-                        </div>
-                        <div class="team-member-details bg-blue text-center">
-                            <h4>Jan Doe</h4>
-                            <h5>PhysioTherapist</h5>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-
-                        </div>
-                        <div class="team-member-links text-center bg-blue-dark">
-                            <div class="vs-10"></div>
-                            <div>
-                                <a href="#" class="btn-social-media"><i class="fa fa-facebook"></i></a><a href="#" class="btn-social-media"><i class="fa fa-twitter"></i></a><a href="#" class="btn-social-media"><i class="fa fa-google-plus"></i></a><a href="#" class="btn-social-media"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                            <div class="vs-10"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="team-member-wrap">
-                        <div class="team-member-img">
-                            <figure class="image-overlay">
-                                <div class="hover-image-wrapper">
-                                    <div class="hover-content">
-                                        <ul>
-                                            <li>
-                                                <a href="person-details.html" class="btn-social-media"><i class="fa fa-search"></i></a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                    <img src="assets/img/people/smile-4.jpg" class="img-responsive" alt='' />
-                                </div>
-                            </figure>
-                        </div>
-                        <div class="team-member-details bg-blue text-center">
-                            <h4>Johny Doe</h4>
-                            <h5>PhysioTherapist</h5>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</p>
-
-                        </div>
-                        <div class="team-member-links text-center bg-blue-dark">
-                            <div class="vs-10"></div>
-                            <div>
-                                <a href="#" class="btn-social-media"><i class="fa fa-facebook"></i></a><a href="#" class="btn-social-media"><i class="fa fa-twitter"></i></a><a href="#" class="btn-social-media"><i class="fa fa-google-plus"></i></a><a href="#" class="btn-social-media"><i class="fa fa-pinterest"></i></a>
-                            </div>
-                            <div class="vs-10"></div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
     <!-- End Team Members -->
-    <!-- Dark Bg -->
-    <!-- <div class="dark-bg  default-hovered animated-text">
-        <div class="container pt-0 pb-0">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="text-center">
-                        <h2>¿Necesitas una cita?</h2>
-                        <h2>Reserva hoy mismo!</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- End Dark Bg -->
   @endsection
-  <!--Section for project scripts-->
     @section('js')
 @endsection
+
+@section('external-js')
+        <script src="{{ asset('assets/js/external/lightbox-2.6.min.js') }}"></script>
+    @endsection

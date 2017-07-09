@@ -192,7 +192,7 @@
                         <p class="text-center">Desarrollado por: Allan Zuñiga, Daniel Elizondo, David Olivas y Esteban Bogantes</p>
                         <p class="text-center">
                            <a href="https://www.facebook.com/Cl%C3%ADnica-FisioEst%C3%A9tica-Glow-109629109054741/" target="_blank" class="btn-social-media"><i class="fa fa-facebook"></i></a>
-                           <a href="https://web.stagram.com/glow_fisioestetica" target="_blank" class="btn-social-media"><i class="fa fa-instagram"></i></a>
+                           <a href="https://www.instagram.com/glow_fisioestetica/" target="_blank" class="btn-social-media"><i class="fa fa-instagram"></i></a>
                         </p>
                      </div>
                   </div>

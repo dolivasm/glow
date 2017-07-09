@@ -1,8 +1,17 @@
-
- $( '#contact-form' ).on( 'submit', function(e) {
+ $(document).ready(function () {
+   
+   $("#contact-form").validate({
+      submitHandler: function(form) {
+        //This methos is callback  when the form is valid
+        putContact(form);
+      }
+  });
+   
+ //$( '#contact-form' ).on( 'submit', function(e) {
+   function putContact() {
         var button = document.getElementById("button");
         button.disabled = true;
-        e.preventDefault();
+        //e.preventDefault();
         var contactName = $("#contact-form #contactName").val();
         var contactEmail = $("#contact-form #contactEmail").val();
         var contactSubject = $("#contact-form #contactSubject").val();
@@ -32,4 +41,6 @@
           }
         }
       });
-    });
+    }/*);*/
+    
+});
