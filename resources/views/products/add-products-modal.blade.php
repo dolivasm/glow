@@ -12,7 +12,7 @@
           <div id="divForAddProducts">
             <p>Cargando contenido.</p>
           </div>
-        <button type="button" class="btn btn-danger-delete btn-block" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger-delete btn-block" data-dismiss="modal">CANCELAR</button>
       </div>
 
     </div>
