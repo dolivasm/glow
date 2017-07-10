@@ -77,7 +77,7 @@ function displayFieldErrors(response) {
     $.each(response.responseJSON, function(key, item) {
         //key is the field
         $gotErrors = true;
-        notifyError(item);
+        notifyError(item+"");
 
     });
     return gotErrors;
