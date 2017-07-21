@@ -31,7 +31,11 @@
                  ?>
                 @endif
             @endif 
-          
+             
+             @if ((Auth::guest() || (Auth::user()->role_id)!=1 ) && ($service->deleted_at != NULL))
+             
+             @else
+             
              <div class="col-md-4 col-sm-12 col-xs-12 home-blog-item">
                     <div class="blog-post-main-img">
                         <figure class="image-overlay">
@@ -48,8 +52,15 @@
                         <!--If the user is an admin, the button to edit and delete are available-->
                             <div class="vs-20"></div>
                             <p><a class="btn btn-normal-edit" OnClick='editServices({{$service->id}});'><i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                             Editar</a><a class="btn btn-danger-delete" OnClick='deleteServices({{$service->id}});'><i class="fa fa-trash-o" aria-hidden="true"></i>
-                             Eliminar</a></p>
+                             Editar</a>
+                             @if($service->deleted_at == NULL)
+                                <a class="btn btn-danger-delete" OnClick='deleteServices({{$service->id}});'><i class="fa fa-trash-o" aria-hidden="true"></i>
+                             Eliminar</a>
+                            @else
+                                <a OnClick="getActivateService({{$service->id}}, '{{$service->name}}');" class="btn btn-normal-react">Activar</a>
+                            @endif
+                             
+                             </p>
                         @endif
                     @endif
 
@@ -81,6 +92,11 @@
                     </div>
                      
                 </div>
+             
+             @endif
+             
+                
+                <!-- hasta quí se muestra el servicio -->
                  <?php
                     $count=$count+1;
                 ?>

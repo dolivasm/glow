@@ -11,7 +11,7 @@
     <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
         <div id="top-img-bg">
-            <h1 class="text-center">Administración de Usuarios</h1>
+            <h1 class="text-center sombraLetrasEncabezado">Administración de Usuarios</h1>
         </div>
     </section>
     <!-- End Section Title -->

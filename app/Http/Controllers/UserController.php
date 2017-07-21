@@ -152,7 +152,9 @@ class UserController extends Controller
         $schedule2 = "Sábado ". $satSchedule->start ." - ". $satSchedule->end;
         
         $schedule = "Lun-Vie ". $attentionSchedule->start . " - ". $lunchSchedule->start ." | ". $lunchSchedule->end ." - ". $attentionSchedule->end;
-        
+        if (Auth::check()) {
+            // code...
+        }
         $id = Auth::user()->id;
         $user = User::where('id', $id)->first();
         return view('users.edit_my_info',['user'=>$user])->with('schedule',$schedule)->with('schedule2', $schedule2)->render();

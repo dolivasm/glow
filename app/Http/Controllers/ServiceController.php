@@ -46,13 +46,14 @@ class ServiceController extends Controller
     
     {
         try {
-             $services = Services::orderBy('updated_at', 'desc')->get(['id', 
+             $services = Services::orderBy('updated_at', 'desc')->withTrashed()->get(['id', 
                             'name', 
                             'description',
                             'price',
                             'imageUrl', 
                             'created_at',
                             'updated_at',
+                            'deleted_at',
                             'duration']);
             
             return  view('services.services-detail',compact('services'))->render();
@@ -231,5 +232,20 @@ class ServiceController extends Controller
         return response()->json(["error" => "Lo sentimos, ha ocurrido un error al intentar eliminar el servicio. El error podría 
         tratarse porque el servicio esta siendo utilizado en otra sección."]);
         }
+    }
+    
+    public function activate($id) {
+        
+        try{
+            
+        Services::onlyTrashed()
+                ->where('id', $id)
+                ->restore();
+        return response()->json(["mensaje"=>"SERVICIO ACTIVADO CORRECTAMENTE"]);
+            
+        } catch ( \Illuminate\Database\QueryException $e) {
+        return response()->json(["error" => "Lo sentimos, ha ocurrido un error al intentar activar el servicio."]);
+        }
+        
     }
 }

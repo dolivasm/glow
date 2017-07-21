@@ -3,7 +3,9 @@
     <link href="{{ asset('assets/css/external/jasny-bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('css/external/toastr.css') }}" rel="stylesheet">
     <link href="{{ asset('css/external/bootstrap-clockpicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/project/style.css') }}" rel="stylesheet">
 @endsection
+
 
 @extends('layouts.principal', ['schedule' => $schedule], ['schedule2' => $schedule2])
     @section('content')
@@ -11,7 +13,7 @@
      <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
         <div id="top-img-bg">
-            <h1 class="text-center">Servicios</h1>
+            <h1 class="text-center sombraLetrasEncabezado">Servicios</h1>
         </div>
     </section>
     <!-- End Section Title -->
@@ -74,6 +76,7 @@
         @include('services.edit-services-modal');
         <!--Modals Delete Section-->
         @include('services.delete-services-modal');
+        @include('services.activate_service_modal')
     </div>
      <!--End Modals Section-->
      

@@ -44,6 +44,7 @@ Route::post('update-services','ServiceController@updateServices');
 Route::post('update-products','ProductController@updateProducts');
 Route::put('update-users','UserController@update');
 Route::put('activateUser/{value?}', 'UserController@activate');
+Route::put('activateService/{value?}', 'ServiceController@activate');
 Route::post('sendContact', 'HomeController@sendContactEmail');
 
 Route::put('changePassword', 'UserController@changePassword');

@@ -5,7 +5,7 @@
     <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
         <div id="top-img-bg">
-            <h1 class="text-center">Iniciar Sesión</h1>
+            <h1 class="text-center sombraLetrasEncabezado">Iniciar Sesión</h1>
         </div>
     </section>
 <div id="login-section" class="container login-section ">

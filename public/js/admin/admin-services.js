@@ -163,5 +163,37 @@ function  acceptDeleteServices () {
       notifyError(response.error);
     }
   });
-} 
+}
+
+ function getActivateService(id, name) {
+     $.get('services/' +id+ '', function(response) {
+        $('#idServiceToActivate').val(id);
+        $('#nameServiceToActivate').text(name);
+     });
+    $('#activateServiceModal').modal('show');
+ }
+ 
+ 
+ function activateService() {
+     document.getElementById("activateServices").disabled = true;
+    var route = "activateService/" + $('#idServiceToActivate').val() +"";
+  var token = $("#token").val();
+  $.ajax({
+    url: route,
+    headers: {
+      'X-CSRF-TOKEN': token
+    },
+    type: 'PUT',
+    dataType: 'json',
+    success: function() {
+        $("#activateServiceModal").modal('hide');
+        loadServices();
+        notifySuccess('El servicio fue activado exitosamente!');
+    },
+    error: function(response) {
+
+        notifyError("Lo sentimos a ocurrido un error al intentar activar al usuario");
+    }
+  });
+ }
     

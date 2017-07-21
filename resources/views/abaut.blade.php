@@ -8,7 +8,7 @@
     <!-- Section Title -->
     <section id="section-title" class="bg-alternative">
         <div id="top-img-bg">
-            <h1 class="text-center">Nosotros</h1>
+            <h1 class="text-center sombraLetrasEncabezado">Nosotros</h1>
         </div>
     </section>
     <!-- End Section Title -->

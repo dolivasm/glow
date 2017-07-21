@@ -13,7 +13,7 @@
       
         <section id="section-title" class="bg-alternative">
             <div id="top-img-bg">
-                <h1 class="text-center">Citas</h1>
+                <h1 class="text-center sombraLetrasEncabezado">Citas</h1>
             </div>
         </section>
       

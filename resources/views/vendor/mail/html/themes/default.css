@@ -99,7 +99,7 @@ img {
 .header {
     padding: 25px 0;
     text-align: center;
-    background: #5b006f;
+    background: #657963;
 }
 
 .header a {
@@ -149,7 +149,7 @@ img {
 /* Footer */
 
 .footer {
-    background: #5b006f;
+    background: #657963;
     margin: 0 auto;
     padding: 0;
     text-align: center;
@@ -163,7 +163,7 @@ img {
     color: white;
     font-size: 12px;
     text-align: center;
-    background: #5b006f;
+    background: #657963;
 }
 
 /* Tables */
@@ -174,7 +174,7 @@ img {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
     -premailer-width: 100%;
-    background: #5b006f;
+    background: #657963;
 }
 
 .table th {
@@ -245,7 +245,7 @@ img {
 }
 
 .panel-content {
-    background-color: #5b006f/*#EDEFF2*/;
+    background-color: #657963/*#EDEFF2*/;
     padding: 16px;
 }
 
