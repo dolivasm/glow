@@ -4644,18 +4644,18 @@ input.error,textarea.error{
 }
 
 #myAppointments{
-    background: #6f4a79;
+    background: #8FC0A9;
     color: #fff;
 }
 
 #AppointmentsReserved{
-    background: #336699;
+    background: #68B0AB;
     color: #fff;
 }
 
 
 #specialEvent{
-    background: #BDAEC6;
+    background: #657963;
     color: #fff;
 }
 .close{

@@ -61,9 +61,9 @@ class AppointmentController extends Controller
         $data = Appointment::get(['id', 'title', 'start', 'end', 'color','userId','serviceId']);
         foreach ($data as $appointment ) {
             if (Auth::check()) {
-                    if ($request->user()->id ==$appointment->userId && ($appointment->color)!="#BDAEC6" )
+                    if ($request->user()->id ==$appointment->userId && ($appointment->color)!="#657963" )
                     {
-                        $appointment->color ="#6f4a79";
+                        $appointment->color ="#8FC0A9";
                     }
                 }
         }
@@ -204,7 +204,7 @@ public function edit($id,Request $request){
             $Appointment->serviceId = $request->serviceId;
             $Appointment->start = $request->date_start . ' ' . $request->time_start;
             $Appointment->end=  $end;
-            $Appointment->color ="#336699" ;
+            $Appointment->color ="#68B0AB" ;
             $Appointment->userId = $request->userId;
             if ($this->ckeckIndividualTime( $Appointment->start, $Appointment->end,true)) {
                 $Appointment->save(); // code...
@@ -234,7 +234,7 @@ public function edit($id,Request $request){
             $Appointment->title = $request->title;
             $Appointment->start = $request->date_start ;
             $Appointment->end=  $request->date_end ;;
-            $Appointment->color ="#BDAEC6" ;
+            $Appointment->color ="#657963" ;
             $Appointment->userId = $request->userId;
              if ($this->ckeckIndividualTime( $Appointment->start, $Appointment->end,true)) {
                 $Appointment->save(); // code...
@@ -256,7 +256,7 @@ public function edit($id,Request $request){
             $Appointment->title = $request->title;
             $Appointment->start = $request->date_start ;
             $Appointment->end=  $request->date_end ;;
-            $Appointment->color ="#BDAEC6" ;
+            $Appointment->color ="#657963" ;
             $Appointment->userId = $request->userId;
             $Appointment->save();
             return response()->json(["message" => "Actualixación realizada exitosamente."]);
@@ -287,7 +287,7 @@ public function edit($id,Request $request){
             $Appointment->start = $request->date_start . ' ' . $request->start;
             $Appointment->userId=$request->userId;
             $Appointment->end=  $end;
-            $Appointment->color ="#336699" ;
+            $Appointment->color ="#68B0AB" ;
             $Appointment->save();
             
             $user=User::find($request->userId);

@@ -52,7 +52,7 @@
                      "title": "Cerrado",
                      start: lunchStart,
                      end: lunchEnd,
-                     color: '#BDAEC6'
+                     color: '#657963'
                  });
                  callback(response);
              }); //this should be a JSON request
