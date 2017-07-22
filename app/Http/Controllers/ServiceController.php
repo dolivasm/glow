@@ -222,10 +222,6 @@ class ServiceController extends Controller
         try {
         $services=Services::findOrFail($id);
         $services->delete();
-        //Delete the image from the server is is difereent than the default.
-        if ($services->imageUrl!=$this->imgDefault) {
-            File::delete($services->imageUrl);
-        }
         return response()->json(["message"=>"BORRADO CORRECTAMENTE"]);
             
         } catch ( \Illuminate\Database\QueryException $e) {

@@ -33,7 +33,9 @@
             @endif 
              
              @if ((Auth::guest() || (Auth::user()->role_id)!=1 ) && ($service->deleted_at != NULL))
-             
+             <?php
+                    $count=$count-1;
+                ?>
              @else
              
              <div class="col-md-4 col-sm-12 col-xs-12 home-blog-item">
