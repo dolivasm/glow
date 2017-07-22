@@ -4593,7 +4593,7 @@ font-size: 18px;
 } 
 
 .form-control:focus{
-    border-color: #c156e3;
+    border-color: #657963/*#657963*/;
 }
 .valid{
     border: 2px solid green;
