@@ -57,7 +57,7 @@
                            <div class="collapse navbar-collapse" id="main-menu-navbar">
                               <ul class="nav navbar-nav pull-right">
                                  <li><a href="/">Inicio</a></li>
-                                 <li><a href="appointment">Citas</a></li>
+                                 <!--<li><a href="appointment">Citas</a></li>-->
                                   @if (!Auth::guest()) 
                                   
                                   @if((Auth::user()->role_id)==1)
