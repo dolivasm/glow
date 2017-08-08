@@ -22,7 +22,7 @@
                 <div class="col-lg-12 text-center blog-intro-header">
                     <br>
                     <h3 class="color-text">
-                        Gran variedad de productos disponibles para tí.
+                        Gran variedad de productos disponibles.
                     </h3>
                 </div>
             </div>

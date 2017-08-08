@@ -54,7 +54,7 @@ class HomeController extends Controller
     
     public function sendContactEmail(Request $request) {
         try {
-            \Mail::to('clinica.glow.cr@gmail.com')->send(new ContactForm($request));
+            \Mail::to('amandabtes@hotmail.com')->send(new ContactForm($request));
             return response()->json(["message" => "Consulta enviada correctamente."]);
         } catch (Exception $e) {
             return response()->json(["error" => "Consulta no enviada."]);

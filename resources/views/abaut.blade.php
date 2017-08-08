@@ -18,16 +18,18 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-6">
                     <h1>Bienvenido(a) a <span class="color-text">Clínica FisioEstética Glow</span> </h1>
-                    <p><strong>Hace ya 10 años que trabajo en el área de la estética y hace unos 7 años como fisioterapeuta,
-                    definitivamente es algo que me apasiona.</strong></p>
-                    <p>Que mis clientes se sientan seguros y confiados con el trabajo que realizo es una de mis mayores satisfacciones.
-                    En este recorrido he tenido la oportunidad de enseñar mis conocimientos en escuelas de estética y también de aprender y perfeccionar mi trabajo llevando cursos y seminarios dentro y fuera del país. 
-                    Desde hace 6 años nació GLOW y ha ido creciendo conmigo y con todas las personas que han confiado en mis servicios.
-                    Buscar la excelencia, mejorar mis destrezas y habilidades para siempre dar un trabajo profesional y de calidad es mi meta.
-                    </p>
+                    <div style="text-align: justify; text-justify: inter-word;">
+                        <p><strong>Hace ya 10 años que trabajo en el área de la estética y hace unos 7 años como fisioterapeuta,
+                        definitivamente es algo que me apasiona.</strong></p>
+                        <p>Que mis clientes se sientan seguros y confiados con el trabajo que realizo es una de mis mayores satisfacciones. <br> <br>
+                        En este recorrido he tenido la oportunidad de enseñar mis conocimientos en escuelas de estética y también de aprender y perfeccionar mi trabajo llevando cursos y seminarios dentro y fuera del país. 
+                        <br> <br>Desde hace 6 años nació GLOW y ha ido creciendo conmigo y con todas las personas que han confiado en mis servicios.
+                        Buscar la excelencia, mejorar mis destrezas y habilidades para siempre dar un trabajo profesional y de calidad es mi meta.
+                        </p>
+                    </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-6">
-                    <img src="img/logo.jpg" class="img-responsive" style="border:5px solid #d9d7d9" />
+                    <img src="img/logo2.jpg" class="img-responsive" style="border:5px solid #d9d7d9" />
                 </div>
             </div>
         </div>
